@@ -3,12 +3,1695 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Student CV Builder - Created by Matimba Chauke (Firebase Backend)</title>
+  <title>Student CV Builder - Created by Matimba Chauke</title>
+  
+  <!-- Fonts & Icons (CDN) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Google Firebase SDK (Compat Version 10.8.0 via CDN) -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+  <style>
+/* ==========================================================================
+   CV Studio & Live Document Styles
+   Created by Matimba Chauke (075 380 6251)
+   Single-File GitHub Deployment Edition
+   ========================================================================== */
+
+:root {
+  --primary-color: #111111;
+  --accent-color: #2563eb;
+  --accent-hover: #1d4ed8;
+  --text-main: #1f2937;
+  --text-muted: #555555;
+  --text-light: #777777;
+  --border-dark: #1a1a1a;
+  --border-light: #e5e7eb;
+  --bg-app: #eef1f6;
+  --bg-sidebar: #ffffff;
+  --bg-paper: #ffffff;
+  --font-heading: 'Montserrat', sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  
+  /* Density scales */
+  --cv-padding: 38px 45px;
+  --section-gap: 20px;
+  --item-gap: 12px;
+  --body-font-size: 0.825rem;
+  --line-height: 1.48;
+}
+
+body.density-compact {
+  --cv-padding: 26px 36px;
+  --section-gap: 13px;
+  --item-gap: 8px;
+  --body-font-size: 0.77rem;
+  --line-height: 1.34;
+}
+
+body.density-spacious {
+  --cv-padding: 48px 54px;
+  --section-gap: 26px;
+  --item-gap: 16px;
+  --body-font-size: 0.88rem;
+  --line-height: 1.55;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg-app);
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+/* Toolbar */
+.app-toolbar {
+  height: 62px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #d1d5db;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.toolbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: #111;
+}
+
+.toolbar-brand i {
+  color: var(--accent-color);
+  font-size: 1.25rem;
+}
+
+.creator-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  color: #475569;
+}
+
+.creator-badge i.fa-code {
+  color: #6366f1;
+}
+
+.creator-badge strong {
+  color: #1e293b;
+}
+
+.creator-phone {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #eff6ff;
+  padding: 2px 7px;
+  border-radius: 12px;
+  transition: all 0.15s;
+}
+
+.creator-phone:hover {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.btn-firebase-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  color: #b45309;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.15s;
+}
+
+.btn-firebase-badge:hover {
+  background: #fef3c7;
+  border-color: #f59e0b;
+}
+
+.btn-firebase-badge.connected {
+  background: #f0fdf4;
+  border-color: #bbf7d0;
+  color: #15803d;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.status-offline {
+  background-color: #f59e0b;
+}
+
+.status-online {
+  background-color: #22c55e;
+  box-shadow: 0 0 6px #22c55e;
+}
+
+.toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.app-info-banner {
+  background: linear-gradient(90deg, #1e293b, #0f172a);
+  color: #f1f5f9;
+  font-size: 0.8rem;
+  padding: 7px 20px;
+  border-bottom: 1px solid #334155;
+}
+
+.banner-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.banner-inner a {
+  color: #60a5fa;
+  text-decoration: underline;
+}
+
+.banner-inner i.fa-sparkles {
+  color: #fbbf24;
+  margin-right: 4px;
+}
+
+.banner-close {
+  background: none;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  padding: 2px 6px;
+  font-size: 0.85rem;
+}
+
+.banner-close:hover {
+  color: white;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 14px;
+  font-size: 0.825rem;
+  font-weight: 500;
+  border-radius: 6px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.15s ease-in-out;
+  text-decoration: none;
+  font-family: var(--font-body);
+}
+
+.btn-primary {
+  background-color: #111827;
+  color: #ffffff;
+  border-color: #111827;
+}
+
+.btn-primary:hover {
+  background-color: var(--accent-color);
+  border-color: var(--accent-color);
+  box-shadow: 0 2px 6px rgba(37,99,235,0.3);
+}
+
+.btn-secondary {
+  background-color: #f3f4f6;
+  color: #374151;
+  border-color: #e5e7eb;
+}
+
+.btn-secondary:hover {
+  background-color: #e5e7eb;
+  color: #111827;
+}
+
+.btn-danger-outline {
+  background-color: transparent;
+  color: #dc2626;
+  border-color: #fca5a5;
+}
+
+.btn-danger-outline:hover {
+  background-color: #fef2f2;
+  border-color: #dc2626;
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--accent-color);
+  border-color: #bfdbfe;
+}
+
+.btn-outline:hover {
+  background-color: #eff6ff;
+  border-color: var(--accent-color);
+}
+
+.btn-sm {
+  padding: 5px 10px;
+  font-size: 0.78rem;
+}
+
+.btn-block {
+  width: 100%;
+  justify-content: center;
+  padding: 9px 16px;
+}
+
+.mt-2 {
+  margin-top: 8px;
+}
+
+.btn-icon {
+  background: transparent;
+  border: none;
+  color: #6b7280;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.btn-icon:hover {
+  background-color: #f3f4f6;
+  color: #111;
+}
+
+.btn-file-label {
+  margin-bottom: 0;
+}
+
+/* User Account */
+.user-profile-menu {
+  position: relative;
+  margin-left: 6px;
+}
+
+.btn-user-avatar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  padding: 4px 10px 4px 5px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-user-avatar:hover {
+  background: #f1f5f9;
+  border-color: #94a3b8;
+}
+
+.avatar-circle {
+  width: 28px;
+  height: 28px;
+  background: #2563eb;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+}
+
+.user-display-name {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #1e293b;
+  max-width: 110px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.btn-user-avatar i {
+  font-size: 0.68rem;
+  color: #64748b;
+}
+
+.user-dropdown-card {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  width: 240px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+  padding: 10px;
+  z-index: 150;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.user-dropdown-card.hidden {
+  display: none;
+}
+
+.dropdown-user-info {
+  padding: 4px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dropdown-user-info strong {
+  font-size: 0.85rem;
+  color: #0f172a;
+}
+
+.dropdown-user-info span {
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+.text-backend-mode {
+  font-size: 0.7rem;
+  color: #059669;
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+.dropdown-divider {
+  height: 1px;
+  background: #f1f5f9;
+  margin: 4px 0;
+}
+
+.dropdown-link-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  padding: 7px 8px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  color: #334155;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+}
+
+.dropdown-link-btn:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+.dropdown-link-btn.danger {
+  color: #dc2626;
+}
+
+.dropdown-link-btn.danger:hover {
+  background: #fef2f2;
+}
+
+/* Dropdown */
+.dropdown-container {
+  position: relative;
+}
+
+.dropdown-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 6px);
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1);
+  padding: 12px;
+  width: 240px;
+  z-index: 150;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.dropdown-menu.hidden {
+  display: none;
+}
+
+.menu-item {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.menu-item label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #6b7280;
+}
+
+.menu-item select,
+.menu-item input[type="text"] {
+  padding: 6px 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 5px;
+  font-size: 0.85rem;
+}
+
+.menu-item input[type="color"] {
+  width: 100%;
+  height: 34px;
+  border: 1px solid #d1d5db;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 2px;
+}
+
+/* Switch */
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .2s;
+  border-radius: 24px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: .2s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: var(--accent-color);
+}
+
+input:checked + .slider:before {
+  transform: translateX(20px);
+}
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background-color: #1f2937;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  font-size: 0.85rem;
+  z-index: 1000;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.toast.hidden {
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+}
+
+/* Modals */
+.auth-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  transition: opacity 0.2s;
+}
+
+.auth-modal-backdrop.hidden {
+  display: none;
+}
+
+.auth-card {
+  background: #ffffff;
+  width: 90%;
+  max-width: 440px;
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+  padding: 26px 28px;
+  position: relative;
+  max-height: 92vh;
+  overflow-y: auto;
+  animation: modalPop 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.firebase-card {
+  max-width: 520px;
+}
+
+@keyframes modalPop {
+  0% { transform: scale(0.94); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.auth-close-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  color: #94a3b8;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.auth-close-btn:hover {
+  color: #1e293b;
+}
+
+.auth-header {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.auth-logo {
+  width: 44px;
+  height: 44px;
+  background: #eff6ff;
+  color: #2563eb;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  margin: 0 auto 10px auto;
+  border: 1px solid #bfdbfe;
+}
+
+.firebase-logo {
+  background: #fffbeb;
+  color: #f59e0b;
+  border-color: #fde68a;
+}
+
+.auth-header h2 {
+  font-size: 1.25rem;
+  color: #0f172a;
+  font-weight: 700;
+}
+
+.auth-subtitle {
+  font-size: 0.8rem;
+  color: #64748b;
+  margin-top: 4px;
+}
+
+.btn-google-sign-in {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 9px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 8px;
+  transition: all 0.15s;
+}
+
+.btn-google-sign-in:hover {
+  background: #f8fafc;
+  border-color: #94a3b8;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+.btn-demo-quick {
+  width: 100%;
+  background: #f0fdf4;
+  border: 1.5px dashed #22c55e;
+  color: #15803d;
+  font-size: 0.825rem;
+  font-weight: 600;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  transition: all 0.15s;
+}
+
+.btn-demo-quick:hover {
+  background: #dcfce7;
+  color: #14532d;
+  border-color: #16a34a;
+}
+
+.auth-divider-line {
+  position: relative;
+  text-align: center;
+  margin: 14px 0;
+}
+
+.auth-divider-line::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #e2e8f0;
+}
+
+.auth-divider-line span {
+  position: relative;
+  background: #ffffff;
+  padding: 0 10px;
+  font-size: 0.72rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+}
+
+.auth-tabs {
+  display: flex;
+  border-bottom: 1px solid #e2e8f0;
+  margin-bottom: 16px;
+}
+
+.auth-tab-btn {
+  flex: 1;
+  background: none;
+  border: none;
+  padding: 8px 4px;
+  font-size: 0.825rem;
+  font-weight: 600;
+  color: #64748b;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.15s;
+}
+
+.auth-tab-btn:hover {
+  color: #0f172a;
+}
+
+.auth-tab-btn.active {
+  color: #2563eb;
+}
+
+.auth-tab-btn.active::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #2563eb;
+}
+
+.auth-form-view.hidden {
+  display: none;
+}
+
+.form-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.77rem;
+  margin-bottom: 16px;
+}
+
+.remember-label {
+  color: #475569;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.link-muted {
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.link-muted:hover {
+  text-decoration: underline;
+}
+
+.auth-helper-note {
+  font-size: 0.78rem;
+  color: #64748b;
+  margin-bottom: 16px;
+  line-height: 1.4;
+}
+
+.auth-footer {
+  margin-top: 18px;
+  padding-top: 12px;
+  border-top: 1px solid #f1f5f9;
+  text-align: center;
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+.auth-footer strong {
+  color: #475569;
+}
+
+.firebase-status-box {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+}
+
+.status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  margin-bottom: 4px;
+}
+
+.firebase-status-box p {
+  font-size: 0.77rem;
+  color: #64748b;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.firebase-quick-steps {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin: 12px 0 16px 0;
+  font-size: 0.78rem;
+  color: #166534;
+}
+
+.firebase-quick-steps h4 {
+  font-size: 0.8rem;
+  margin-bottom: 6px;
+  color: #15803d;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.firebase-quick-steps ol {
+  padding-left: 18px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.firebase-quick-steps a {
+  color: #15803d;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.modal-actions-row {
+  display: flex;
+  gap: 10px;
+}
+
+/* App Layout */
+.app-layout {
+  display: flex;
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+.editor-sidebar {
+  width: 380px;
+  background: var(--bg-sidebar);
+  border-right: 1px solid #e5e7eb;
+  height: calc(100vh - 62px);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  transition: margin-left 0.25s ease-in-out;
+  flex-shrink: 0;
+  z-index: 20;
+}
+
+.editor-sidebar.collapsed {
+  margin-left: -380px;
+}
+
+.sidebar-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid #f3f4f6;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sidebar-header h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #111827;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sidebar-tip {
+  margin: 12px 16px 6px 16px;
+  padding: 10px 12px;
+  background-color: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 6px;
+  font-size: 0.77rem;
+  color: #166534;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.accordion {
+  padding: 10px 16px 30px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.accordion-item {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.accordion-title {
+  padding: 12px 14px;
+  background-color: #fafafa;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #374151;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.15s;
+}
+
+.accordion-title:hover {
+  background-color: #f3f4f6;
+}
+
+.accordion-title span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.accordion-title i.fa-chevron-down {
+  font-size: 0.75rem;
+  transition: transform 0.2s;
+}
+
+.accordion-item.open .accordion-title i.fa-chevron-down {
+  transform: rotate(180deg);
+}
+
+.accordion-content {
+  padding: 14px;
+  display: none;
+  border-top: 1px solid #e5e7eb;
+}
+
+.accordion-item.open .accordion-content {
+  display: block;
+}
+
+.form-group {
+  margin-bottom: 12px;
+}
+
+.form-group:last-child {
+  margin-bottom: 0;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #4b5563;
+  margin-bottom: 4px;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 7px 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 5px;
+  font-family: inherit;
+  font-size: 0.825rem;
+  color: #1f2937;
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 2px rgba(37,99,235,0.15);
+}
+
+.form-items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.form-card-item {
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 10px;
+  background: #f9fafb;
+  position: relative;
+}
+
+.form-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #4b5563;
+}
+
+.btn-card-del {
+  color: #ef4444;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 2px 4px;
+}
+
+.btn-card-del:hover {
+  color: #b91c1c;
+}
+
+/* Document Canvas */
+.document-container {
+  flex: 1;
+  overflow-y: auto;
+  height: calc(100vh - 62px);
+  padding: 24px 30px 60px 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #e5e7eb;
+}
+
+.document-helper-bar {
+  width: 100%;
+  max-width: 820px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  color: #6b7280;
+  font-size: 0.8rem;
+}
+
+.helper-text i {
+  color: var(--accent-color);
+  margin-right: 4px;
+}
+
+#saveStatusIndicator {
+  color: #10b981;
+  font-weight: 600;
+  margin-left: 6px;
+}
+
+.scale-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #ffffff;
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+}
+
+.scale-controls span {
+  font-size: 0.75rem;
+  font-weight: 600;
+  min-width: 44px;
+  text-align: center;
+}
+
+.btn-icon-sm {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  color: #4b5563;
+}
+
+.btn-icon-sm:hover {
+  background-color: #f3f4f6;
+  color: #111;
+}
+
+/* Exact CV Paper Layout */
+.cv-page-wrapper {
+  display: flex;
+  justify-content: center;
+  transform-origin: top center;
+  transition: transform 0.15s ease-out;
+}
+
+.cv-paper {
+  width: 210mm;
+  min-height: 297mm;
+  background: var(--bg-paper);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), 0 1px 3px rgba(0, 0, 0, 0.08);
+  padding: var(--cv-padding);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  color: #222222;
+  font-size: var(--body-font-size);
+  line-height: var(--line-height);
+  position: relative;
+}
+
+[contenteditable="true"] {
+  outline: none;
+  border-radius: 2px;
+  transition: background-color 0.15s, box-shadow 0.15s;
+}
+
+[contenteditable="true"]:hover {
+  background-color: rgba(37, 99, 235, 0.05);
+  cursor: text;
+}
+
+[contenteditable="true"]:focus {
+  background-color: rgba(37, 99, 235, 0.08);
+  box-shadow: 0 0 0 1px #2563eb;
+}
+
+/* Header */
+.cv-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 14px;
+  position: relative;
+}
+
+.name-block {
+  flex: 1;
+}
+
+.candidate-name {
+  font-family: var(--font-heading);
+  font-size: 2.35rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  color: var(--primary-color);
+  text-transform: uppercase;
+  margin: 0;
+  line-height: 1.1;
+}
+
+/* Monogram Seal */
+.stamp-block {
+  flex-shrink: 0;
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s;
+}
+
+.stamp-block:hover {
+  transform: rotate(5deg) scale(1.02);
+}
+
+.circular-stamp {
+  overflow: visible;
+}
+
+.stamp-outer-ring {
+  fill: none;
+  stroke: var(--primary-color);
+  stroke-width: 0.75;
+}
+
+.stamp-inner-ring {
+  fill: none;
+  stroke: var(--primary-color);
+  stroke-width: 0.75;
+}
+
+.stamp-curved-text {
+  font-family: var(--font-heading);
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  fill: var(--primary-color);
+  text-transform: uppercase;
+}
+
+.stamp-center-monogram {
+  font-family: var(--font-heading);
+  font-weight: 400;
+  fill: var(--primary-color);
+}
+
+.monogram-letter {
+  font-size: 16px;
+  letter-spacing: 0.05em;
+}
+
+.monogram-line {
+  stroke: var(--primary-color);
+  stroke-width: 0.8;
+}
+
+.header-divider {
+  width: 100%;
+  height: 2px;
+  background-color: var(--primary-color);
+  margin-bottom: 22px;
+}
+
+/* Two Columns */
+.cv-body {
+  display: flex;
+  flex: 1;
+  gap: 0;
+  position: relative;
+}
+
+.cv-left-col {
+  width: 32%;
+  flex-shrink: 0;
+  padding-right: 22px;
+  border-right: 1.5px solid var(--primary-color);
+  display: flex;
+  flex-direction: column;
+  gap: var(--section-gap);
+}
+
+.cv-right-col {
+  width: 68%;
+  padding-left: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--section-gap);
+}
+
+.cv-section {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.section-title-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.section-heading {
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--primary-color);
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+
+.cv-section::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 1.5px;
+  background-color: var(--primary-color);
+  margin-top: var(--section-gap);
+}
+
+.cv-left-col .cv-section:last-child::after,
+.cv-right-col .cv-section:last-child::after {
+  display: none;
+}
+
+/* Contacts */
+.contact-card {
+  display: flex;
+  flex-direction: column;
+  margin-top: 2px;
+}
+
+.contact-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 0;
+  gap: 8px;
+}
+
+.contact-val {
+  font-size: 0.8rem;
+  color: #333333;
+  word-break: break-word;
+  line-height: 1.35;
+  flex: 1;
+}
+
+.contact-icon {
+  width: 26px;
+  height: 26px;
+  background-color: #f1f2f5;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666666;
+  font-size: 0.72rem;
+  flex-shrink: 0;
+}
+
+.contact-divider {
+  width: 100%;
+  height: 1px;
+  background-color: #f0f0f0;
+}
+
+/* Bullet Lists */
+.cv-bullet-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cv-bullet-item {
+  position: relative;
+  padding-left: 14px;
+  font-size: 0.8rem;
+  color: #333333;
+  line-height: 1.35;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.cv-bullet-item::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #111;
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.cv-bullet-item .item-text {
+  flex: 1;
+}
+
+/* Personal Details */
+.personal-item {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.personal-item:last-child {
+  margin-bottom: 0;
+}
+
+.personal-lbl {
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: #111;
+  margin-bottom: 2px;
+}
+
+.personal-val {
+  font-size: 0.8rem;
+  color: #555555;
+}
+
+/* About Me */
+.about-text {
+  font-size: 0.82rem;
+  color: #4b5563;
+  text-align: justify;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Entries */
+.entry-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--item-gap);
+}
+
+.cv-entry {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.entry-header {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 4px;
+}
+
+.entry-title {
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #111111;
+  line-height: 1.3;
+}
+
+.entry-date {
+  font-size: 0.78rem;
+  color: #666666;
+  margin-top: 1px;
+}
+
+.entry-note {
+  font-size: 0.8rem;
+  color: #4b5563;
+  margin-top: 3px;
+  line-height: 1.4;
+}
+
+.entry-bullets {
+  list-style: none;
+  padding: 0;
+  margin: 4px 0 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.entry-bullet-item {
+  position: relative;
+  padding-left: 14px;
+  font-size: 0.8rem;
+  color: #4b5563;
+  line-height: 1.4;
+  display: flex;
+  align-items: baseline;
+}
+
+.entry-bullet-item::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #444;
+  font-size: 1rem;
+}
+
+.entry-bullet-item .bullet-text {
+  flex: 1;
+}
+
+/* References */
+.references-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 2px;
+}
+
+.reference-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ref-name {
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #111111;
+}
+
+.ref-phone {
+  font-size: 0.8rem;
+  color: #4b5563;
+}
+
+/* Inline Action Controls (Hover) */
+.item-actions {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: -6px;
+  gap: 4px;
+  background: white;
+  padding: 2px 4px;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  border: 1px solid #e5e7eb;
+  z-index: 10;
+}
+
+.cv-entry:hover .item-actions,
+.cv-bullet-item:hover .item-actions,
+.reference-card:hover .item-actions {
+  display: flex;
+}
+
+.btn-inline-action {
+  background: none;
+  border: none;
+  font-size: 0.72rem;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+
+.btn-inline-action:hover {
+  background: #f3f4f6;
+  color: #111;
+}
+
+.btn-inline-action.btn-del:hover {
+  color: #ef4444;
+  background: #fef2f2;
+}
+
+.btn-add-inline {
+  background: #f3f4f6;
+  border: 1px solid #d1d5db;
+  color: #374151;
+  font-size: 0.72rem;
+  font-weight: 500;
+  padding: 2px 6px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-add-inline:hover {
+  background: #e5e7eb;
+  color: #111;
+}
+
+.app-footer {
+  margin-top: 30px;
+  text-align: center;
+  font-size: 0.78rem;
+  color: #64748b;
+  padding-bottom: 20px;
+}
+
+.app-footer strong {
+  color: #1e293b;
+}
+
+.app-footer a {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* Print Stylesheet */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .no-print,
+  .app-toolbar,
+  .app-info-banner,
+  .auth-modal-backdrop,
+  .editor-sidebar,
+  .document-helper-bar,
+  .item-actions,
+  .btn-add-inline,
+  .toast,
+  .app-footer {
+    display: none !important;
+  }
+
+  .app-layout {
+    display: block !important;
+    overflow: visible !important;
+  }
+
+  .document-container {
+    padding: 0 !important;
+    margin: 0 !important;
+    background: none !important;
+    overflow: visible !important;
+    height: auto !important;
+  }
+
+  .cv-page-wrapper {
+    transform: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .cv-paper {
+    width: 210mm !important;
+    min-height: 297mm !important;
+    box-shadow: none !important;
+    margin: 0 auto !important;
+    padding: var(--cv-padding) !important;
+    page-break-after: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  [contenteditable="true"]:hover,
+  [contenteditable="true"]:focus {
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+}
+  </style>
 </head>
 <body>
 
@@ -101,7 +1784,7 @@
           <div class="dropdown-user-info">
             <strong id="dropdownName">Demo Student</strong>
             <span id="dropdownEmail">student@university.ac.za</span>
-            <small id="dropdownBackendLabel" class="text-backend-mode">Mode: Local Storage</small>
+            <small id="dropdownBackendLabel" class="text-backend-mode">Mode: Cloud Firestore</small>
           </div>
           <div class="dropdown-divider"></div>
           <button id="btnOpenFirebaseModalFromMenu" class="dropdown-link-btn">
@@ -122,7 +1805,7 @@
   <!-- Creator Banner Notice on Top of Page (Visible in web app, automatically hidden in PDF) -->
   <div class="app-info-banner no-print">
     <div class="banner-inner">
-      <span><i class="fa-solid fa-sparkles"></i> <strong>Student CV Builder</strong> — Created by <strong>Matimba Chauke</strong> (<a href="tel:0753806251">075 380 6251</a>). Supports Google Firebase Auth & Cloud Firestore!</span>
+      <span><i class="fa-solid fa-sparkles"></i> <strong>Student CV Builder</strong> — Created by <strong>Matimba Chauke</strong> (<a href="tel:0753806251">075 380 6251</a>). Powered by Google Firebase!</span>
       <button class="banner-close" onclick="this.parentElement.parentElement.style.display='none'"><i class="fa-solid fa-xmark"></i></button>
     </div>
   </div>
@@ -145,23 +1828,16 @@
 
       <div class="firebase-status-box" id="firebaseCurrentStatusBox">
         <div class="status-indicator">
-          <span class="status-dot status-offline" id="modalStatusDot"></span>
-          <strong id="modalStatusTitle">Firebase Not Configured</strong>
+          <span class="status-dot status-online" id="modalStatusDot"></span>
+          <strong id="modalStatusTitle">Firebase Connected & Active</strong>
         </div>
-        <p id="modalStatusDesc">The application is currently running with local browser storage. Paste your Firebase web credentials below to enable live cloud authentication and database storage.</p>
+        <p id="modalStatusDesc">Your project (cv-builder2026) is securely connected to Google Firebase. Authentication and Cloud Firestore auto-sync are active.</p>
       </div>
 
       <form id="formFirebaseConfig">
         <div class="form-group">
           <label>Paste `firebaseConfig` object (JSON or JS)</label>
-          <textarea id="firebaseConfigInput" rows="6" placeholder='{
-  "apiKey": "AIzaSy...",
-  "authDomain": "my-project.firebaseapp.com",
-  "projectId": "my-project",
-  "storageBucket": "my-project.appspot.com",
-  "messagingSenderId": "123456789",
-  "appId": "1:123456789:web:abcdef..."
-}'></textarea>
+          <textarea id="firebaseConfigInput" rows="6"></textarea>
         </div>
 
         <div class="firebase-quick-steps">
@@ -452,17 +2128,13 @@
                 <defs>
                   <path id="textCircle" d="M 80, 80 m -62, 0 a 62,62 0 1,1 124,0 a 62,62 0 1,1 -124,0" />
                 </defs>
-                <!-- Outer decorative circle -->
                 <circle cx="80" cy="80" r="76" class="stamp-outer-ring" />
-                <!-- Circular repeat text -->
                 <text class="stamp-curved-text">
                   <textPath href="#textCircle" id="stampTextPath" startOffset="0%">
                     THABO NDLOVU • THABO NDLOVU • 
                   </textPath>
                 </text>
-                <!-- Inner decorative circle -->
                 <circle cx="80" cy="80" r="48" class="stamp-inner-ring" />
-                <!-- Stylized Center Monogram -->
                 <g class="stamp-center-monogram">
                   <text x="80" y="74" text-anchor="middle" class="monogram-letter" id="monogramTop">T</text>
                   <line x1="66" y1="80" x2="94" y2="80" class="monogram-line" />
@@ -472,10 +2144,8 @@
             </div>
           </header>
 
-          <!-- Horizontal Divider -->
           <div class="header-divider"></div>
 
-          <!-- Two Column Body -->
           <div class="cv-body">
             
             <!-- LEFT COLUMN -->
@@ -508,9 +2178,7 @@
                   <h2 class="section-heading">S K I L L S</h2>
                   <button class="btn-add-inline no-print" onclick="window.cvApp.addSkill()" title="Add Skill"><i class="fa-solid fa-plus"></i></button>
                 </div>
-                <ul class="cv-bullet-list" id="cvSkillsList">
-                  <!-- Populated by JS -->
-                </ul>
+                <ul class="cv-bullet-list" id="cvSkillsList"></ul>
               </section>
 
               <!-- LANGUAGES -->
@@ -519,9 +2187,7 @@
                   <h2 class="section-heading">L A N G U A G E S</h2>
                   <button class="btn-add-inline no-print" onclick="window.cvApp.addLanguage()" title="Add Language"><i class="fa-solid fa-plus"></i></button>
                 </div>
-                <ul class="cv-bullet-list" id="cvLanguagesList">
-                  <!-- Populated by JS -->
-                </ul>
+                <ul class="cv-bullet-list" id="cvLanguagesList"></ul>
               </section>
 
               <!-- PERSONAL DETAILS -->
@@ -556,9 +2222,7 @@
                   <h2 class="section-heading">W O R K &nbsp; E X P E R I E N C E</h2>
                   <button class="btn-add-inline no-print" onclick="window.cvApp.addExperience()" title="Add Experience"><i class="fa-solid fa-plus"></i> Add</button>
                 </div>
-                <div class="entry-list" id="cvExperienceList">
-                  <!-- Populated by JS -->
-                </div>
+                <div class="entry-list" id="cvExperienceList"></div>
               </div>
 
               <!-- EDUCATION -->
@@ -567,9 +2231,7 @@
                   <h2 class="section-heading">E D U C A T I O N</h2>
                   <button class="btn-add-inline no-print" onclick="window.cvApp.addEducation()" title="Add Education"><i class="fa-solid fa-plus"></i> Add</button>
                 </div>
-                <div class="entry-list" id="cvEducationList">
-                  <!-- Populated by JS -->
-                </div>
+                <div class="entry-list" id="cvEducationList"></div>
               </div>
 
               <!-- EXTRA-CURRICULAR ACTIVITIES -->
@@ -578,9 +2240,7 @@
                   <h2 class="section-heading">E X T R A - C U R R I C U L A R &nbsp; A C T I V I T I E S</h2>
                   <button class="btn-add-inline no-print" onclick="window.cvApp.addExtracurricular()" title="Add Activity"><i class="fa-solid fa-plus"></i> Add</button>
                 </div>
-                <div class="entry-list" id="cvExtracurricularList">
-                  <!-- Populated by JS -->
-                </div>
+                <div class="entry-list" id="cvExtracurricularList"></div>
               </div>
 
               <!-- REFERENCES -->
@@ -589,9 +2249,7 @@
                   <h2 class="section-heading">R E F E R E N C E S</h2>
                   <button class="btn-add-inline no-print" onclick="window.cvApp.addReference()" title="Add Reference"><i class="fa-solid fa-plus"></i> Add</button>
                 </div>
-                <div class="references-grid" id="cvReferencesList">
-                  <!-- Populated by JS -->
-                </div>
+                <div class="references-grid" id="cvReferencesList"></div>
               </div>
 
             </section>
@@ -600,7 +2258,7 @@
         </article>
       </div>
 
-      <!-- Footer Attribution (Visible only on web, never printed on the CV) -->
+      <!-- Footer Attribution -->
       <footer class="app-footer no-print">
         <p>
           Student CV Studio • Application created by <strong>Matimba Chauke</strong> • Contact: <a href="tel:0753806251">075 380 6251</a>
@@ -609,13 +2267,1603 @@
     </main>
   </div>
 
-  <!-- Google Firebase SDK (Compat Version: 10.8.0) -->
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <!-- APPLICATION LOGIC & FIREBASE INTEGRATION (INLINED) -->
+  <script>
+/**
+ * Student CV Studio & Editor Logic
+ * Created by Matimba Chauke (075 380 6251)
+ * Single-file GitHub Pages ready
+ */
 
-  <!-- Firebase Config & App Engine -->
-  <script src="firebase-config.js"></script>
-  <script src="app.js"></script>
+// Firebase Configuration for cv-builder2026
+const DEFAULT_FIREBASE_CONFIG = {
+  apiKey: "AIzaSyCgSvQtW4ls-9grgFp8r8-vtEGzDDQDQVE",
+  authDomain: "cv-builder2026.firebaseapp.com",
+  projectId: "cv-builder2026",
+  storageBucket: "cv-builder2026.firebasestorage.app",
+  messagingSenderId: "643149015982",
+  appId: "1:643149015982:web:7fd6c1ba3d5edaf537763f",
+  measurementId: "G-E1GMFC8KXF"
+};
+
+function getFirebaseConfig() {
+  try {
+    const saved = localStorage.getItem('cv_firebase_custom_config');
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      if (parsed && parsed.apiKey && parsed.apiKey !== "YOUR_API_KEY_HERE") {
+        return parsed;
+      }
+    }
+  } catch (e) {
+    console.warn("Could not read custom Firebase config", e);
+  }
+  return DEFAULT_FIREBASE_CONFIG;
+}
+
+function isFirebaseConfigured(config) {
+  return Boolean(
+    config && 
+    config.apiKey && 
+    config.apiKey !== "YOUR_API_KEY_HERE" &&
+    config.projectId && 
+    config.projectId !== "your-project-id"
+  );
+}
+
+const DEFAULT_DEMO_DATA = {
+  name: "THABO NDLOVU",
+  initials: "TN",
+  phone: "071 234 5678",
+  email: "student.demo@university.ac.za",
+  address: "Polokwane, Limpopo, South Africa",
+  dob: "15 Mar 2002",
+  nationality: "South African",
+  about: "Dedicated and hardworking BSc Mathematical Sciences (Computer Science & Mathematics) student with a strong academic foundation, seeking graduate opportunities and student mentorship roles. Equipped with leadership, tutoring, and technical problem-solving capabilities developed through student assistantships and academic societies. Passionate about leveraging technology, mentoring junior peers, and applying analytical skills to real-world challenges.",
+  skills: [
+    "Academic Tutoring & Mentorship",
+    "Student Leadership & Collaboration",
+    "Python & Java Programming",
+    "Data Structures & Algorithms",
+    "Administrative & Organizational Skills",
+    "Technical Problem Solving",
+    "Written & Verbal Communication"
+  ],
+  languages: [
+    "English",
+    "Sepedi",
+    "Xitsonga"
+  ],
+  experience: [
+    {
+      title: "Student Assistant - Dept. of Mathematics",
+      date: "Jan 2024 - Dec 2025",
+      bullets: [
+        "Facilitated weekly tutorial classes for first-year and second-year undergraduate modules.",
+        "Provided one-on-one academic support, answered student inquiries, and assisted with assignment grading.",
+        "Strengthened peer mentorship, communication, and educational leadership skills."
+      ]
+    },
+    {
+      title: "Peer Tutor - Computer Science Dept.",
+      date: "Jan 2025 - Present",
+      bullets: [
+        "Conducted laboratory practicals in Java Object-Oriented Programming and Algorithms.",
+        "Mentored over 50 first-year students in coding fundamentals, debugging, and project submissions.",
+        "Assisted lecturers with tutorial problem-set preparation."
+      ]
+    },
+    {
+      title: "Private Mathematics & Science Tutor",
+      date: "Feb 2023 - Present",
+      bullets: [
+        "Provided customized lessons for high school and university students.",
+        "Helped students improve overall academic comprehension and exam pass rates by 25%."
+      ]
+    }
+  ],
+  education: [
+    {
+      title: "BSc Mathematical Sciences (Computer Science & Mathematics), University of Limpopo",
+      date: "2025 (Expected)",
+      note: "Earned distinctions in advanced computing, software engineering, and mathematical analysis modules."
+    },
+    {
+      title: "National Senior Certificate (Matric), Example Secondary School",
+      date: "2021",
+      note: "Achieved Bachelor Degree pass with distinctions in Mathematics and Physical Sciences."
+    }
+  ],
+  extracurricular: [
+    {
+      title: "Class Representative, School of Mathematical & Computational Sciences",
+      date: "Jan 2023 - Present",
+      bullets: [
+        "Liaised between faculty members and 120+ students to resolve academic scheduling and coursework concerns.",
+        "Coordinated peer study groups and represented student body in departmental meetings."
+      ]
+    },
+    {
+      title: "Academic Officer, University Computing & Developer Society",
+      date: "Jan 2024 - Nov 2025",
+      bullets: [
+        "Organized peer coding hackathons, technical workshops, and campus tech talks."
+      ]
+    }
+  ],
+  references: [
+    {
+      name: "Prof. A. M. Sithole (Head of Department)",
+      phone: "T: 015 268 9111"
+    },
+    {
+      name: "Dr. K. E. Maluleke (Senior Lecturer)",
+      phone: "T: 072 000 0000"
+    }
+  ]
+};
+
+class CVApp {
+  constructor() {
+    this.firebaseActive = false;
+    this.auth = null;
+    this.db = null;
+    this.cloudSaveTimeout = null;
+    this.zoomLevel = 1.0;
+
+    this.initFirebase();
+    this.initLocalAuthFallback();
+    this.data = this.loadData();
+    this.initElements();
+    this.bindEvents();
+    this.render();
+  }
+
+  initFirebase() {
+    const config = getFirebaseConfig();
+    if (window.firebase && isFirebaseConfigured(config)) {
+      try {
+        if (!firebase.apps.length) {
+          firebase.initializeApp(config);
+        }
+        this.auth = firebase.auth();
+        this.db = firebase.firestore();
+        this.firebaseActive = true;
+
+        this.auth.onAuthStateChanged(async (user) => {
+          if (user) {
+            this.currentUser = {
+              uid: user.uid,
+              name: user.displayName || user.email.split('@')[0],
+              email: user.email,
+              isAnonymous: user.isAnonymous
+            };
+            this.updateUserBadge();
+            await this.loadDataFromFirestore(user.uid);
+          } else {
+            this.initLocalAuthFallback();
+            this.updateUserBadge();
+            this.data = this.loadData();
+            this.render();
+          }
+          this.updateFirebaseStatusUI();
+        });
+
+      } catch (err) {
+        console.warn("Firebase init error:", err);
+        this.firebaseActive = false;
+      }
+    } else {
+      this.firebaseActive = false;
+    }
+  }
+
+  updateFirebaseStatusUI() {
+    const btn = document.getElementById('btnFirebaseStatus');
+    const text = document.getElementById('firebaseStatusText');
+    const dot = document.getElementById('firebaseStatusDot');
+    const modalDot = document.getElementById('modalStatusDot');
+    const modalTitle = document.getElementById('modalStatusTitle');
+    const modalDesc = document.getElementById('modalStatusDesc');
+    const backendLabel = document.getElementById('dropdownBackendLabel');
+
+    if (this.firebaseActive) {
+      if (btn) btn.classList.add('connected');
+      if (text) text.textContent = "Firebase Live";
+      if (dot) { dot.className = "status-dot status-online"; }
+      if (modalDot) { modalDot.className = "status-dot status-online"; }
+      if (modalTitle) modalTitle.textContent = "Firebase Connected & Active";
+      if (modalDesc) modalDesc.textContent = "Project (cv-builder2026) is securely connected to Google Firebase. Authentication and Cloud Firestore auto-sync are active.";
+      if (backendLabel) {
+        backendLabel.textContent = "Mode: Cloud Firestore";
+        backendLabel.style.color = "#10b981";
+      }
+    } else {
+      if (btn) btn.classList.remove('connected');
+      if (text) text.textContent = "Firebase Setup";
+      if (dot) { dot.className = "status-dot status-offline"; }
+      if (modalDot) { modalDot.className = "status-dot status-offline"; }
+      if (modalTitle) modalTitle.textContent = "Firebase in Local / Offline Mode";
+      if (modalDesc) modalDesc.textContent = "Currently saving to browser storage. Click to connect your cloud project.";
+      if (backendLabel) {
+        backendLabel.textContent = "Mode: Local Storage";
+        backendLabel.style.color = "#f59e0b";
+      }
+    }
+  }
+
+  initLocalAuthFallback() {
+    let users = [];
+    try {
+      users = JSON.parse(localStorage.getItem('cv_studio_users')) || [];
+    } catch(e) { users = []; }
+
+    if (!users.some(u => u.email === 'student@university.ac.za')) {
+      users.push({
+        name: "Demo Student",
+        email: "student@university.ac.za",
+        password: "password123"
+      });
+      localStorage.setItem('cv_studio_users', JSON.stringify(users));
+    }
+
+    try {
+      const activeSession = localStorage.getItem('cv_studio_active_session');
+      if (activeSession) {
+        this.currentUser = JSON.parse(activeSession);
+      } else {
+        this.currentUser = {
+          name: "Demo Student",
+          email: "student@university.ac.za"
+        };
+        localStorage.setItem('cv_studio_active_session', JSON.stringify(this.currentUser));
+      }
+    } catch(e) {
+      this.currentUser = { name: "Demo Student", email: "student@university.ac.za" };
+    }
+  }
+
+  getUserStorageKey() {
+    const id = this.currentUser && (this.currentUser.uid || this.currentUser.email)
+      ? (this.currentUser.uid || this.currentUser.email).replace(/[^a-zA-Z0-9]/g, '_') 
+      : 'guest';
+    return `cv_studio_data_${id}`;
+  }
+
+  loadData() {
+    try {
+      const saved = localStorage.getItem(this.getUserStorageKey());
+      if (saved) {
+        return JSON.parse(saved);
+      }
+    } catch (e) {
+      console.warn("Could not read from localStorage", e);
+    }
+    return JSON.parse(JSON.stringify(DEFAULT_DEMO_DATA));
+  }
+
+  async loadDataFromFirestore(uid) {
+    if (!this.firebaseActive || !this.db || !uid) return;
+    try {
+      const docRef = this.db.collection('users').doc(uid).collection('cv').doc('current');
+      const docSnap = await docRef.get();
+      if (docSnap.exists) {
+        this.data = docSnap.data();
+        this.saveDataLocally();
+        this.render();
+        this.showToast("Cloud CV loaded from Firestore");
+      } else {
+        await docRef.set(this.data);
+      }
+    } catch (e) {
+      console.warn("Firestore read error, using local data", e);
+    }
+  }
+
+  saveDataLocally() {
+    try {
+      localStorage.setItem(this.getUserStorageKey(), JSON.stringify(this.data));
+    } catch (e) {
+      console.warn("Could not save to localStorage", e);
+    }
+  }
+
+  saveData() {
+    this.saveDataLocally();
+    this.updateSaveIndicator("Saved");
+
+    if (this.firebaseActive && this.db && this.currentUser && this.currentUser.uid) {
+      clearTimeout(this.cloudSaveTimeout);
+      this.cloudSaveTimeout = setTimeout(async () => {
+        try {
+          this.updateSaveIndicator("Syncing cloud...");
+          await this.db.collection('users').doc(this.currentUser.uid).collection('cv').doc('current').set(this.data);
+          this.updateSaveIndicator("Synced to Cloud");
+        } catch (e) {
+          console.warn("Firestore sync error:", e);
+          this.updateSaveIndicator("Saved locally");
+        }
+      }, 1000);
+    }
+  }
+
+  updateSaveIndicator(statusText) {
+    const el = document.getElementById('saveStatusIndicator');
+    if (!el) return;
+    if (statusText === "Synced to Cloud") {
+      el.innerHTML = `<i class="fa-solid fa-cloud-check"></i> Synced to Cloud`;
+      el.style.color = "#10b981";
+    } else if (statusText === "Syncing cloud...") {
+      el.innerHTML = `<i class="fa-solid fa-cloud-arrow-up"></i> Syncing...`;
+      el.style.color = "#2563eb";
+    } else {
+      el.innerHTML = `<i class="fa-solid fa-check"></i> Auto-saved`;
+      el.style.color = "#10b981";
+    }
+  }
+
+  showToast(message) {
+    const toast = document.getElementById('toast');
+    if (!toast) return;
+    toast.textContent = message;
+    toast.classList.remove('hidden');
+    clearTimeout(this.toastTimeout);
+    this.toastTimeout = setTimeout(() => {
+      toast.classList.add('hidden');
+    }, 2800);
+  }
+
+  initElements() {
+    this.btnToggleSidebar = document.getElementById('btnToggleSidebar');
+    this.btnCloseSidebar = document.getElementById('btnCloseSidebar');
+    this.editorSidebar = document.getElementById('editorSidebar');
+    this.btnPrint = document.getElementById('btnPrint');
+    this.btnExportJSON = document.getElementById('btnExportJSON');
+    this.importJSONInput = document.getElementById('importJSONInput');
+    this.btnReset = document.getElementById('btnReset');
+    
+    this.authModal = document.getElementById('authModal');
+    this.btnCloseAuthModal = document.getElementById('btnCloseAuthModal');
+    this.btnAuthTrigger = document.getElementById('btnAuthTrigger');
+    this.userDropdown = document.getElementById('userDropdown');
+    this.btnQuickDemoLogin = document.getElementById('btnQuickDemoLogin');
+    this.btnGoogleSignIn = document.getElementById('btnGoogleSignIn');
+    this.btnSwitchAccount = document.getElementById('btnSwitchAccount');
+    this.btnLogout = document.getElementById('btnLogout');
+    this.userDisplayName = document.getElementById('userDisplayName');
+    this.userAvatarText = document.getElementById('userAvatarText');
+    this.dropdownName = document.getElementById('dropdownName');
+    this.dropdownEmail = document.getElementById('dropdownEmail');
+    
+    this.btnFirebaseStatus = document.getElementById('btnFirebaseStatus');
+    this.btnOpenFirebaseModalFromMenu = document.getElementById('btnOpenFirebaseModalFromMenu');
+    this.firebaseModal = document.getElementById('firebaseModal');
+    this.btnCloseFirebaseModal = document.getElementById('btnCloseFirebaseModal');
+    this.formFirebaseConfig = document.getElementById('formFirebaseConfig');
+    this.firebaseConfigInput = document.getElementById('firebaseConfigInput');
+    this.btnResetFirebaseConfig = document.getElementById('btnResetFirebaseConfig');
+
+    this.authTabs = document.querySelectorAll('.auth-tab-btn');
+    this.formLogin = document.getElementById('formLogin');
+    this.formSignup = document.getElementById('formSignup');
+    this.formForgot = document.getElementById('formForgot');
+    this.linkGoForgot = document.getElementById('linkGoForgot');
+    this.btnBackToLogin = document.getElementById('btnBackToLogin');
+    this.authModalTitle = document.getElementById('authModalTitle');
+    this.authModalSubtitle = document.getElementById('authModalSubtitle');
+
+    this.btnZoomIn = document.getElementById('btnZoomIn');
+    this.btnZoomOut = document.getElementById('btnZoomOut');
+    this.btnZoomFit = document.getElementById('btnZoomFit');
+    this.zoomLabel = document.getElementById('zoomLabel');
+    this.cvPageWrapper = document.getElementById('cvPageWrapper');
+    
+    this.btnCustomize = document.getElementById('btnCustomize');
+    this.customizeMenu = document.getElementById('customizeMenu');
+    this.accentColorPicker = document.getElementById('accentColorPicker');
+    this.densitySelect = document.getElementById('densitySelect');
+    this.toggleSeal = document.getElementById('toggleSeal');
+    this.stampBlock = document.getElementById('stampBlock');
+
+    this.cvName = document.getElementById('cvName');
+    this.cvPhone = document.getElementById('cvPhone');
+    this.cvEmail = document.getElementById('cvEmail');
+    this.cvAddress = document.getElementById('cvAddress');
+    this.cvDob = document.getElementById('cvDob');
+    this.cvNationality = document.getElementById('cvNationality');
+    this.cvAbout = document.getElementById('cvAbout');
+    
+    this.cvSkillsList = document.getElementById('cvSkillsList');
+    this.cvLanguagesList = document.getElementById('cvLanguagesList');
+    this.cvExperienceList = document.getElementById('cvExperienceList');
+    this.cvEducationList = document.getElementById('cvEducationList');
+    this.cvExtracurricularList = document.getElementById('cvExtracurricularList');
+    this.cvReferencesList = document.getElementById('cvReferencesList');
+
+    this.stampTextPath = document.getElementById('stampTextPath');
+    this.monogramTop = document.getElementById('monogramTop');
+    this.monogramBottom = document.getElementById('monogramBottom');
+
+    this.inputName = document.getElementById('inputName');
+    this.inputInitials = document.getElementById('inputInitials');
+    this.inputPhone = document.getElementById('inputPhone');
+    this.inputEmail = document.getElementById('inputEmail');
+    this.inputAddress = document.getElementById('inputAddress');
+    this.inputDob = document.getElementById('inputDob');
+    this.inputNationality = document.getElementById('inputNationality');
+    this.inputAbout = document.getElementById('inputAbout');
+
+    this.skillsFormList = document.getElementById('skillsFormList');
+    this.languagesFormList = document.getElementById('languagesFormList');
+    this.experienceFormList = document.getElementById('experienceFormList');
+    this.educationFormList = document.getElementById('educationFormList');
+    this.extracurricularFormList = document.getElementById('extracurricularFormList');
+    this.referencesFormList = document.getElementById('referencesFormList');
+
+    document.getElementById('btnAddSkill').addEventListener('click', () => this.addSkill());
+    document.getElementById('btnAddLanguage').addEventListener('click', () => this.addLanguage());
+    document.getElementById('btnAddExperience').addEventListener('click', () => this.addExperience());
+    document.getElementById('btnAddEducation').addEventListener('click', () => this.addEducation());
+    document.getElementById('btnAddExtracurricular').addEventListener('click', () => this.addExtracurricular());
+    document.getElementById('btnAddReference').addEventListener('click', () => this.addReference());
+
+    this.updateUserBadge();
+    this.updateFirebaseStatusUI();
+  }
+
+  updateUserBadge() {
+    if (!this.currentUser) return;
+    const name = this.currentUser.name || "Student";
+    this.userDisplayName.textContent = name;
+    this.dropdownName.textContent = name;
+    this.dropdownEmail.textContent = this.currentUser.email || "";
+
+    const initials = name.split(' ').map(p => p[0]).join('').slice(0, 2).toUpperCase() || "ST";
+    this.userAvatarText.textContent = initials;
+  }
+
+  switchAuthTab(tabName) {
+    this.authTabs.forEach(btn => {
+      btn.classList.toggle('active', btn.getAttribute('data-tab') === tabName);
+    });
+
+    this.formLogin.classList.toggle('hidden', tabName !== 'login');
+    this.formSignup.classList.toggle('hidden', tabName !== 'signup');
+    this.formForgot.classList.toggle('hidden', tabName !== 'forgot');
+
+    if (tabName === 'login') {
+      this.authModalTitle.textContent = "Welcome Back";
+      this.authModalSubtitle.textContent = this.firebaseActive 
+        ? "Sign in with Firebase Auth & Cloud Firestore" 
+        : "Sign in to manage your saved CV";
+    } else if (tabName === 'signup') {
+      this.authModalTitle.textContent = "Create Student Account";
+      this.authModalSubtitle.textContent = "Sign up for free to build and sync your CV";
+    } else if (tabName === 'forgot') {
+      this.authModalTitle.textContent = "Reset Password";
+      this.authModalSubtitle.textContent = "Enter your email to receive recovery instructions";
+    }
+  }
+
+  bindEvents() {
+    this.btnAuthTrigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      this.userDropdown.classList.toggle('hidden');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!this.userDropdown.contains(e.target) && !this.btnAuthTrigger.contains(e.target)) {
+        this.userDropdown.classList.add('hidden');
+      }
+    });
+
+    const openFirebaseModal = () => {
+      this.userDropdown.classList.add('hidden');
+      const savedConfig = localStorage.getItem('cv_firebase_custom_config');
+      if (savedConfig) {
+        this.firebaseConfigInput.value = savedConfig;
+      } else {
+        this.firebaseConfigInput.value = JSON.stringify(getFirebaseConfig(), null, 2);
+      }
+      this.firebaseModal.classList.remove('hidden');
+    };
+
+    if (this.btnFirebaseStatus) this.btnFirebaseStatus.addEventListener('click', openFirebaseModal);
+    if (this.btnOpenFirebaseModalFromMenu) this.btnOpenFirebaseModalFromMenu.addEventListener('click', openFirebaseModal);
+
+    this.btnCloseFirebaseModal.addEventListener('click', () => {
+      this.firebaseModal.classList.add('hidden');
+    });
+
+    this.firebaseModal.addEventListener('click', (e) => {
+      if (e.target === this.firebaseModal) this.firebaseModal.classList.add('hidden');
+    });
+
+    this.formFirebaseConfig.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const raw = this.firebaseConfigInput.value.trim();
+      if (!raw) {
+        alert("Please paste your Firebase configuration object.");
+        return;
+      }
+      try {
+        let clean = raw;
+        if (clean.includes('{') && clean.includes('}')) {
+          clean = clean.substring(clean.indexOf('{'), clean.lastIndexOf('}') + 1);
+        }
+        clean = clean.replace(/([{,]\s*)([a-zA-Z0-9_]+)\s*:/g, '$1"$2":');
+        clean = clean.replace(/'/g, '"');
+        clean = clean.replace(/,\s*}/g, '}');
+
+        const parsed = JSON.parse(clean);
+        if (!parsed.apiKey || !parsed.projectId) {
+          alert("The configuration must include at least 'apiKey' and 'projectId'.");
+          return;
+        }
+
+        localStorage.setItem('cv_firebase_custom_config', JSON.stringify(parsed, null, 2));
+        alert("Firebase credentials saved! The application will now reload to activate Firebase.");
+        window.location.reload();
+      } catch (err) {
+        alert("Could not parse config. Please verify JSON format.\n\nError: " + err.message);
+      }
+    });
+
+    this.btnResetFirebaseConfig.addEventListener('click', () => {
+      if (confirm("Reset to default cv-builder2026 project config?")) {
+        localStorage.removeItem('cv_firebase_custom_config');
+        window.location.reload();
+      }
+    });
+
+    this.btnSwitchAccount.addEventListener('click', () => {
+      this.userDropdown.classList.add('hidden');
+      this.switchAuthTab('login');
+      this.authModal.classList.remove('hidden');
+    });
+
+    this.btnCloseAuthModal.addEventListener('click', () => {
+      this.authModal.classList.add('hidden');
+    });
+
+    this.authModal.addEventListener('click', (e) => {
+      if (e.target === this.authModal) {
+        this.authModal.classList.add('hidden');
+      }
+    });
+
+    this.btnQuickDemoLogin.addEventListener('click', async () => {
+      if (this.firebaseActive && this.auth) {
+        try {
+          await this.auth.signInAnonymously();
+          this.authModal.classList.add('hidden');
+          this.showToast("Signed in as Demo Student via Firebase");
+          return;
+        } catch (e) {
+          console.warn("Firebase anonymous auth not active, using local demo", e);
+        }
+      }
+
+      this.currentUser = {
+        name: "Demo Student",
+        email: "student@university.ac.za"
+      };
+      localStorage.setItem('cv_studio_active_session', JSON.stringify(this.currentUser));
+      this.updateUserBadge();
+      this.authModal.classList.add('hidden');
+      this.showToast("Signed in as Demo Student");
+    });
+
+    this.btnGoogleSignIn.addEventListener('click', async () => {
+      if (!this.firebaseActive || !this.auth) {
+        alert("Please ensure Firebase is configured to use Google Sign-In.");
+        return;
+      }
+      try {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        await this.auth.signInWithPopup(provider);
+        this.authModal.classList.add('hidden');
+        this.showToast("Signed in with Google!");
+      } catch (err) {
+        alert("Google Sign-In Error: " + err.message);
+      }
+    });
+
+    this.btnLogout.addEventListener('click', async () => {
+      if (this.firebaseActive && this.auth) {
+        try {
+          await this.auth.signOut();
+        } catch (e) {
+          console.warn("Sign out error", e);
+        }
+      }
+      this.currentUser = {
+        name: "Guest Student",
+        email: "guest@university.ac.za"
+      };
+      localStorage.removeItem('cv_studio_active_session');
+      this.updateUserBadge();
+      this.userDropdown.classList.add('hidden');
+      this.showToast("Logged out successfully");
+      this.switchAuthTab('login');
+      this.authModal.classList.remove('hidden');
+    });
+
+    this.authTabs.forEach(btn => {
+      btn.addEventListener('click', () => {
+        this.switchAuthTab(btn.getAttribute('data-tab'));
+      });
+    });
+
+    this.linkGoForgot.addEventListener('click', (e) => {
+      e.preventDefault();
+      this.switchAuthTab('forgot');
+    });
+
+    this.btnBackToLogin.addEventListener('click', () => {
+      this.switchAuthTab('login');
+    });
+
+    this.formLogin.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('loginEmail').value.trim();
+      const pass = document.getElementById('loginPassword').value.trim();
+
+      if (this.firebaseActive && this.auth) {
+        try {
+          await this.auth.signInWithEmailAndPassword(email, pass);
+          this.authModal.classList.add('hidden');
+          this.showToast("Signed in via Firebase Auth!");
+          return;
+        } catch (err) {
+          alert("Firebase Sign In Error: " + err.message);
+          return;
+        }
+      }
+
+      let users = [];
+      try {
+        users = JSON.parse(localStorage.getItem('cv_studio_users')) || [];
+      } catch(err) { users = []; }
+
+      const user = users.find(u => u.email.toLowerCase() === email.toLowerCase());
+      if (!user || user.password !== pass) {
+        alert("Invalid email or password. You can also click '1-Click Demo Student Access' above!");
+        return;
+      }
+
+      this.currentUser = { name: user.name, email: user.email };
+      localStorage.setItem('cv_studio_active_session', JSON.stringify(this.currentUser));
+      this.updateUserBadge();
+      this.authModal.classList.add('hidden');
+      this.data = this.loadData();
+      this.render();
+      this.showToast(`Welcome back, ${user.name}!`);
+    });
+
+    this.formSignup.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('signupName').value.trim();
+      const email = document.getElementById('signupEmail').value.trim();
+      const pass = document.getElementById('signupPassword').value.trim();
+      const passConfirm = document.getElementById('signupPasswordConfirm').value.trim();
+
+      if (pass !== passConfirm) {
+        alert("Passwords do not match. Please verify.");
+        return;
+      }
+
+      if (this.firebaseActive && this.auth) {
+        try {
+          const cred = await this.auth.createUserWithEmailAndPassword(email, pass);
+          await cred.user.updateProfile({ displayName: name });
+          
+          this.currentUser = { uid: cred.user.uid, name, email };
+          this.data = JSON.parse(JSON.stringify(DEFAULT_DEMO_DATA));
+          this.data.name = name.toUpperCase();
+          this.data.email = email;
+          const parts = name.split(' ');
+          this.data.initials = (parts[0][0] + (parts[1] ? parts[1][0] : parts[0][1] || '')).toUpperCase();
+          
+          this.saveData();
+          this.updateUserBadge();
+          this.authModal.classList.add('hidden');
+          this.render();
+          this.showToast(`Account created on Firebase! Welcome, ${name}`);
+          return;
+        } catch (err) {
+          alert("Firebase Sign Up Error: " + err.message);
+          return;
+        }
+      }
+
+      let users = [];
+      try {
+        users = JSON.parse(localStorage.getItem('cv_studio_users')) || [];
+      } catch(err) { users = []; }
+
+      if (users.some(u => u.email.toLowerCase() === email.toLowerCase())) {
+        alert("An account with this email already exists. Please sign in.");
+        this.switchAuthTab('login');
+        return;
+      }
+
+      users.push({ name, email, password: pass });
+      localStorage.setItem('cv_studio_users', JSON.stringify(users));
+
+      this.currentUser = { name, email };
+      localStorage.setItem('cv_studio_active_session', JSON.stringify(this.currentUser));
+      
+      this.data = JSON.parse(JSON.stringify(DEFAULT_DEMO_DATA));
+      this.data.name = name.toUpperCase();
+      this.data.email = email;
+      const parts = name.split(' ');
+      this.data.initials = (parts[0][0] + (parts[1] ? parts[1][0] : parts[0][1] || '')).toUpperCase();
+      this.saveData();
+
+      this.updateUserBadge();
+      this.authModal.classList.add('hidden');
+      this.render();
+      this.showToast(`Account created! Welcome, ${name}`);
+    });
+
+    this.formForgot.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('forgotEmail').value.trim();
+
+      if (this.firebaseActive && this.auth) {
+        try {
+          await this.auth.sendPasswordResetEmail(email);
+          alert(`Firebase has sent a password reset email to ${email}. Check your inbox!`);
+          this.switchAuthTab('login');
+          return;
+        } catch (err) {
+          alert("Password reset error: " + err.message);
+          return;
+        }
+      }
+
+      alert(`Password recovery instructions sent to ${email} (Demo simulation: For Demo Student, password is 'password123').`);
+      this.switchAuthTab('login');
+    });
+
+    const toggleSidebar = () => {
+      this.editorSidebar.classList.toggle('collapsed');
+    };
+    this.btnToggleSidebar.addEventListener('click', toggleSidebar);
+    this.btnCloseSidebar.addEventListener('click', toggleSidebar);
+
+    this.btnCustomize.addEventListener('click', (e) => {
+      e.stopPropagation();
+      this.customizeMenu.classList.toggle('hidden');
+    });
+    document.addEventListener('click', (e) => {
+      if (!this.customizeMenu.contains(e.target) && e.target !== this.btnCustomize) {
+        this.customizeMenu.classList.add('hidden');
+      }
+    });
+
+    this.accentColorPicker.addEventListener('input', (e) => {
+      document.documentElement.style.setProperty('--primary-color', e.target.value);
+    });
+
+    this.densitySelect.addEventListener('change', (e) => {
+      document.body.classList.remove('density-compact', 'density-spacious');
+      if (e.target.value !== 'normal') {
+        document.body.classList.add(`density-${e.target.value}`);
+      }
+    });
+
+    this.toggleSeal.addEventListener('change', (e) => {
+      this.stampBlock.style.display = e.target.checked ? 'flex' : 'none';
+    });
+
+    this.btnZoomIn.addEventListener('click', () => this.setZoom(this.zoomLevel + 0.1));
+    this.btnZoomOut.addEventListener('click', () => this.setZoom(this.zoomLevel - 0.1));
+    this.btnZoomFit.addEventListener('click', () => {
+      const containerWidth = document.querySelector('.document-container').clientWidth - 60;
+      const paperWidthPx = 210 * 3.7795275591;
+      const targetZoom = Math.min(1.0, Math.max(0.5, containerWidth / paperWidthPx));
+      this.setZoom(targetZoom);
+    });
+
+    this.btnPrint.addEventListener('click', () => {
+      window.print();
+    });
+
+    this.btnExportJSON.addEventListener('click', () => {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(this.data, null, 2));
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.setAttribute("href", dataStr);
+      downloadAnchor.setAttribute("download", `${this.data.name.replace(/\s+/g, '_')}_CV.json`);
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+      this.showToast("CV data exported as JSON");
+    });
+
+    this.importJSONInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        try {
+          const parsed = JSON.parse(event.target.result);
+          if (parsed && parsed.name) {
+            this.data = parsed;
+            this.saveData();
+            this.render();
+            this.showToast("CV successfully loaded!");
+          } else {
+            alert("Invalid CV JSON format.");
+          }
+        } catch (err) {
+          alert("Could not parse JSON file: " + err.message);
+        }
+      };
+      reader.readAsText(file);
+      e.target.value = '';
+    });
+
+    this.btnReset.addEventListener('click', () => {
+      if (confirm("Reset everything back to the sample student demo template? Any unsaved edits will be replaced.")) {
+        this.data = JSON.parse(JSON.stringify(DEFAULT_DEMO_DATA));
+        this.saveData();
+        this.render();
+        this.showToast("Reset to sample student template");
+      }
+    });
+
+    document.querySelectorAll('.accordion-title').forEach(header => {
+      header.addEventListener('click', () => {
+        const item = header.parentElement;
+        item.classList.toggle('open');
+      });
+    });
+
+    const bindInline = (el, prop) => {
+      el.addEventListener('blur', () => {
+        this.data[prop] = el.innerText.trim();
+        this.saveData();
+        this.syncForms();
+        if (prop === 'name') this.updateStamp();
+      });
+    };
+
+    bindInline(this.cvName, 'name');
+    bindInline(this.cvPhone, 'phone');
+    bindInline(this.cvEmail, 'email');
+    bindInline(this.cvAddress, 'address');
+    bindInline(this.cvDob, 'dob');
+    bindInline(this.cvNationality, 'nationality');
+    bindInline(this.cvAbout, 'about');
+
+    const bindInput = (inputEl, prop) => {
+      inputEl.addEventListener('input', () => {
+        this.data[prop] = inputEl.value;
+        this.saveData();
+        this.syncDocumentHeader();
+        if (prop === 'name' || prop === 'initials') this.updateStamp();
+      });
+    };
+
+    bindInput(this.inputName, 'name');
+    bindInput(this.inputInitials, 'initials');
+    bindInput(this.inputPhone, 'phone');
+    bindInput(this.inputEmail, 'email');
+    bindInput(this.inputAddress, 'address');
+    bindInput(this.inputDob, 'dob');
+    bindInput(this.inputNationality, 'nationality');
+    bindInput(this.inputAbout, 'about');
+  }
+
+  setZoom(val) {
+    this.zoomLevel = Math.min(1.4, Math.max(0.5, Math.round(val * 10) / 10));
+    this.cvPageWrapper.style.transform = `scale(${this.zoomLevel})`;
+    this.zoomLabel.textContent = `${Math.round(this.zoomLevel * 100)}%`;
+  }
+
+  updateStamp() {
+    const rawName = (this.data.name || "STUDENT NAME").toUpperCase();
+    const stampText = `${rawName} • ${rawName} • `;
+    if (this.stampTextPath) {
+      this.stampTextPath.textContent = stampText;
+    }
+
+    let initials = (this.data.initials || "").toUpperCase().trim();
+    if (!initials) {
+      const parts = rawName.split(/\s+/).filter(Boolean);
+      if (parts.length >= 2) {
+        initials = parts[0][0] + parts[parts.length - 1][0];
+      } else if (parts.length === 1) {
+        initials = parts[0].slice(0, 2);
+      } else {
+        initials = "ST";
+      }
+    }
+
+    if (this.monogramTop && this.monogramBottom) {
+      this.monogramTop.textContent = initials[0] || "S";
+      this.monogramBottom.textContent = initials[1] || "T";
+    }
+  }
+
+  syncDocumentHeader() {
+    this.cvName.innerText = this.data.name;
+    this.cvPhone.innerText = this.data.phone;
+    this.cvEmail.innerText = this.data.email;
+    this.cvAddress.innerText = this.data.address;
+    this.cvDob.innerText = this.data.dob;
+    this.cvNationality.innerText = this.data.nationality;
+    this.cvAbout.innerText = this.data.about;
+  }
+
+  syncForms() {
+    this.inputName.value = this.data.name || "";
+    this.inputInitials.value = this.data.initials || "";
+    this.inputPhone.value = this.data.phone || "";
+    this.inputEmail.value = this.data.email || "";
+    this.inputAddress.value = this.data.address || "";
+    this.inputDob.value = this.data.dob || "";
+    this.inputNationality.value = this.data.nationality || "";
+    this.inputAbout.value = this.data.about || "";
+  }
+
+  render() {
+    this.syncDocumentHeader();
+    this.syncForms();
+    this.updateStamp();
+
+    this.renderSkills();
+    this.renderLanguages();
+    this.renderExperience();
+    this.renderEducation();
+    this.renderExtracurricular();
+    this.renderReferences();
+  }
+
+  renderSkills() {
+    this.cvSkillsList.innerHTML = '';
+    this.data.skills.forEach((skill, idx) => {
+      const li = document.createElement('li');
+      li.className = 'cv-bullet-item';
+      li.innerHTML = `
+        <span class="item-text" contenteditable="true" spellcheck="false">${skill}</span>
+        <div class="item-actions no-print">
+          <button class="btn-inline-action btn-del" title="Delete skill" data-del-skill="${idx}"><i class="fa-solid fa-trash"></i></button>
+        </div>
+      `;
+
+      const textEl = li.querySelector('.item-text');
+      textEl.addEventListener('blur', () => {
+        this.data.skills[idx] = textEl.innerText.trim();
+        this.saveData();
+        this.renderSkillsForm();
+      });
+
+      li.querySelector('[data-del-skill]').addEventListener('click', () => {
+        this.data.skills.splice(idx, 1);
+        this.saveData();
+        this.renderSkills();
+      });
+
+      this.cvSkillsList.appendChild(li);
+    });
+
+    this.renderSkillsForm();
+  }
+
+  renderSkillsForm() {
+    this.skillsFormList.innerHTML = '';
+    this.data.skills.forEach((skill, idx) => {
+      const div = document.createElement('div');
+      div.className = 'form-card-item';
+      div.innerHTML = `
+        <div class="form-card-header">
+          <span>Skill #${idx + 1}</span>
+          <button class="btn-card-del" data-form-del-skill="${idx}"><i class="fa-solid fa-trash"></i></button>
+        </div>
+        <input type="text" class="form-control" value="${skill}">
+      `;
+
+      const input = div.querySelector('input');
+      input.addEventListener('input', () => {
+        this.data.skills[idx] = input.value;
+        this.saveData();
+        const docItems = this.cvSkillsList.querySelectorAll('.item-text');
+        if (docItems[idx]) docItems[idx].innerText = input.value;
+      });
+
+      div.querySelector('[data-form-del-skill]').addEventListener('click', () => {
+        this.data.skills.splice(idx, 1);
+        this.saveData();
+        this.renderSkills();
+      });
+
+      this.skillsFormList.appendChild(div);
+    });
+  }
+
+  addSkill() {
+    this.data.skills.push("New Skill / Competency");
+    this.saveData();
+    this.renderSkills();
+    this.showToast("Skill added");
+  }
+
+  renderLanguages() {
+    this.cvLanguagesList.innerHTML = '';
+    this.data.languages.forEach((lang, idx) => {
+      const li = document.createElement('li');
+      li.className = 'cv-bullet-item';
+      li.innerHTML = `
+        <span class="item-text" contenteditable="true" spellcheck="false">${lang}</span>
+        <div class="item-actions no-print">
+          <button class="btn-inline-action btn-del" title="Delete language" data-del-lang="${idx}"><i class="fa-solid fa-trash"></i></button>
+        </div>
+      `;
+
+      const textEl = li.querySelector('.item-text');
+      textEl.addEventListener('blur', () => {
+        this.data.languages[idx] = textEl.innerText.trim();
+        this.saveData();
+        this.renderLanguagesForm();
+      });
+
+      li.querySelector('[data-del-lang]').addEventListener('click', () => {
+        this.data.languages.splice(idx, 1);
+        this.saveData();
+        this.renderLanguages();
+      });
+
+      this.cvLanguagesList.appendChild(li);
+    });
+
+    this.renderLanguagesForm();
+  }
+
+  renderLanguagesForm() {
+    this.languagesFormList.innerHTML = '';
+    this.data.languages.forEach((lang, idx) => {
+      const div = document.createElement('div');
+      div.className = 'form-card-item';
+      div.innerHTML = `
+        <div class="form-card-header">
+          <span>Language #${idx + 1}</span>
+          <button class="btn-card-del" data-form-del-lang="${idx}"><i class="fa-solid fa-trash"></i></button>
+        </div>
+        <input type="text" class="form-control" value="${lang}">
+      `;
+
+      const input = div.querySelector('input');
+      input.addEventListener('input', () => {
+        this.data.languages[idx] = input.value;
+        this.saveData();
+        const docItems = this.cvLanguagesList.querySelectorAll('.item-text');
+        if (docItems[idx]) docItems[idx].innerText = input.value;
+      });
+
+      div.querySelector('[data-form-del-lang]').addEventListener('click', () => {
+        this.data.languages.splice(idx, 1);
+        this.saveData();
+        this.renderLanguages();
+      });
+
+      this.languagesFormList.appendChild(div);
+    });
+  }
+
+  addLanguage() {
+    this.data.languages.push("New Language");
+    this.saveData();
+    this.renderLanguages();
+    this.showToast("Language added");
+  }
+
+  renderExperience() {
+    this.cvExperienceList.innerHTML = '';
+    this.data.experience.forEach((job, idx) => {
+      const card = document.createElement('div');
+      card.className = 'cv-entry';
+      
+      let bulletsHtml = (job.bullets || []).map((b, bIdx) => `
+        <li class="entry-bullet-item">
+          <span class="bullet-text" contenteditable="true" spellcheck="false">${b}</span>
+          <div class="item-actions no-print">
+            <button class="btn-inline-action btn-del" data-del-exp-bullet="${idx}:${bIdx}" title="Delete bullet"><i class="fa-solid fa-xmark"></i></button>
+          </div>
+        </li>
+      `).join('');
+
+      card.innerHTML = `
+        <div class="entry-header">
+          <span class="entry-title" contenteditable="true" spellcheck="false">${job.title}</span>
+          <span class="entry-date" contenteditable="true" spellcheck="false">${job.date}</span>
+        </div>
+        <ul class="entry-bullets">${bulletsHtml}</ul>
+        <div class="item-actions no-print">
+          <button class="btn-inline-action" data-add-exp-bullet="${idx}" title="Add bullet point"><i class="fa-solid fa-plus"></i></button>
+          <button class="btn-inline-action btn-del" data-del-exp="${idx}" title="Delete role"><i class="fa-solid fa-trash"></i></button>
+        </div>
+      `;
+
+      const titleEl = card.querySelector('.entry-title');
+      titleEl.addEventListener('blur', () => {
+        this.data.experience[idx].title = titleEl.innerText.trim();
+        this.saveData();
+        this.renderExperienceForm();
+      });
+
+      const dateEl = card.querySelector('.entry-date');
+      dateEl.addEventListener('blur', () => {
+        this.data.experience[idx].date = dateEl.innerText.trim();
+        this.saveData();
+        this.renderExperienceForm();
+      });
+
+      card.querySelectorAll('.bullet-text').forEach((bEl, bIdx) => {
+        bEl.addEventListener('blur', () => {
+          this.data.experience[idx].bullets[bIdx] = bEl.innerText.trim();
+          this.saveData();
+          this.renderExperienceForm();
+        });
+      });
+
+      card.querySelectorAll('[data-del-exp-bullet]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const [, bIdx] = btn.getAttribute('data-del-exp-bullet').split(':').map(Number);
+          this.data.experience[idx].bullets.splice(bIdx, 1);
+          this.saveData();
+          this.renderExperience();
+        });
+      });
+
+      card.querySelector('[data-add-exp-bullet]').addEventListener('click', () => {
+        this.data.experience[idx].bullets.push("Key accomplishment or responsibility");
+        this.saveData();
+        this.renderExperience();
+      });
+
+      card.querySelector('[data-del-exp]').addEventListener('click', () => {
+        this.data.experience.splice(idx, 1);
+        this.saveData();
+        this.renderExperience();
+      });
+
+      this.cvExperienceList.appendChild(card);
+    });
+
+    this.renderExperienceForm();
+  }
+
+  renderExperienceForm() {
+    this.experienceFormList.innerHTML = '';
+    this.data.experience.forEach((job, idx) => {
+      const div = document.createElement('div');
+      div.className = 'form-card-item';
+      div.innerHTML = `
+        <div class="form-card-header">
+          <span>Role #${idx + 1}</span>
+          <button class="btn-card-del" data-form-del-exp="${idx}"><i class="fa-solid fa-trash"></i></button>
+        </div>
+        <div class="form-group">
+          <label>Job Title & Department</label>
+          <input type="text" class="exp-title-input" value="${job.title}">
+        </div>
+        <div class="form-group">
+          <label>Date Period</label>
+          <input type="text" class="exp-date-input" value="${job.date}">
+        </div>
+        <div class="form-group">
+          <label>Responsibilities (one per line)</label>
+          <textarea rows="3" class="exp-bullets-input">${(job.bullets || []).join('\n')}</textarea>
+        </div>
+      `;
+
+      div.querySelector('.exp-title-input').addEventListener('input', (e) => {
+        this.data.experience[idx].title = e.target.value;
+        this.saveData();
+        const titles = this.cvExperienceList.querySelectorAll('.entry-title');
+        if (titles[idx]) titles[idx].innerText = e.target.value;
+      });
+
+      div.querySelector('.exp-date-input').addEventListener('input', (e) => {
+        this.data.experience[idx].date = e.target.value;
+        this.saveData();
+        const dates = this.cvExperienceList.querySelectorAll('.entry-date');
+        if (dates[idx]) dates[idx].innerText = e.target.value;
+      });
+
+      div.querySelector('.exp-bullets-input').addEventListener('input', (e) => {
+        this.data.experience[idx].bullets = e.target.value.split('\n').filter(s => s.trim().length > 0);
+        this.saveData();
+        this.renderExperience();
+      });
+
+      div.querySelector('[data-form-del-exp]').addEventListener('click', () => {
+        this.data.experience.splice(idx, 1);
+        this.saveData();
+        this.renderExperience();
+      });
+
+      this.experienceFormList.appendChild(div);
+    });
+  }
+
+  addExperience() {
+    this.data.experience.push({
+      title: "Student Assistant - Organization or Department",
+      date: "Jan 2026 - Present",
+      bullets: [
+        "Key responsibility or noteworthy achievement in this role."
+      ]
+    });
+    this.saveData();
+    this.renderExperience();
+    this.showToast("Work experience added");
+  }
+
+  renderEducation() {
+    this.cvEducationList.innerHTML = '';
+    this.data.education.forEach((edu, idx) => {
+      const card = document.createElement('div');
+      card.className = 'cv-entry';
+      
+      let noteHtml = edu.note ? `<div class="entry-note" contenteditable="true" spellcheck="false">${edu.note}</div>` : '';
+
+      card.innerHTML = `
+        <div class="entry-header">
+          <span class="entry-title" contenteditable="true" spellcheck="false">${edu.title}</span>
+          <span class="entry-date" contenteditable="true" spellcheck="false">${edu.date}</span>
+        </div>
+        ${noteHtml}
+        <div class="item-actions no-print">
+          <button class="btn-inline-action btn-del" data-del-edu="${idx}" title="Delete education"><i class="fa-solid fa-trash"></i></button>
+        </div>
+      `;
+
+      const titleEl = card.querySelector('.entry-title');
+      titleEl.addEventListener('blur', () => {
+        this.data.education[idx].title = titleEl.innerText.trim();
+        this.saveData();
+        this.renderEducationForm();
+      });
+
+      const dateEl = card.querySelector('.entry-date');
+      dateEl.addEventListener('blur', () => {
+        this.data.education[idx].date = dateEl.innerText.trim();
+        this.saveData();
+        this.renderEducationForm();
+      });
+
+      const noteEl = card.querySelector('.entry-note');
+      if (noteEl) {
+        noteEl.addEventListener('blur', () => {
+          this.data.education[idx].note = noteEl.innerText.trim();
+          this.saveData();
+          this.renderEducationForm();
+        });
+      }
+
+      card.querySelector('[data-del-edu]').addEventListener('click', () => {
+        this.data.education.splice(idx, 1);
+        this.saveData();
+        this.renderEducation();
+      });
+
+      this.cvEducationList.appendChild(card);
+    });
+
+    this.renderEducationForm();
+  }
+
+  renderEducationForm() {
+    this.educationFormList.innerHTML = '';
+    this.data.education.forEach((edu, idx) => {
+      const div = document.createElement('div');
+      div.className = 'form-card-item';
+      div.innerHTML = `
+        <div class="form-card-header">
+          <span>Degree / School #${idx + 1}</span>
+          <button class="btn-card-del" data-form-del-edu="${idx}"><i class="fa-solid fa-trash"></i></button>
+        </div>
+        <div class="form-group">
+          <label>Degree & Institution</label>
+          <input type="text" class="edu-title-input" value="${edu.title}">
+        </div>
+        <div class="form-group">
+          <label>Graduation Year</label>
+          <input type="text" class="edu-date-input" value="${edu.date}">
+        </div>
+        <div class="form-group">
+          <label>Distinctions / Academic Achievements (Optional)</label>
+          <textarea rows="2" class="edu-note-input">${edu.note || ''}</textarea>
+        </div>
+      `;
+
+      div.querySelector('.edu-title-input').addEventListener('input', (e) => {
+        this.data.education[idx].title = e.target.value;
+        this.saveData();
+        const titles = this.cvEducationList.querySelectorAll('.entry-title');
+        if (titles[idx]) titles[idx].innerText = e.target.value;
+      });
+
+      div.querySelector('.edu-date-input').addEventListener('input', (e) => {
+        this.data.education[idx].date = e.target.value;
+        this.saveData();
+        const dates = this.cvEducationList.querySelectorAll('.entry-date');
+        if (dates[idx]) dates[idx].innerText = e.target.value;
+      });
+
+      div.querySelector('.edu-note-input').addEventListener('input', (e) => {
+        this.data.education[idx].note = e.target.value;
+        this.saveData();
+        this.renderEducation();
+      });
+
+      div.querySelector('[data-form-del-edu]').addEventListener('click', () => {
+        this.data.education.splice(idx, 1);
+        this.saveData();
+        this.renderEducation();
+      });
+
+      this.educationFormList.appendChild(div);
+    });
+  }
+
+  addEducation() {
+    this.data.education.push({
+      title: "Degree or Certificate, Institution Name",
+      date: "2026",
+      note: "Relevant academic distinctions, honors or major coursework."
+    });
+    this.saveData();
+    this.renderEducation();
+    this.showToast("Education item added");
+  }
+
+  renderExtracurricular() {
+    this.cvExtracurricularList.innerHTML = '';
+    this.data.extracurricular.forEach((act, idx) => {
+      const card = document.createElement('div');
+      card.className = 'cv-entry';
+
+      let bulletsHtml = (act.bullets && act.bullets.length > 0)
+        ? `<ul class="entry-bullets">` + act.bullets.map((b, bIdx) => `
+            <li class="entry-bullet-item">
+              <span class="bullet-text" contenteditable="true" spellcheck="false">${b}</span>
+              <div class="item-actions no-print">
+                <button class="btn-inline-action btn-del" data-del-act-bullet="${idx}:${bIdx}" title="Delete bullet"><i class="fa-solid fa-xmark"></i></button>
+              </div>
+            </li>
+          `).join('') + `</ul>`
+        : '';
+
+      card.innerHTML = `
+        <div class="entry-header">
+          <span class="entry-title" contenteditable="true" spellcheck="false">${act.title}</span>
+          <span class="entry-date" contenteditable="true" spellcheck="false">${act.date}</span>
+        </div>
+        ${bulletsHtml}
+        <div class="item-actions no-print">
+          <button class="btn-inline-action" data-add-act-bullet="${idx}" title="Add bullet point"><i class="fa-solid fa-plus"></i></button>
+          <button class="btn-inline-action btn-del" data-del-act="${idx}" title="Delete activity"><i class="fa-solid fa-trash"></i></button>
+        </div>
+      `;
+
+      const titleEl = card.querySelector('.entry-title');
+      titleEl.addEventListener('blur', () => {
+        this.data.extracurricular[idx].title = titleEl.innerText.trim();
+        this.saveData();
+        this.renderExtracurricularForm();
+      });
+
+      const dateEl = card.querySelector('.entry-date');
+      dateEl.addEventListener('blur', () => {
+        this.data.extracurricular[idx].date = dateEl.innerText.trim();
+        this.saveData();
+        this.renderExtracurricularForm();
+      });
+
+      card.querySelectorAll('.bullet-text').forEach((bEl, bIdx) => {
+        bEl.addEventListener('blur', () => {
+          this.data.extracurricular[idx].bullets[bIdx] = bEl.innerText.trim();
+          this.saveData();
+          this.renderExtracurricularForm();
+        });
+      });
+
+      card.querySelectorAll('[data-del-act-bullet]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const [, bIdx] = btn.getAttribute('data-del-act-bullet').split(':').map(Number);
+          this.data.extracurricular[idx].bullets.splice(bIdx, 1);
+          this.saveData();
+          this.renderExtracurricular();
+        });
+      });
+
+      card.querySelector('[data-add-act-bullet]').addEventListener('click', () => {
+        if (!this.data.extracurricular[idx].bullets) this.data.extracurricular[idx].bullets = [];
+        this.data.extracurricular[idx].bullets.push("New activity responsibility");
+        this.saveData();
+        this.renderExtracurricular();
+      });
+
+      card.querySelector('[data-del-act]').addEventListener('click', () => {
+        this.data.extracurricular.splice(idx, 1);
+        this.saveData();
+        this.renderExtracurricular();
+      });
+
+      this.cvExtracurricularList.appendChild(card);
+    });
+
+    this.renderExtracurricularForm();
+  }
+
+  renderExtracurricularForm() {
+    this.extracurricularFormList.innerHTML = '';
+    this.data.extracurricular.forEach((act, idx) => {
+      const div = document.createElement('div');
+      div.className = 'form-card-item';
+      div.innerHTML = `
+        <div class="form-card-header">
+          <span>Activity #${idx + 1}</span>
+          <button class="btn-card-del" data-form-del-act="${idx}"><i class="fa-solid fa-trash"></i></button>
+        </div>
+        <div class="form-group">
+          <label>Leadership Role & Organization</label>
+          <input type="text" class="act-title-input" value="${act.title}">
+        </div>
+        <div class="form-group">
+          <label>Period</label>
+          <input type="text" class="act-date-input" value="${act.date}">
+        </div>
+        <div class="form-group">
+          <label>Key Achievements (one per line, optional)</label>
+          <textarea rows="2" class="act-bullets-input">${(act.bullets || []).join('\n')}</textarea>
+        </div>
+      `;
+
+      div.querySelector('.act-title-input').addEventListener('input', (e) => {
+        this.data.extracurricular[idx].title = e.target.value;
+        this.saveData();
+        const titles = this.cvExtracurricularList.querySelectorAll('.entry-title');
+        if (titles[idx]) titles[idx].innerText = e.target.value;
+      });
+
+      div.querySelector('.act-date-input').addEventListener('input', (e) => {
+        this.data.extracurricular[idx].date = e.target.value;
+        this.saveData();
+        const dates = this.cvExtracurricularList.querySelectorAll('.entry-date');
+        if (dates[idx]) dates[idx].innerText = e.target.value;
+      });
+
+      div.querySelector('.act-bullets-input').addEventListener('input', (e) => {
+        this.data.extracurricular[idx].bullets = e.target.value.split('\n').filter(s => s.trim().length > 0);
+        this.saveData();
+        this.renderExtracurricular();
+      });
+
+      div.querySelector('[data-form-del-act]').addEventListener('click', () => {
+        this.data.extracurricular.splice(idx, 1);
+        this.saveData();
+        this.renderExtracurricular();
+      });
+
+      this.extracurricularFormList.appendChild(div);
+    });
+  }
+
+  addExtracurricular() {
+    this.data.extracurricular.push({
+      title: "Officer / Representative, Society or Committee",
+      date: "Jan 2026 - Present",
+      bullets: []
+    });
+    this.saveData();
+    this.renderExtracurricular();
+    this.showToast("Activity added");
+  }
+
+  renderReferences() {
+    this.cvReferencesList.innerHTML = '';
+    this.data.references.forEach((ref, idx) => {
+      const card = document.createElement('div');
+      card.className = 'reference-card';
+      card.innerHTML = `
+        <span class="ref-name" contenteditable="true" spellcheck="false">${ref.name}</span>
+        <span class="ref-phone" contenteditable="true" spellcheck="false">${ref.phone}</span>
+        <div class="item-actions no-print">
+          <button class="btn-inline-action btn-del" data-del-ref="${idx}" title="Delete reference"><i class="fa-solid fa-trash"></i></button>
+        </div>
+      `;
+
+      const nameEl = card.querySelector('.ref-name');
+      nameEl.addEventListener('blur', () => {
+        this.data.references[idx].name = nameEl.innerText.trim();
+        this.saveData();
+        this.renderReferencesForm();
+      });
+
+      const phoneEl = card.querySelector('.ref-phone');
+      phoneEl.addEventListener('blur', () => {
+        this.data.references[idx].phone = phoneEl.innerText.trim();
+        this.saveData();
+        this.renderReferencesForm();
+      });
+
+      card.querySelector('[data-del-ref]').addEventListener('click', () => {
+        this.data.references.splice(idx, 1);
+        this.saveData();
+        this.renderReferences();
+      });
+
+      this.cvReferencesList.appendChild(card);
+    });
+
+    this.renderReferencesForm();
+  }
+
+  renderReferencesForm() {
+    this.referencesFormList.innerHTML = '';
+    this.data.references.forEach((ref, idx) => {
+      const div = document.createElement('div');
+      div.className = 'form-card-item';
+      div.innerHTML = `
+        <div class="form-card-header">
+          <span>Reference #${idx + 1}</span>
+          <button class="btn-card-del" data-form-del-ref="${idx}"><i class="fa-solid fa-trash"></i></button>
+        </div>
+        <div class="form-group">
+          <label>Name & Title</label>
+          <input type="text" class="ref-name-input" value="${ref.name}">
+        </div>
+        <div class="form-group">
+          <label>Contact Phone / Email</label>
+          <input type="text" class="ref-phone-input" value="${ref.phone}">
+        </div>
+      `;
+
+      div.querySelector('.ref-name-input').addEventListener('input', (e) => {
+        this.data.references[idx].name = e.target.value;
+        this.saveData();
+        const names = this.cvReferencesList.querySelectorAll('.ref-name');
+        if (names[idx]) names[idx].innerText = e.target.value;
+      });
+
+      div.querySelector('.ref-phone-input').addEventListener('input', (e) => {
+        this.data.references[idx].phone = e.target.value;
+        this.saveData();
+        const phones = this.cvReferencesList.querySelectorAll('.ref-phone');
+        if (phones[idx]) phones[idx].innerText = e.target.value;
+      });
+
+      div.querySelector('[data-form-del-ref]').addEventListener('click', () => {
+        this.data.references.splice(idx, 1);
+        this.saveData();
+        this.renderReferences();
+      });
+
+      this.referencesFormList.appendChild(div);
+    });
+  }
+
+  addReference() {
+    this.data.references.push({
+      name: "Reference Name (e.g. Dr / Prof / Manager)",
+      phone: "T: 000 000 0000"
+    });
+    this.saveData();
+    this.renderReferences();
+    this.showToast("Reference added");
+  }
+}
+
+// Start application
+window.addEventListener('DOMContentLoaded', () => {
+  window.cvApp = new CVApp();
+});
+  </script>
 </body>
 </html>
