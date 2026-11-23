@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student CV Builder - Created by Matimba Chauke (Firebase Backend)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header class="app-toolbar no-print">
+    <div class="toolbar-left">
+      <div class="toolbar-brand">
+        <i class="fa-solid fa-graduation-cap"></i>
+        <span>Student CV Studio</span>
+      </div>
+
+      <!-- Creator Attribution Badge -->
+      <div class="creator-badge" title="Developer Contact">
+        <i class="fa-solid fa-code"></i>
+        <span>Created by <strong>Matimba Chauke</strong></span>
+        <a href="tel:0753806251" class="creator-phone"><i class="fa-solid fa-phone"></i> 075 380 6251</a>
+      </div>
+
+      <!-- Firebase Cloud Status Badge -->
+      <button id="btnFirebaseStatus" class="btn-firebase-badge" title="Click to configure or view Firebase backend">
+        <i class="fa-solid fa-cloud"></i>
+        <span id="firebaseStatusText">Firebase</span>
+        <span class="status-dot status-offline" id="firebaseStatusDot"></span>
+      </button>
+    </div>
+
+    <div class="toolbar-actions">
+      <button id="btnToggleSidebar" class="btn btn-secondary" title="Open Form Editor Panel">
+        <i class="fa-solid fa-sliders"></i>
+        <span>Form Panel</span>
+      </button>
+
+      <div class="dropdown-container">
+        <button id="btnCustomize" class="btn btn-secondary">
+          <i class="fa-solid fa-palette"></i>
+          <span>Theme & Size</span>
+        </button>
+        <div id="customizeMenu" class="dropdown-menu hidden">
+          <div class="menu-item">
+            <label>Color Accent</label>
+            <input type="color" id="accentColorPicker" value="#111111">
+          </div>
+          <div class="menu-item">
+            <label>Page Density</label>
+            <select id="densitySelect">
+              <option value="compact">Compact (Fit to 1 page)</option>
+              <option value="normal" selected>Standard</option>
+              <option value="spacious">Spacious</option>
+            </select>
+          </div>
+          <div class="menu-item">
+            <label>Seal Monogram</label>
+            <label class="toggle-switch">
+              <input type="checkbox" id="toggleSeal" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <button id="btnExportJSON" class="btn btn-secondary" title="Export CV data as JSON file">
+        <i class="fa-solid fa-file-export"></i>
+        <span>Export Data</span>
+      </button>
+
+      <label for="importJSONInput" class="btn btn-secondary btn-file-label" title="Import previously saved JSON file">
+        <i class="fa-solid fa-file-import"></i>
+        <span>Import</span>
+        <input type="file" id="importJSONInput" accept=".json" style="display:none;">
+      </label>
+
+      <button id="btnReset" class="btn btn-danger-outline" title="Reset to sample demo student CV">
+        <i class="fa-solid fa-rotate-left"></i>
+        <span>Reset Demo</span>
+      </button>
+
+      <button id="btnPrint" class="btn btn-primary" title="Print or save as high-quality PDF">
+        <i class="fa-solid fa-file-pdf"></i>
+        <span>Save as PDF</span>
+      </button>
+
+      <!-- User Profile & Auth Trigger -->
+      <div class="user-profile-menu">
+        <button id="btnAuthTrigger" class="btn-user-avatar" title="User Account">
+          <span class="avatar-circle" id="userAvatarText">ST</span>
+          <span class="user-display-name" id="userDisplayName">Demo Student</span>
+          <i class="fa-solid fa-chevron-down"></i>
+        </button>
+        <div id="userDropdown" class="user-dropdown-card hidden">
+          <div class="dropdown-user-info">
+            <strong id="dropdownName">Demo Student</strong>
+            <span id="dropdownEmail">student@university.ac.za</span>
+            <small id="dropdownBackendLabel" class="text-backend-mode">Mode: Local Storage</small>
+          </div>
+          <div class="dropdown-divider"></div>
+          <button id="btnOpenFirebaseModalFromMenu" class="dropdown-link-btn">
+            <i class="fa-solid fa-fire"></i> Firebase Backend Setup
+          </button>
+          <button id="btnSwitchAccount" class="dropdown-link-btn">
+            <i class="fa-solid fa-right-left"></i> Switch / Log In
+          </button>
+          <button id="btnLogout" class="dropdown-link-btn danger">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Creator Banner Notice on Top of Page (Visible in web app, automatically hidden in PDF) -->
+  <div class="app-info-banner no-print">
+    <div class="banner-inner">
+      <span><i class="fa-solid fa-sparkles"></i> <strong>Student CV Builder</strong> — Created by <strong>Matimba Chauke</strong> (<a href="tel:0753806251">075 380 6251</a>). Supports Google Firebase Auth & Cloud Firestore!</span>
+      <button class="banner-close" onclick="this.parentElement.parentElement.style.display='none'"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+  </div>
+
+  <!-- Notification Toast -->
+  <div id="toast" class="toast hidden"></div>
+
+  <!-- FIREBASE CONFIGURATION MODAL -->
+  <div id="firebaseModal" class="auth-modal-backdrop hidden no-print">
+    <div class="auth-card firebase-card">
+      <button id="btnCloseFirebaseModal" class="auth-close-btn" title="Close"><i class="fa-solid fa-xmark"></i></button>
+      
+      <div class="auth-header">
+        <div class="auth-logo firebase-logo">
+          <i class="fa-solid fa-fire"></i>
+        </div>
+        <h2>Firebase Backend Setup</h2>
+        <p class="auth-subtitle">Connect your Google Firebase project for real-time Cloud Firestore & Auth</p>
+      </div>
+
+      <div class="firebase-status-box" id="firebaseCurrentStatusBox">
+        <div class="status-indicator">
+          <span class="status-dot status-offline" id="modalStatusDot"></span>
+          <strong id="modalStatusTitle">Firebase Not Configured</strong>
+        </div>
+        <p id="modalStatusDesc">The application is currently running with local browser storage. Paste your Firebase web credentials below to enable live cloud authentication and database storage.</p>
+      </div>
+
+      <form id="formFirebaseConfig">
+        <div class="form-group">
+          <label>Paste `firebaseConfig` object (JSON or JS)</label>
+          <textarea id="firebaseConfigInput" rows="6" placeholder='{
+  "apiKey": "AIzaSy...",
+  "authDomain": "my-project.firebaseapp.com",
+  "projectId": "my-project",
+  "storageBucket": "my-project.appspot.com",
+  "messagingSenderId": "123456789",
+  "appId": "1:123456789:web:abcdef..."
+}'></textarea>
+        </div>
+
+        <div class="firebase-quick-steps">
+          <h4><i class="fa-solid fa-circle-info"></i> How to get your keys in 1 minute:</h4>
+          <ol>
+            <li>Go to <a href="https://console.firebase.google.com/" target="_blank">console.firebase.google.com</a> & create/open a project.</li>
+            <li>Click <strong>Authentication</strong> > Enable <strong>Email/Password</strong> & <strong>Google</strong>.</li>
+            <li>Click <strong>Firestore Database</strong> > Create Database (Test mode).</li>
+            <li>In Project Settings, scroll to <em>"Your apps"</em> > Web app (<code>&lt;/&gt;</code>) and copy <code>firebaseConfig</code>.</li>
+          </ol>
+        </div>
+
+        <div class="modal-actions-row">
+          <button type="submit" class="btn btn-primary">Save & Connect Firebase</button>
+          <button type="button" id="btnResetFirebaseConfig" class="btn btn-secondary">Clear / Reset</button>
+        </div>
+      </form>
+
+      <div class="auth-footer">
+        <span>Created by <strong>Matimba Chauke</strong> (075 380 6251)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- AUTHENTICATION MODAL (Login, Sign Up, Forgot Password, Google Login) -->
+  <div id="authModal" class="auth-modal-backdrop hidden no-print">
+    <div class="auth-card">
+      <button id="btnCloseAuthModal" class="auth-close-btn" title="Close"><i class="fa-solid fa-xmark"></i></button>
+      
+      <div class="auth-header">
+        <div class="auth-logo">
+          <i class="fa-solid fa-graduation-cap"></i>
+        </div>
+        <h2 id="authModalTitle">Welcome to Student CV Studio</h2>
+        <p class="auth-subtitle" id="authModalSubtitle">Sign in to save and sync your personal CV in the cloud</p>
+      </div>
+
+      <!-- Google Sign In Button (Supported by Firebase) -->
+      <button type="button" id="btnGoogleSignIn" class="btn-google-sign-in">
+        <svg width="18" height="18" viewBox="0 0 24 24">
+          <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+          <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+          <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+          <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+        </svg>
+        <span>Continue with Google</span>
+      </button>
+
+      <!-- Quick 1-Click Demo Login Button -->
+      <button id="btnQuickDemoLogin" class="btn-demo-quick">
+        <i class="fa-solid fa-bolt"></i> 1-Click Demo Student Access
+      </button>
+
+      <div class="auth-divider-line">
+        <span>or with student email</span>
+      </div>
+
+      <div class="auth-tabs" id="authTabs">
+        <button class="auth-tab-btn active" data-tab="login">Sign In</button>
+        <button class="auth-tab-btn" data-tab="signup">Create Account</button>
+        <button class="auth-tab-btn" data-tab="forgot">Forgot Password</button>
+      </div>
+
+      <!-- TAB 1: LOGIN FORM -->
+      <form id="formLogin" class="auth-form-view active">
+        <div class="form-group">
+          <label><i class="fa-solid fa-envelope"></i> Email or Student Email</label>
+          <input type="text" id="loginEmail" placeholder="student@university.ac.za" required>
+        </div>
+        <div class="form-group">
+          <label><i class="fa-solid fa-lock"></i> Password</label>
+          <input type="password" id="loginPassword" placeholder="••••••••" required>
+        </div>
+        <div class="form-options">
+          <label class="remember-label">
+            <input type="checkbox" id="loginRemember" checked> Remember me
+          </label>
+          <a href="#" id="linkGoForgot" class="link-muted">Forgot password?</a>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+      </form>
+
+      <!-- TAB 2: SIGN UP FORM -->
+      <form id="formSignup" class="auth-form-view hidden">
+        <div class="form-group">
+          <label><i class="fa-solid fa-user"></i> Full Name</label>
+          <input type="text" id="signupName" placeholder="e.g. John Doe" required>
+        </div>
+        <div class="form-group">
+          <label><i class="fa-solid fa-envelope"></i> Student Email</label>
+          <input type="email" id="signupEmail" placeholder="student@university.ac.za" required>
+        </div>
+        <div class="form-group">
+          <label><i class="fa-solid fa-lock"></i> Create Password</label>
+          <input type="password" id="signupPassword" placeholder="At least 6 characters" minlength="6" required>
+        </div>
+        <div class="form-group">
+          <label><i class="fa-solid fa-shield-check"></i> Confirm Password</label>
+          <input type="password" id="signupPasswordConfirm" placeholder="Repeat password" minlength="6" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Create Account</button>
+      </form>
+
+      <!-- TAB 3: FORGOT PASSWORD FORM -->
+      <form id="formForgot" class="auth-form-view hidden">
+        <div class="form-group">
+          <label><i class="fa-solid fa-envelope"></i> Registered Email</label>
+          <input type="email" id="forgotEmail" placeholder="student@university.ac.za" required>
+        </div>
+        <p class="auth-helper-note">Enter your registered email address and we will send a password reset link directly via Firebase Auth.</p>
+        <button type="submit" class="btn btn-primary btn-block">Send Reset Link</button>
+        <button type="button" id="btnBackToLogin" class="btn btn-secondary btn-block mt-2">Back to Sign In</button>
+      </form>
+
+      <div class="auth-footer">
+        <span>Created by <strong>Matimba Chauke</strong> (075 380 6251)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main App Layout -->
+  <div class="app-layout">
+    <!-- Left Sidebar: Form-based Editor -->
+    <aside id="editorSidebar" class="editor-sidebar no-print">
+      <div class="sidebar-header">
+        <h3><i class="fa-solid fa-list-check"></i> Form Editor</h3>
+        <button id="btnCloseSidebar" class="btn-icon" title="Close Panel">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="sidebar-tip">
+        <i class="fa-solid fa-lightbulb"></i>
+        <span>Click directly on the CV paper, or use this form panel to edit!</span>
+      </div>
+
+      <div class="accordion">
+        <!-- Personal & Header -->
+        <div class="accordion-item open">
+          <div class="accordion-title">
+            <span><i class="fa-solid fa-user"></i> Personal Info</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="accordion-content">
+            <div class="form-group">
+              <label>Full Name</label>
+              <input type="text" id="inputName">
+            </div>
+            <div class="form-group">
+              <label>Circular Stamp Monogram Initials</label>
+              <input type="text" id="inputInitials" maxlength="4" placeholder="TN">
+            </div>
+            <div class="form-group">
+              <label>Phone</label>
+              <input type="text" id="inputPhone">
+            </div>
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" id="inputEmail">
+            </div>
+            <div class="form-group">
+              <label>Location / Address</label>
+              <textarea id="inputAddress" rows="2"></textarea>
+            </div>
+            <div class="form-group">
+              <label>Date of Birth</label>
+              <input type="text" id="inputDob">
+            </div>
+            <div class="form-group">
+              <label>Nationality</label>
+              <input type="text" id="inputNationality">
+            </div>
+          </div>
+        </div>
+
+        <!-- About Me -->
+        <div class="accordion-item">
+          <div class="accordion-title">
+            <span><i class="fa-solid fa-quote-left"></i> About Me</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="accordion-content">
+            <div class="form-group">
+              <label>Professional / Academic Summary</label>
+              <textarea id="inputAbout" rows="6"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- Skills -->
+        <div class="accordion-item">
+          <div class="accordion-title">
+            <span><i class="fa-solid fa-screwdriver-wrench"></i> Skills</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="accordion-content">
+            <div id="skillsFormList" class="form-items-list"></div>
+            <button id="btnAddSkill" class="btn btn-sm btn-outline"><i class="fa-solid fa-plus"></i> Add Skill</button>
+          </div>
+        </div>
+
+        <!-- Languages -->
+        <div class="accordion-item">
+          <div class="accordion-title">
+            <span><i class="fa-solid fa-language"></i> Languages</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="accordion-content">
+            <div id="languagesFormList" class="form-items-list"></div>
+            <button id="btnAddLanguage" class="btn btn-sm btn-outline"><i class="fa-solid fa-plus"></i> Add Language</button>
+          </div>
+        </div>
+
+        <!-- Work Experience -->
+        <div class="accordion-item">
+          <div class="accordion-title">
+            <span><i class="fa-solid fa-briefcase"></i> Work Experience</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="accordion-content">
+            <div id="experienceFormList" class="form-items-list"></div>
+            <button id="btnAddExperience" class="btn btn-sm btn-outline"><i class="fa-solid fa-plus"></i> Add Experience</button>
+          </div>
+        </div>
+
+        <!-- Education -->
+        <div class="accordion-item">
+          <div class="accordion-title">
+            <span><i class="fa-solid fa-graduation-cap"></i> Education</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="accordion-content">
+            <div id="educationFormList" class="form-items-list"></div>
+            <button id="btnAddEducation" class="btn btn-sm btn-outline"><i class="fa-solid fa-plus"></i> Add Education</button>
+          </div>
+        </div>
+
+        <!-- Extra-Curricular -->
+        <div class="accordion-item">
+          <div class="accordion-title">
+            <span><i class="fa-solid fa-award"></i> Extra-Curricular</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="accordion-content">
+            <div id="extracurricularFormList" class="form-items-list"></div>
+            <button id="btnAddExtracurricular" class="btn btn-sm btn-outline"><i class="fa-solid fa-plus"></i> Add Activity</button>
+          </div>
+        </div>
+
+        <!-- References -->
+        <div class="accordion-item">
+          <div class="accordion-title">
+            <span><i class="fa-solid fa-users"></i> References</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="accordion-content">
+            <div id="referencesFormList" class="form-items-list"></div>
+            <button id="btnAddReference" class="btn btn-sm btn-outline"><i class="fa-solid fa-plus"></i> Add Reference</button>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Workspace / Live Document Canvas -->
+    <main class="document-container">
+      <div class="document-helper-bar no-print">
+        <span class="helper-text"><i class="fa-solid fa-i-cursor"></i> Sample student template. Click any text to customize. <span id="saveStatusIndicator"><i class="fa-solid fa-check"></i> Auto-saved</span></span>
+        <div class="scale-controls">
+          <button id="btnZoomOut" class="btn-icon-sm" title="Zoom Out"><i class="fa-solid fa-minus"></i></button>
+          <span id="zoomLabel">100%</span>
+          <button id="btnZoomIn" class="btn-icon-sm" title="Zoom In"><i class="fa-solid fa-plus"></i></button>
+          <button id="btnZoomFit" class="btn-icon-sm" title="Fit to Screen"><i class="fa-solid fa-compress"></i></button>
+        </div>
+      </div>
+
+      <!-- Printable A4 Paper Wrapper -->
+      <div class="cv-page-wrapper" id="cvPageWrapper">
+        <article class="cv-paper" id="cvPaper">
+          
+          <!-- Header: Name & Circular Monogram Stamp -->
+          <header class="cv-header">
+            <div class="name-block">
+              <h1 class="candidate-name" id="cvName" contenteditable="true" spellcheck="false">THABO NDLOVU</h1>
+            </div>
+            
+            <div class="stamp-block" id="stampBlock" title="Click to customize monogram seal">
+              <svg class="circular-stamp" viewBox="0 0 160 160" width="125" height="125">
+                <defs>
+                  <path id="textCircle" d="M 80, 80 m -62, 0 a 62,62 0 1,1 124,0 a 62,62 0 1,1 -124,0" />
+                </defs>
+                <!-- Outer decorative circle -->
+                <circle cx="80" cy="80" r="76" class="stamp-outer-ring" />
+                <!-- Circular repeat text -->
+                <text class="stamp-curved-text">
+                  <textPath href="#textCircle" id="stampTextPath" startOffset="0%">
+                    THABO NDLOVU • THABO NDLOVU • 
+                  </textPath>
+                </text>
+                <!-- Inner decorative circle -->
+                <circle cx="80" cy="80" r="48" class="stamp-inner-ring" />
+                <!-- Stylized Center Monogram -->
+                <g class="stamp-center-monogram">
+                  <text x="80" y="74" text-anchor="middle" class="monogram-letter" id="monogramTop">T</text>
+                  <line x1="66" y1="80" x2="94" y2="80" class="monogram-line" />
+                  <text x="80" y="96" text-anchor="middle" class="monogram-letter" id="monogramBottom">N</text>
+                </g>
+              </svg>
+            </div>
+          </header>
+
+          <!-- Horizontal Divider -->
+          <div class="header-divider"></div>
+
+          <!-- Two Column Body -->
+          <div class="cv-body">
+            
+            <!-- LEFT COLUMN -->
+            <aside class="cv-left-col">
+              
+              <!-- CONTACTS -->
+              <section class="cv-section left-section" id="sectionContacts">
+                <h2 class="section-heading">C O N T A C T S</h2>
+                <div class="contact-card">
+                  <div class="contact-row">
+                    <span class="contact-val" id="cvPhone" contenteditable="true" spellcheck="false">071 234 5678</span>
+                    <span class="contact-icon"><i class="fa-solid fa-phone"></i></span>
+                  </div>
+                  <div class="contact-divider"></div>
+                  <div class="contact-row">
+                    <span class="contact-val" id="cvEmail" contenteditable="true" spellcheck="false">student.demo@university.ac.za</span>
+                    <span class="contact-icon"><i class="fa-solid fa-envelope"></i></span>
+                  </div>
+                  <div class="contact-divider"></div>
+                  <div class="contact-row">
+                    <span class="contact-val" id="cvAddress" contenteditable="true" spellcheck="false">Polokwane, Limpopo, South Africa</span>
+                    <span class="contact-icon"><i class="fa-solid fa-location-dot"></i></span>
+                  </div>
+                </div>
+              </section>
+
+              <!-- SKILLS -->
+              <section class="cv-section left-section" id="sectionSkills">
+                <div class="section-title-wrap">
+                  <h2 class="section-heading">S K I L L S</h2>
+                  <button class="btn-add-inline no-print" onclick="window.cvApp.addSkill()" title="Add Skill"><i class="fa-solid fa-plus"></i></button>
+                </div>
+                <ul class="cv-bullet-list" id="cvSkillsList">
+                  <!-- Populated by JS -->
+                </ul>
+              </section>
+
+              <!-- LANGUAGES -->
+              <section class="cv-section left-section" id="sectionLanguages">
+                <div class="section-title-wrap">
+                  <h2 class="section-heading">L A N G U A G E S</h2>
+                  <button class="btn-add-inline no-print" onclick="window.cvApp.addLanguage()" title="Add Language"><i class="fa-solid fa-plus"></i></button>
+                </div>
+                <ul class="cv-bullet-list" id="cvLanguagesList">
+                  <!-- Populated by JS -->
+                </ul>
+              </section>
+
+              <!-- PERSONAL DETAILS -->
+              <section class="cv-section left-section" id="sectionPersonal">
+                <h2 class="section-heading">P E R S O N A L<br>D E T A I L S</h2>
+                <div class="personal-item">
+                  <span class="personal-lbl">Date of birth</span>
+                  <span class="personal-val" id="cvDob" contenteditable="true" spellcheck="false">15 Mar 2002</span>
+                </div>
+                <div class="personal-item">
+                  <span class="personal-lbl">Nationality</span>
+                  <span class="personal-val" id="cvNationality" contenteditable="true" spellcheck="false">South African</span>
+                </div>
+              </section>
+
+            </aside>
+
+            <!-- RIGHT COLUMN -->
+            <section class="cv-right-col">
+              
+              <!-- ABOUT ME -->
+              <div class="cv-section right-section" id="sectionAbout">
+                <h2 class="section-heading">A B O U T &nbsp; M E</h2>
+                <p class="about-text" id="cvAbout" contenteditable="true" spellcheck="false">
+                  Dedicated and hardworking BSc Mathematical Sciences (Computer Science & Mathematics) student with a strong academic foundation, seeking graduate opportunities and student mentorship roles. Equipped with leadership, tutoring, and technical problem-solving capabilities developed through student assistantships and academic societies. Passionate about leveraging technology, mentoring junior peers, and applying analytical skills to real-world challenges.
+                </p>
+              </div>
+
+              <!-- WORK EXPERIENCE -->
+              <div class="cv-section right-section" id="sectionExperience">
+                <div class="section-title-wrap">
+                  <h2 class="section-heading">W O R K &nbsp; E X P E R I E N C E</h2>
+                  <button class="btn-add-inline no-print" onclick="window.cvApp.addExperience()" title="Add Experience"><i class="fa-solid fa-plus"></i> Add</button>
+                </div>
+                <div class="entry-list" id="cvExperienceList">
+                  <!-- Populated by JS -->
+                </div>
+              </div>
+
+              <!-- EDUCATION -->
+              <div class="cv-section right-section" id="sectionEducation">
+                <div class="section-title-wrap">
+                  <h2 class="section-heading">E D U C A T I O N</h2>
+                  <button class="btn-add-inline no-print" onclick="window.cvApp.addEducation()" title="Add Education"><i class="fa-solid fa-plus"></i> Add</button>
+                </div>
+                <div class="entry-list" id="cvEducationList">
+                  <!-- Populated by JS -->
+                </div>
+              </div>
+
+              <!-- EXTRA-CURRICULAR ACTIVITIES -->
+              <div class="cv-section right-section" id="sectionExtracurricular">
+                <div class="section-title-wrap">
+                  <h2 class="section-heading">E X T R A - C U R R I C U L A R &nbsp; A C T I V I T I E S</h2>
+                  <button class="btn-add-inline no-print" onclick="window.cvApp.addExtracurricular()" title="Add Activity"><i class="fa-solid fa-plus"></i> Add</button>
+                </div>
+                <div class="entry-list" id="cvExtracurricularList">
+                  <!-- Populated by JS -->
+                </div>
+              </div>
+
+              <!-- REFERENCES -->
+              <div class="cv-section right-section" id="sectionReferences">
+                <div class="section-title-wrap">
+                  <h2 class="section-heading">R E F E R E N C E S</h2>
+                  <button class="btn-add-inline no-print" onclick="window.cvApp.addReference()" title="Add Reference"><i class="fa-solid fa-plus"></i> Add</button>
+                </div>
+                <div class="references-grid" id="cvReferencesList">
+                  <!-- Populated by JS -->
+                </div>
+              </div>
+
+            </section>
+          </div>
+
+        </article>
+      </div>
+
+      <!-- Footer Attribution (Visible only on web, never printed on the CV) -->
+      <footer class="app-footer no-print">
+        <p>
+          Student CV Studio • Application created by <strong>Matimba Chauke</strong> • Contact: <a href="tel:0753806251">075 380 6251</a>
+        </p>
+      </footer>
+    </main>
+  </div>
+
+  <!-- Google Firebase SDK (Compat Version: 10.8.0) -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+  <!-- Firebase Config & App Engine -->
+  <script src="firebase-config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
