@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Student CV Builder - 32 Formats - Created by Matimba Chauke</title>
+  <title>Student CV Builder - 32 Formats & History - Created by Matimba Chauke</title>
   
   <!-- Fonts & Icons (CDN) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,14 +19,16 @@
   <style>
 /* ==========================================================================
    CV Studio & Live Document Styles
-   Created by Matimba Chauke (075 380 6251)
-   Single-File Edition with 32+ Formats & Auth Gate
+   Created by Matimba Chauke (075 380 6251) - Contact Dokodela
+   Single-File Edition with 32+ Formats, CV History & WhatsApp Support
    ========================================================================== */
 
 :root {
   --primary-color: #111111;
   --accent-color: #2563eb;
   --accent-hover: #1d4ed8;
+  --whatsapp-color: #25D366;
+  --whatsapp-hover: #1eb855;
   --text-main: #1f2937;
   --text-muted: #555555;
   --text-light: #777777;
@@ -78,6 +80,60 @@ body {
 }
 
 /* ==========================================================================
+   FLOATING WHATSAPP BUTTON (DOKODELA)
+   ========================================================================== */
+
+.whatsapp-float-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background-color: var(--whatsapp-color);
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
+  border-radius: 999px;
+  box-shadow: 0 4px 18px rgba(37, 211, 102, 0.45);
+  font-size: 0.86rem;
+  font-weight: 700;
+  text-decoration: none;
+  z-index: 990;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.whatsapp-float-btn i {
+  font-size: 1.35rem;
+}
+
+.whatsapp-float-btn:hover {
+  background-color: var(--whatsapp-hover);
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.6);
+  color: white;
+}
+
+.whatsapp-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #25D366;
+  color: white !important;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.74rem;
+  padding: 3px 10px;
+  border-radius: 999px;
+  transition: all 0.15s;
+}
+
+.whatsapp-badge-pill:hover {
+  background-color: #1eb855;
+  box-shadow: 0 2px 8px rgba(37, 211, 102, 0.4);
+}
+
+/* ==========================================================================
    FULL-PAGE AUTHENTICATION & ONBOARDING GATE
    ========================================================================== */
 
@@ -99,7 +155,7 @@ body {
 
 .auth-gate-container {
   width: 100%;
-  max-width: 1040px;
+  max-width: 1060px;
   background: rgba(255, 255, 255, 0.03);
   backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.12);
@@ -110,7 +166,6 @@ body {
   margin: auto;
 }
 
-/* Left Hero Brand Panel */
 .auth-hero-panel {
   flex: 1.1;
   padding: 44px 40px;
@@ -156,15 +211,15 @@ body {
   font-size: 0.92rem;
   color: #94a3b8;
   line-height: 1.55;
-  margin-bottom: 30px;
+  margin-bottom: 26px;
 }
 
 .hero-feature-list {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  margin-bottom: 30px;
+  gap: 13px;
+  margin-bottom: 28px;
 }
 
 .hero-feature-item {
@@ -191,23 +246,26 @@ body {
 .hero-creator-credit {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-  padding: 12px 16px;
+  border-radius: 12px;
+  padding: 14px 18px;
   font-size: 0.82rem;
   color: #cbd5e1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.credit-contact-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 .hero-creator-credit strong {
   color: #ffffff;
 }
 
-.hero-creator-credit a {
-  color: #38bdf8;
-  text-decoration: none;
-  font-weight: 600;
-}
-
-/* Right Form Card */
 .auth-gate-form-panel {
   flex: 0.9;
   background: #ffffff;
@@ -245,7 +303,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 20px;
+  padding: 0 18px;
   position: sticky;
   top: 0;
   z-index: 100;
@@ -255,7 +313,7 @@ body {
 .toolbar-left {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .toolbar-brand {
@@ -276,7 +334,7 @@ body {
 .creator-badge {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 7px;
   background: #f8fafc;
   border: 1px solid #e2e8f0;
   padding: 4px 10px;
@@ -287,24 +345,6 @@ body {
 
 .creator-badge strong {
   color: #1e293b;
-}
-
-.creator-phone {
-  color: #2563eb;
-  text-decoration: none;
-  font-weight: 600;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  background: #eff6ff;
-  padding: 2px 7px;
-  border-radius: 12px;
-  transition: all 0.15s;
-}
-
-.creator-phone:hover {
-  background: #2563eb;
-  color: #ffffff;
 }
 
 .btn-firebase-badge {
@@ -347,7 +387,7 @@ body {
 .toolbar-actions {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
 
 .btn-templates-glow {
@@ -360,6 +400,20 @@ body {
 .btn-templates-glow:hover {
   background: linear-gradient(135deg, #2563eb, #1d4ed8);
   box-shadow: 0 2px 10px rgba(37,99,235,0.35);
+}
+
+.btn-history-badge {
+  position: relative;
+}
+
+.badge-count {
+  background: #2563eb;
+  color: white;
+  border-radius: 999px;
+  padding: 1px 6px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  margin-left: 4px;
 }
 
 .app-info-banner {
@@ -383,6 +437,11 @@ body {
   text-decoration: underline;
 }
 
+.banner-inner i.fa-sparkles {
+  color: #fbbf24;
+  margin-right: 4px;
+}
+
 .banner-close {
   background: none;
   border: none;
@@ -396,9 +455,9 @@ body {
 .btn {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  padding: 7px 13px;
-  font-size: 0.825rem;
+  gap: 6px;
+  padding: 7px 11px;
+  font-size: 0.81rem;
   font-weight: 500;
   border-radius: 6px;
   cursor: pointer;
@@ -464,10 +523,6 @@ body {
   padding: 9px 16px;
 }
 
-.mt-2 {
-  margin-top: 8px;
-}
-
 .btn-icon {
   background: transparent;
   border: none;
@@ -493,16 +548,16 @@ body {
 /* User Account */
 .user-profile-menu {
   position: relative;
-  margin-left: 6px;
+  margin-left: 4px;
 }
 
 .btn-user-avatar {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 7px;
   background: #f8fafc;
   border: 1px solid #cbd5e1;
-  padding: 4px 10px 4px 5px;
+  padding: 4px 8px 4px 4px;
   border-radius: 999px;
   cursor: pointer;
   transition: all 0.15s;
@@ -514,8 +569,8 @@ body {
 }
 
 .avatar-circle {
-  width: 28px;
-  height: 28px;
+  width: 26px;
+  height: 26px;
   background: #2563eb;
   color: white;
   border-radius: 50%;
@@ -523,15 +578,15 @@ body {
   align-items: center;
   justify-content: center;
   font-weight: 700;
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   letter-spacing: 0.05em;
 }
 
 .user-display-name {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 600;
   color: #1e293b;
-  max-width: 110px;
+  max-width: 95px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -615,123 +670,6 @@ body {
   background: #fef2f2;
 }
 
-/* Dropdown Customize */
-.dropdown-container {
-  position: relative;
-}
-
-.dropdown-menu {
-  position: absolute;
-  right: 0;
-  top: calc(100% + 6px);
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1);
-  padding: 12px;
-  width: 240px;
-  z-index: 150;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.dropdown-menu.hidden {
-  display: none;
-}
-
-.menu-item {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-
-.menu-item label {
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  color: #6b7280;
-}
-
-.menu-item select,
-.menu-item input[type="text"] {
-  padding: 6px 10px;
-  border: 1px solid #d1d5db;
-  border-radius: 5px;
-  font-size: 0.85rem;
-}
-
-.menu-item input[type="color"] {
-  width: 100%;
-  height: 34px;
-  border: 1px solid #d1d5db;
-  border-radius: 5px;
-  cursor: pointer;
-  padding: 2px;
-}
-
-/* Switch */
-.toggle-switch {
-  position: relative;
-  display: inline-block;
-  width: 44px;
-  height: 24px;
-}
-
-.toggle-switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background-color: #ccc;
-  transition: .2s;
-  border-radius: 24px;
-}
-
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 18px; width: 18px;
-  left: 3px; bottom: 3px;
-  background-color: white;
-  transition: .2s;
-  border-radius: 50%;
-}
-
-input:checked + .slider {
-  background-color: var(--accent-color);
-}
-
-input:checked + .slider:before {
-  transform: translateX(20px);
-}
-
-/* Toast */
-.toast {
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  background-color: #1f2937;
-  color: white;
-  padding: 12px 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  font-size: 0.85rem;
-  z-index: 10000;
-  transition: opacity 0.2s, transform 0.2s;
-}
-
-.toast.hidden {
-  opacity: 0;
-  transform: translateY(10px);
-  pointer-events: none;
-}
-
 /* Modals */
 .auth-modal-backdrop {
   position: fixed;
@@ -766,7 +704,8 @@ input:checked + .slider:before {
   max-width: 520px;
 }
 
-.template-gallery-card {
+.template-gallery-card,
+.history-gallery-card {
   max-width: 960px;
   width: 95%;
   max-height: 90vh;
@@ -791,6 +730,31 @@ input:checked + .slider:before {
 
 .auth-close-btn:hover {
   color: #1e293b;
+}
+
+.auth-header {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.auth-logo {
+  width: 44px;
+  height: 44px;
+  background: #eff6ff;
+  color: #2563eb;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  margin: 0 auto 10px auto;
+  border: 1px solid #bfdbfe;
+}
+
+.firebase-logo {
+  background: #fffbeb;
+  color: #f59e0b;
+  border-color: #fde68a;
 }
 
 .btn-google-sign-in {
@@ -901,29 +865,125 @@ input:checked + .slider:before {
   display: none;
 }
 
-.form-options {
+/* ==========================================================================
+   CV HISTORY MODAL & CARDS
+   ========================================================================== */
+
+.history-toolbar-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 0.77rem;
   margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e2e8f0;
 }
 
-.remember-label {
-  color: #475569;
+.history-grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+  max-height: 55vh;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+.history-card {
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 16px;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+.history-card:hover {
+  transform: translateY(-2px);
+  border-color: #2563eb;
+  box-shadow: 0 8px 18px rgba(37,99,235,0.12);
+}
+
+.history-card.active {
+  border-color: #2563eb;
+  background: #f8faff;
+  box-shadow: 0 0 0 2px #2563eb;
+}
+
+.history-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.history-card-title {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: #0f172a;
+  word-break: break-word;
+}
+
+.history-badge-active {
+  background: #10b981;
+  color: white;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 999px;
+  text-transform: uppercase;
+}
+
+.history-meta-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.77rem;
+  color: #64748b;
+  margin-bottom: 14px;
+}
+
+.history-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.history-actions-row {
+  display: flex;
+  gap: 6px;
+  border-top: 1px solid #f1f5f9;
+  padding-top: 10px;
+}
+
+.btn-history-action {
+  flex: 1;
+  padding: 6px 8px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+  background: #f8fafc;
+  color: #334155;
   cursor: pointer;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 5px;
+  transition: all 0.15s;
 }
 
-.link-muted {
-  color: #2563eb;
-  text-decoration: none;
+.btn-history-action:hover {
+  background: #2563eb;
+  color: white;
+  border-color: #2563eb;
 }
 
-.link-muted:hover {
-  text-decoration: underline;
+.btn-history-action.btn-del-history:hover {
+  background: #dc2626;
+  color: white;
+  border-color: #dc2626;
 }
 
 /* ==========================================================================
@@ -1805,18 +1865,15 @@ input:checked + .slider:before {
    32 DIVERSE CV TEMPLATES & FORMAT OVERRIDES
    ========================================================================== */
 
-/* 1. Limpopo Classic (Default) */
 .cv-paper.template-limpopo {
   --primary-color: #111111;
   --font-heading: 'Montserrat', sans-serif;
 }
 
-/* 2. Harvard Academic */
 .cv-paper.template-harvard {
   --primary-color: #1e293b;
   --font-heading: 'Merriweather', serif;
   --font-body: 'Merriweather', serif;
-  text-align: left;
 }
 .cv-paper.template-harvard .candidate-name {
   text-align: center;
@@ -1838,17 +1895,15 @@ input:checked + .slider:before {
   padding-bottom: 4px;
 }
 
-/* 3. Stanford Modern */
 .cv-paper.template-stanford {
-  --primary-color: #8c1515; /* Stanford Cardinal */
+  --primary-color: #8c1515;
   --font-heading: 'Roboto', sans-serif;
 }
 .cv-paper.template-stanford .header-divider { background-color: #8c1515; }
 .cv-paper.template-stanford .cv-left-col { border-right-color: #8c1515; }
 
-/* 4. Oxford Traditional */
 .cv-paper.template-oxford {
-  --primary-color: #002147; /* Oxford Navy */
+  --primary-color: #002147;
   --font-heading: 'Playfair Display', serif;
 }
 .cv-paper.template-oxford .candidate-name {
@@ -1857,7 +1912,6 @@ input:checked + .slider:before {
   letter-spacing: 0.05em;
 }
 
-/* 5. Tech Minimalist */
 .cv-paper.template-tech-minimalist {
   --primary-color: #0f172a;
   --font-heading: 'Fira Code', monospace;
@@ -1868,23 +1922,14 @@ input:checked + .slider:before {
   color: #2563eb;
 }
 
-/* 6. Executive Gold */
 .cv-paper.template-executive-gold {
   --primary-color: #1e1b18;
   --font-heading: 'Montserrat', sans-serif;
   border-top: 6px solid #d97706;
 }
-.cv-paper.template-executive-gold .candidate-name {
-  color: #1e1b18;
-}
-.cv-paper.template-executive-gold .section-heading {
-  color: #b45309;
-}
-.cv-paper.template-executive-gold .header-divider {
-  background-color: #d97706;
-}
+.cv-paper.template-executive-gold .section-heading { color: #b45309; }
+.cv-paper.template-executive-gold .header-divider { background-color: #d97706; }
 
-/* 7. Nordic Clean */
 .cv-paper.template-nordic-clean {
   --primary-color: #475569;
   --font-heading: 'Inter', sans-serif;
@@ -1894,55 +1939,23 @@ input:checked + .slider:before {
   background-color: #cbd5e1;
   height: 1px;
 }
-.cv-paper.template-nordic-clean .cv-left-col {
-  border-right-color: #e2e8f0;
-}
+.cv-paper.template-nordic-clean .cv-left-col { border-right-color: #e2e8f0; }
 
-/* 8. Creative Indigo */
 .cv-paper.template-creative-indigo {
   --primary-color: #4f46e5;
   --font-heading: 'Montserrat', sans-serif;
 }
-.cv-paper.template-creative-indigo .candidate-name {
-  color: #4338ca;
-  letter-spacing: 0.22em;
-}
-.cv-paper.template-creative-indigo .contact-icon {
-  background-color: #e0e7ff;
-  color: #4338ca;
-}
+.cv-paper.template-creative-indigo .candidate-name { color: #4338ca; letter-spacing: 0.22em; }
+.cv-paper.template-creative-indigo .contact-icon { background-color: #e0e7ff; color: #4338ca; }
 
-/* 9. Emerald Horizon */
-.cv-paper.template-emerald {
-  --primary-color: #065f46;
-}
-.cv-paper.template-emerald .candidate-name {
-  color: #064e3b;
-}
+.cv-paper.template-emerald { --primary-color: #065f46; }
+.cv-paper.template-sapphire { --primary-color: #1e3a8a; }
+.cv-paper.template-ruby { --primary-color: #9f1239; }
+.cv-paper.template-teal { --primary-color: #0f766e; }
 
-/* 10. Midnight Sapphire */
-.cv-paper.template-sapphire {
-  --primary-color: #1e3a8a;
-}
-.cv-paper.template-sapphire .header-divider {
-  background-color: #1e40af;
-}
-
-/* 11. Ruby Professional */
-.cv-paper.template-ruby {
-  --primary-color: #9f1239;
-}
-
-/* 12. Teal Synergy */
-.cv-paper.template-teal {
-  --primary-color: #0f766e;
-}
-
-/* 13. Swiss Monochrome Grid */
 .cv-paper.template-swiss {
   --primary-color: #000000;
   --font-heading: 'Inter', sans-serif;
-  --font-body: 'Inter', sans-serif;
 }
 .cv-paper.template-swiss .candidate-name {
   font-weight: 800;
@@ -1950,35 +1963,22 @@ input:checked + .slider:before {
   font-size: 2.6rem;
 }
 
-/* 14. Bold Navy Header Block */
-.cv-paper.template-header-block {
-  padding-top: 0;
-  overflow: hidden;
-}
+.cv-paper.template-header-block { padding-top: 0; overflow: hidden; }
 .cv-paper.template-header-block .cv-header {
   background-color: #0f172a;
   color: white;
   margin: 0 calc(-1 * var(--cv-padding)) 20px calc(-1 * var(--cv-padding));
   padding: 30px var(--cv-padding);
 }
-.cv-paper.template-header-block .candidate-name {
-  color: white;
-}
+.cv-paper.template-header-block .candidate-name { color: white; }
 .cv-paper.template-header-block .stamp-outer-ring,
 .cv-paper.template-header-block .stamp-inner-ring,
-.cv-paper.template-header-block .monogram-line {
-  stroke: white;
-}
+.cv-paper.template-header-block .monogram-line { stroke: white; }
 .cv-paper.template-header-block .stamp-curved-text,
-.cv-paper.template-header-block .stamp-center-monogram {
-  fill: white;
-}
+.cv-paper.template-header-block .stamp-center-monogram { fill: white; }
 .cv-paper.template-header-block .header-divider { display: none; }
 
-/* 15. Charcoal Banner */
-.cv-paper.template-header-charcoal {
-  padding-top: 0;
-}
+.cv-paper.template-header-charcoal { padding-top: 0; }
 .cv-paper.template-header-charcoal .cv-header {
   background-color: #27272a;
   color: white;
@@ -1988,13 +1988,11 @@ input:checked + .slider:before {
 .cv-paper.template-header-charcoal .candidate-name { color: white; }
 .cv-paper.template-header-charcoal .header-divider { display: none; }
 
-/* 16. Warm Terracotta */
 .cv-paper.template-terracotta {
   --primary-color: #c2410c;
   background-color: #fffbf7;
 }
 
-/* 17. Compact Pro 1-Pager */
 .cv-paper.template-compact-pro {
   --cv-padding: 22px 30px;
   --section-gap: 11px;
@@ -2002,29 +2000,18 @@ input:checked + .slider:before {
   --body-font-size: 0.75rem;
   --line-height: 1.3;
 }
-.cv-paper.template-compact-pro .candidate-name {
-  font-size: 1.85rem;
-}
+.cv-paper.template-compact-pro .candidate-name { font-size: 1.85rem; }
 
-/* 18. Right Sidebar Layout (Flipped) */
-.cv-paper.template-right-sidebar .cv-body {
-  flex-direction: row-reverse;
-}
+.cv-paper.template-right-sidebar .cv-body { flex-direction: row-reverse; }
 .cv-paper.template-right-sidebar .cv-left-col {
   border-right: none;
   border-left: 1.5px solid var(--primary-color);
   padding-right: 0;
   padding-left: 22px;
 }
-.cv-paper.template-right-sidebar .cv-right-col {
-  padding-left: 0;
-  padding-right: 24px;
-}
+.cv-paper.template-right-sidebar .cv-right-col { padding-left: 0; padding-right: 24px; }
 
-/* 19. Single Column Classic Chronological */
-.cv-paper.template-single-column .cv-body {
-  flex-direction: column;
-}
+.cv-paper.template-single-column .cv-body { flex-direction: column; }
 .cv-paper.template-single-column .cv-left-col {
   width: 100%;
   border-right: none;
@@ -2038,90 +2025,25 @@ input:checked + .slider:before {
   padding-top: 14px;
 }
 
-/* 20. Soft Lavender */
-.cv-paper.template-lavender {
-  --primary-color: #7c3aed;
-  background-color: #faf7ff;
-}
-
-/* 21. Rose Gold */
-.cv-paper.template-rose-gold {
-  --primary-color: #be185d;
-}
-
-/* 22. High-Contrast Bordered */
+.cv-paper.template-lavender { --primary-color: #7c3aed; background-color: #faf7ff; }
+.cv-paper.template-rose-gold { --primary-color: #be185d; }
 .cv-paper.template-heavy-borders .header-divider,
 .cv-paper.template-heavy-borders .cv-left-col,
-.cv-paper.template-heavy-borders .cv-section::after {
-  border-width: 2.5px;
-  height: 2.5px;
-}
-
-/* 23. Wall Street Banking */
-.cv-paper.template-wall-street {
-  --primary-color: #1e3a5f;
-  --font-heading: 'Roboto', sans-serif;
-}
-
-/* 24. Health & Medical Sciences */
-.cv-paper.template-medical {
-  --primary-color: #0284c7;
-}
-
-/* 25. Engineering Blueprint */
-.cv-paper.template-engineering {
-  --primary-color: #0369a1;
-  --font-heading: 'Roboto', sans-serif;
-}
-
-/* 26. Legal & Jurisprudence */
-.cv-paper.template-legal {
-  --primary-color: #1f2937;
-  --font-heading: 'Merriweather', serif;
-  --font-body: 'Merriweather', serif;
-}
-
-/* 27. Modern Startup Amber */
-.cv-paper.template-startup-amber {
-  --primary-color: #d97706;
-}
-
-/* 28. Cyber Matrix */
-.cv-paper.template-cyber {
-  --primary-color: #0284c7;
-  --font-heading: 'Fira Code', monospace;
-}
-
-/* 29. Editorial Magazine */
-.cv-paper.template-editorial {
-  --primary-color: #111827;
-  --font-heading: 'Playfair Display', serif;
-}
-
-/* 30. Pretoria Public Sector */
-.cv-paper.template-pretoria {
-  --primary-color: #14532d;
-  border-top: 5px solid #ca8a04;
-}
-
-/* 31. Minimalist Borderless */
+.cv-paper.template-heavy-borders .cv-section::after { border-width: 2.5px; height: 2.5px; }
+.cv-paper.template-wall-street { --primary-color: #1e3a5f; --font-heading: 'Roboto', sans-serif; }
+.cv-paper.template-medical { --primary-color: #0284c7; }
+.cv-paper.template-engineering { --primary-color: #0369a1; --font-heading: 'Roboto', sans-serif; }
+.cv-paper.template-legal { --primary-color: #1f2937; --font-heading: 'Merriweather', serif; --font-body: 'Merriweather', serif; }
+.cv-paper.template-startup-amber { --primary-color: #d97706; }
+.cv-paper.template-cyber { --primary-color: #0284c7; --font-heading: 'Fira Code', monospace; }
+.cv-paper.template-editorial { --primary-color: #111827; --font-heading: 'Playfair Display', serif; }
+.cv-paper.template-pretoria { --primary-color: #14532d; border-top: 5px solid #ca8a04; }
 .cv-paper.template-borderless .header-divider,
 .cv-paper.template-borderless .cv-section::after,
-.cv-paper.template-borderless .cv-left-col {
-  display: none !important;
-  border: none !important;
-}
+.cv-paper.template-borderless .cv-left-col { display: none !important; border: none !important; }
+.cv-paper.template-diamond-blue { --primary-color: #2563eb; border-top: 4px solid #2563eb; }
 
-/* 32. Diamond Blue */
-.cv-paper.template-diamond-blue {
-  --primary-color: #2563eb;
-  border-top: 4px solid #2563eb;
-}
-
-/* ==========================================================================
-   Print Stylesheet
-   ========================================================================== */
-
+/* Print Stylesheet */
 @media print {
   @page {
     size: A4 portrait;
@@ -2136,6 +2058,7 @@ input:checked + .slider:before {
   }
 
   .no-print,
+  .whatsapp-float-btn,
   .app-toolbar,
   .app-info-banner,
   .auth-gate-screen,
@@ -2189,6 +2112,14 @@ input:checked + .slider:before {
 <body>
 
   <!-- ==========================================================================
+       FLOATING WHATSAPP BUTTON (CONTACT DOKODELA)
+       ========================================================================== -->
+  <a href="https://wa.me/27753806251?text=Hi%20Dokodela,%20I'm%20using%20the%20Student%20CV%20Studio%20and%20would%20like%20assistance." target="_blank" class="whatsapp-float-btn no-print" title="Chat with Dokodela on WhatsApp">
+    <i class="fa-brands fa-whatsapp"></i>
+    <span>WhatsApp Dokodela</span>
+  </a>
+
+  <!-- ==========================================================================
        START SCREEN: USER ONBOARDING & SIGN UP GATE
        ========================================================================== -->
   <div id="authGateScreen" class="auth-gate-screen no-print">
@@ -2207,13 +2138,17 @@ input:checked + .slider:before {
           </h1>
 
           <p class="hero-desc">
-            The free, cloud-powered curriculum vitae builder designed for university and college students. Create, live-edit, customize, and export professional A4 CVs in seconds.
+            The free, cloud-powered curriculum vitae builder designed for university and college students. Create, live-edit, customize, manage multiple CV versions, and export professional A4 CVs in seconds.
           </p>
 
           <ul class="hero-feature-list">
             <li class="hero-feature-item">
               <i class="fa-solid fa-layer-group"></i>
               <span><strong>32 Unique CV Layouts</strong> (Academic, Executive, Tech, Modern & Minimalist)</span>
+            </li>
+            <li class="hero-feature-item">
+              <i class="fa-solid fa-clock-rotate-left"></i>
+              <span><strong>CV History & Multi-Version Manager</strong> (Switch & duplicate CVs anytime)</span>
             </li>
             <li class="hero-feature-item">
               <i class="fa-solid fa-cloud"></i>
@@ -2223,15 +2158,17 @@ input:checked + .slider:before {
               <i class="fa-solid fa-file-pdf"></i>
               <span><strong>Pixel-Perfect A4 PDF Export</strong> (Ready for job & bursary applications)</span>
             </li>
-            <li class="hero-feature-item">
-              <i class="fa-solid fa-pen-nib"></i>
-              <span><strong>Direct Click-to-Edit</strong> & Form Panel Drawer</span>
-            </li>
           </ul>
         </div>
 
         <div class="hero-creator-credit">
-          <i class="fa-solid fa-award"></i> Created & Designed by <strong>Matimba Chauke</strong> • Contact: <a href="tel:0753806251">075 380 6251</a>
+          <div><i class="fa-solid fa-award"></i> Created & Designed by <strong>Matimba Chauke</strong></div>
+          <div class="credit-contact-row">
+            <span>Contact Dokodela:</span>
+            <a href="https://wa.me/27753806251?text=Hi%20Dokodela,%20I%20have%20a%20question%20about%20Student%20CV%20Studio." target="_blank" class="whatsapp-badge-pill">
+              <i class="fa-brands fa-whatsapp"></i> WhatsApp 075 380 6251
+            </a>
+          </div>
         </div>
       </div>
 
@@ -2239,7 +2176,7 @@ input:checked + .slider:before {
       <div class="auth-gate-form-panel">
         <div class="gate-form-header">
           <h3 id="gateTitle">Create Your Account</h3>
-          <p id="gateSubtitle">Sign up to choose from 32 CV formats and start editing</p>
+          <p id="gateSubtitle">Sign up to access 32 CV formats, CV history, and cloud sync</p>
         </div>
 
         <!-- 1-Click Demo Access Button -->
@@ -2327,11 +2264,12 @@ input:checked + .slider:before {
           <span>Student CV Studio</span>
         </div>
 
-        <!-- Creator Attribution Badge -->
+        <!-- Creator Attribution Badge with WhatsApp -->
         <div class="creator-badge" title="Developer Contact">
-          <i class="fa-solid fa-code"></i>
           <span>Created by <strong>Matimba Chauke</strong></span>
-          <a href="tel:0753806251" class="creator-phone"><i class="fa-solid fa-phone"></i> 075 380 6251</a>
+          <a href="https://wa.me/27753806251?text=Hi%20Dokodela,%20I'm%20using%20Student%20CV%20Studio." target="_blank" class="whatsapp-badge-pill" title="WhatsApp Dokodela">
+            <i class="fa-brands fa-whatsapp"></i> WhatsApp Dokodela
+          </a>
         </div>
 
         <!-- Firebase Cloud Status Badge -->
@@ -2343,21 +2281,28 @@ input:checked + .slider:before {
       </div>
 
       <div class="toolbar-actions">
+        <!-- CV History / Multi-CV Manager Button -->
+        <button id="btnOpenHistory" class="btn btn-secondary btn-history-badge" title="Manage multiple CVs & view history">
+          <i class="fa-solid fa-clock-rotate-left"></i>
+          <span>My CVs</span>
+          <span class="badge-count" id="historyCountBadge">1</span>
+        </button>
+
         <!-- 32 CV Formats Gallery Button -->
         <button id="btnOpenTemplates" class="btn btn-templates-glow" title="Browse 32 different CV formats">
           <i class="fa-solid fa-layer-group"></i>
-          <span>CV Formats (32)</span>
+          <span>Formats (32)</span>
         </button>
 
         <button id="btnToggleSidebar" class="btn btn-secondary" title="Open Form Editor Panel">
           <i class="fa-solid fa-sliders"></i>
-          <span>Form Panel</span>
+          <span>Form</span>
         </button>
 
         <div class="dropdown-container">
           <button id="btnCustomize" class="btn btn-secondary">
             <i class="fa-solid fa-palette"></i>
-            <span>Theme & Density</span>
+            <span>Theme</span>
           </button>
           <div id="customizeMenu" class="dropdown-menu hidden">
             <div class="menu-item">
@@ -2393,11 +2338,6 @@ input:checked + .slider:before {
           <input type="file" id="importJSONInput" accept=".json" style="display:none;">
         </label>
 
-        <button id="btnReset" class="btn btn-danger-outline" title="Reset to sample demo student CV">
-          <i class="fa-solid fa-rotate-left"></i>
-          <span>Reset</span>
-        </button>
-
         <button id="btnPrint" class="btn btn-primary" title="Print or save as high-quality PDF">
           <i class="fa-solid fa-file-pdf"></i>
           <span>Save as PDF</span>
@@ -2417,6 +2357,9 @@ input:checked + .slider:before {
               <small id="dropdownBackendLabel" class="text-backend-mode">Mode: Cloud Firestore</small>
             </div>
             <div class="dropdown-divider"></div>
+            <a href="https://wa.me/27753806251?text=Hi%20Dokodela,%20I'm%20using%20Student%20CV%20Studio." target="_blank" class="dropdown-link-btn" style="color: #25D366; font-weight: 600;">
+              <i class="fa-brands fa-whatsapp"></i> WhatsApp Dokodela
+            </a>
             <button id="btnOpenFirebaseModalFromMenu" class="dropdown-link-btn">
               <i class="fa-solid fa-fire"></i> Firebase Settings
             </button>
@@ -2432,13 +2375,49 @@ input:checked + .slider:before {
     <!-- Top Banner -->
     <div class="app-info-banner no-print">
       <div class="banner-inner">
-        <span><i class="fa-solid fa-sparkles"></i> <strong>Student CV Studio</strong> — Created by <strong>Matimba Chauke</strong> (<a href="tel:0753806251">075 380 6251</a>). Choose from 32 distinct CV formats!</span>
+        <span><i class="fa-solid fa-sparkles"></i> <strong>Student CV Studio</strong> — Created by <strong>Matimba Chauke</strong>. Need help? <a href="https://wa.me/27753806251?text=Hi%20Dokodela,%20I%20have%20a%20question%20about%20Student%20CV%20Studio." target="_blank" style="color:#4ade80; font-weight:600;"><i class="fa-brands fa-whatsapp"></i> WhatsApp Dokodela (075 380 6251)</a></span>
         <button class="banner-close" onclick="this.parentElement.parentElement.style.display='none'"><i class="fa-solid fa-xmark"></i></button>
       </div>
     </div>
 
     <!-- Notification Toast -->
     <div id="toast" class="toast hidden"></div>
+
+    <!-- ==========================================================================
+         CV HISTORY & MULTI-CV MANAGER MODAL
+         ========================================================================== -->
+    <div id="historyModal" class="auth-modal-backdrop hidden no-print">
+      <div class="auth-card history-gallery-card">
+        <button id="btnCloseHistoryModal" class="auth-close-btn" title="Close"><i class="fa-solid fa-xmark"></i></button>
+        
+        <div class="auth-header">
+          <h2><i class="fa-solid fa-clock-rotate-left" style="color: #2563eb;"></i> My Created CVs & History</h2>
+          <p class="auth-subtitle">Access, duplicate, switch, or manage multiple tailored versions of your CV</p>
+        </div>
+
+        <div class="history-toolbar-row">
+          <span style="font-size: 0.85rem; color: #475569; font-weight: 600;">
+            Saved CVs: <strong id="historyTotalCount" style="color:#0f172a;">1</strong>
+          </span>
+          <div style="display: flex; gap: 8px;">
+            <button id="btnDuplicateCurrentCV" class="btn btn-secondary btn-sm" title="Duplicate current CV for another job application">
+              <i class="fa-solid fa-copy"></i> Duplicate Current
+            </button>
+            <button id="btnCreateNewCV" class="btn btn-primary btn-sm" title="Start a fresh CV version">
+              <i class="fa-solid fa-plus"></i> Create New CV
+            </button>
+          </div>
+        </div>
+
+        <div class="history-grid-container" id="historyGrid">
+          <!-- Populated dynamically with saved CVs -->
+        </div>
+
+        <div class="auth-footer">
+          <span>Created by <strong>Matimba Chauke</strong> • <a href="https://wa.me/27753806251" target="_blank" style="color: #16a34a; text-decoration: none; font-weight: 600;"><i class="fa-brands fa-whatsapp"></i> WhatsApp Dokodela (075 380 6251)</a></span>
+        </div>
+      </div>
+    </div>
 
     <!-- TEMPLATE GALLERY MODAL (32 FORMATS) -->
     <div id="templateModal" class="auth-modal-backdrop hidden no-print">
@@ -2528,6 +2507,10 @@ input:checked + .slider:before {
               <i class="fa-solid fa-chevron-down"></i>
             </div>
             <div class="accordion-content">
+              <div class="form-group">
+                <label>CV Title / Label (e.g. Internship Application)</label>
+                <input type="text" id="inputCvTitle" placeholder="My Main CV">
+              </div>
               <div class="form-group">
                 <label>Full Name</label>
                 <input type="text" id="inputName">
@@ -2650,7 +2633,7 @@ input:checked + .slider:before {
       <!-- Main Workspace / Live Document Canvas -->
       <main class="document-container">
         <div class="document-helper-bar no-print">
-          <span class="helper-text"><i class="fa-solid fa-i-cursor"></i> Format: <strong id="activeTemplateNameLabel">Limpopo Classic</strong> • Click any text to edit. <span id="saveStatusIndicator"><i class="fa-solid fa-check"></i> Auto-saved</span></span>
+          <span class="helper-text"><i class="fa-solid fa-file-signature"></i> CV: <strong id="activeCvTitleLabel">Main CV</strong> (<span id="activeTemplateNameLabel">Limpopo Classic</span>) • <span id="saveStatusIndicator"><i class="fa-solid fa-check"></i> Auto-saved</span></span>
           <div class="scale-controls">
             <button id="btnZoomOut" class="btn-icon-sm" title="Zoom Out"><i class="fa-solid fa-minus"></i></button>
             <span id="zoomLabel">100%</span>
@@ -2807,7 +2790,7 @@ input:checked + .slider:before {
         <!-- Footer Attribution -->
         <footer class="app-footer no-print">
           <p>
-            Student CV Studio • Application created by <strong>Matimba Chauke</strong> • Contact: <a href="tel:0753806251">075 380 6251</a>
+            Student CV Studio • Created by <strong>Matimba Chauke</strong> • <a href="https://wa.me/27753806251?text=Hi%20Dokodela,%20I'm%20using%20Student%20CV%20Studio." target="_blank" style="color: #16a34a; font-weight: 600;"><i class="fa-brands fa-whatsapp"></i> WhatsApp Dokodela (075 380 6251)</a>
           </p>
         </footer>
       </main>
@@ -2879,7 +2862,10 @@ function getFirebaseConfig() {
 }
 
 const DEFAULT_DEMO_DATA = {
+  id: "cv_default_1",
+  cvTitle: "Main General CV",
   templateId: "template-limpopo",
+  lastModified: new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
   name: "THABO NDLOVU",
   initials: "TN",
   phone: "071 234 5678",
@@ -2980,9 +2966,12 @@ class CVApp {
     this.zoomLevel = 1.0;
     this.activeFilter = "all";
 
+    this.cvHistory = [];
+    this.activeCvId = null;
+
     this.initFirebase();
     this.checkSessionAndGate();
-    this.data = this.loadData();
+    this.initCVHistory();
     this.initElements();
     this.bindEvents();
     this.render();
@@ -3027,7 +3016,7 @@ class CVApp {
             localStorage.setItem('cv_studio_active_session', JSON.stringify(this.currentUser));
             document.getElementById('authGateScreen').classList.add('hidden');
             this.updateUserBadge();
-            await this.loadDataFromFirestore(user.uid);
+            await this.loadCloudHistory(user.uid);
           }
           this.updateFirebaseStatusUI();
         });
@@ -3068,59 +3057,271 @@ class CVApp {
     const id = this.currentUser && (this.currentUser.uid || this.currentUser.email)
       ? (this.currentUser.uid || this.currentUser.email).replace(/[^a-zA-Z0-9]/g, '_') 
       : 'guest';
-    return `cv_studio_data_${id}`;
+    return `cv_studio_history_${id}`;
   }
 
-  loadData() {
+  // =================== CV HISTORY SYSTEM ===================
+  initCVHistory() {
     try {
       const saved = localStorage.getItem(this.getUserStorageKey());
       if (saved) {
-        return JSON.parse(saved);
-      }
-    } catch (e) {}
-    return JSON.parse(JSON.stringify(DEFAULT_DEMO_DATA));
-  }
-
-  async loadDataFromFirestore(uid) {
-    if (!this.firebaseActive || !this.db || !uid) return;
-    try {
-      const docRef = this.db.collection('users').doc(uid).collection('cv').doc('current');
-      const docSnap = await docRef.get();
-      if (docSnap.exists) {
-        this.data = docSnap.data();
-        this.saveDataLocally();
-        this.render();
-        this.showToast("Cloud CV loaded from Firestore");
-      } else {
-        await docRef.set(this.data);
+        this.cvHistory = JSON.parse(saved);
       }
     } catch (e) {
-      console.warn("Firestore read error:", e);
+      this.cvHistory = [];
+    }
+
+    if (!Array.isArray(this.cvHistory) || this.cvHistory.length === 0) {
+      const initialCV = JSON.parse(JSON.stringify(DEFAULT_DEMO_DATA));
+      initialCV.id = "cv_" + Date.now();
+      initialCV.cvTitle = "Main Graduate CV";
+      initialCV.lastModified = this.getFormattedDate();
+      this.cvHistory = [initialCV];
+    }
+
+    this.activeCvId = this.cvHistory[0].id;
+    this.data = this.cvHistory[0];
+    this.updateHistoryUI();
+  }
+
+  getFormattedDate() {
+    return new Date().toLocaleDateString('en-GB', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  }
+
+  async loadCloudHistory(uid) {
+    if (!this.firebaseActive || !this.db || !uid) return;
+    try {
+      const docRef = this.db.collection('users').doc(uid).collection('cv').doc('history');
+      const docSnap = await docRef.get();
+      if (docSnap.exists) {
+        const cloudList = docSnap.data().list;
+        if (Array.isArray(cloudList) && cloudList.length > 0) {
+          this.cvHistory = cloudList;
+          this.activeCvId = this.cvHistory[0].id;
+          this.data = this.cvHistory[0];
+          this.saveHistoryLocally();
+          this.render();
+          this.updateHistoryUI();
+          this.showToast("Loaded CV history from Cloud");
+        }
+      } else {
+        // Save local history to cloud for the first time
+        await docRef.set({ list: this.cvHistory });
+      }
+    } catch(e) {
+      console.warn("Firestore history read error:", e);
     }
   }
 
-  saveDataLocally() {
+  saveHistoryLocally() {
     try {
-      localStorage.setItem(this.getUserStorageKey(), JSON.stringify(this.data));
+      localStorage.setItem(this.getUserStorageKey(), JSON.stringify(this.cvHistory));
     } catch (e) {}
   }
 
   saveData() {
-    this.saveDataLocally();
+    // Update active CV in history
+    if (this.data && this.activeCvId) {
+      this.data.lastModified = this.getFormattedDate();
+      const idx = this.cvHistory.findIndex(c => c.id === this.activeCvId);
+      if (idx !== -1) {
+        this.cvHistory[idx] = JSON.parse(JSON.stringify(this.data));
+      } else {
+        this.cvHistory.unshift(JSON.parse(JSON.stringify(this.data)));
+      }
+    }
+
+    this.saveHistoryLocally();
+    this.updateHistoryUI();
     this.updateSaveIndicator("Saved");
 
+    // Cloud Firestore Sync
     if (this.firebaseActive && this.db && this.currentUser && this.currentUser.uid) {
       clearTimeout(this.cloudSaveTimeout);
       this.cloudSaveTimeout = setTimeout(async () => {
         try {
           this.updateSaveIndicator("Syncing cloud...");
-          await this.db.collection('users').doc(this.currentUser.uid).collection('cv').doc('current').set(this.data);
+          await this.db.collection('users').doc(this.currentUser.uid).collection('cv').doc('history').set({
+            list: this.cvHistory
+          });
           this.updateSaveIndicator("Synced to Cloud");
         } catch (e) {
           this.updateSaveIndicator("Saved locally");
         }
       }, 1000);
     }
+  }
+
+  switchActiveCV(cvId) {
+    const found = this.cvHistory.find(c => c.id === cvId);
+    if (!found) return;
+
+    this.activeCvId = cvId;
+    this.data = JSON.parse(JSON.stringify(found));
+    this.render();
+    this.updateHistoryUI();
+    this.showToast(`Switched to: ${this.data.cvTitle || "CV"}`);
+  }
+
+  duplicateActiveCV() {
+    const copy = JSON.parse(JSON.stringify(this.data));
+    copy.id = "cv_" + Date.now();
+    copy.cvTitle = (copy.cvTitle || "CV") + " (Copy)";
+    copy.lastModified = this.getFormattedDate();
+
+    this.cvHistory.unshift(copy);
+    this.activeCvId = copy.id;
+    this.data = copy;
+    this.saveData();
+    this.render();
+    this.updateHistoryUI();
+    this.showToast("Duplicated CV created!");
+  }
+
+  createNewBlankCV() {
+    const newCv = JSON.parse(JSON.stringify(DEFAULT_DEMO_DATA));
+    newCv.id = "cv_" + Date.now();
+    newCv.cvTitle = "New CV Version " + (this.cvHistory.length + 1);
+    newCv.lastModified = this.getFormattedDate();
+
+    // If user has a name in profile, prefill it
+    if (this.currentUser && this.currentUser.name && this.currentUser.name !== "Demo Student") {
+      newCv.name = this.currentUser.name.toUpperCase();
+      newCv.email = this.currentUser.email || "";
+      const parts = this.currentUser.name.split(' ');
+      newCv.initials = (parts[0][0] + (parts[1] ? parts[1][0] : parts[0][1] || '')).toUpperCase();
+    }
+
+    this.cvHistory.unshift(newCv);
+    this.activeCvId = newCv.id;
+    this.data = newCv;
+    this.saveData();
+    this.render();
+    this.updateHistoryUI();
+    this.showToast("New CV created!");
+  }
+
+  deleteCV(cvId) {
+    if (this.cvHistory.length <= 1) {
+      alert("You must keep at least one CV in your history.");
+      return;
+    }
+    const target = this.cvHistory.find(c => c.id === cvId);
+    if (!confirm(`Are you sure you want to delete "${target ? target.cvTitle : 'this CV'}"?`)) return;
+
+    this.cvHistory = this.cvHistory.filter(c => c.id !== cvId);
+
+    if (this.activeCvId === cvId) {
+      this.activeCvId = this.cvHistory[0].id;
+      this.data = JSON.parse(JSON.stringify(this.cvHistory[0]));
+      this.render();
+    }
+
+    this.saveData();
+    this.updateHistoryUI();
+    this.showToast("CV deleted");
+  }
+
+  renameCV(cvId) {
+    const target = this.cvHistory.find(c => c.id === cvId);
+    if (!target) return;
+    const newTitle = prompt("Enter new title for this CV:", target.cvTitle || "CV");
+    if (newTitle && newTitle.trim()) {
+      target.cvTitle = newTitle.trim();
+      if (this.activeCvId === cvId) {
+        this.data.cvTitle = target.cvTitle;
+        const input = document.getElementById('inputCvTitle');
+        if (input) input.value = target.cvTitle;
+        const label = document.getElementById('activeCvTitleLabel');
+        if (label) label.textContent = target.cvTitle;
+      }
+      this.saveData();
+      this.updateHistoryUI();
+    }
+  }
+
+  updateHistoryUI() {
+    const badge = document.getElementById('historyCountBadge');
+    if (badge) badge.textContent = this.cvHistory.length;
+
+    const totalCount = document.getElementById('historyTotalCount');
+    if (totalCount) totalCount.textContent = this.cvHistory.length;
+
+    const titleLabel = document.getElementById('activeCvTitleLabel');
+    if (titleLabel) titleLabel.textContent = this.data.cvTitle || "Main CV";
+
+    this.renderHistoryModalGrid();
+  }
+
+  renderHistoryModalGrid() {
+    const grid = document.getElementById('historyGrid');
+    if (!grid) return;
+    grid.innerHTML = '';
+
+    this.cvHistory.forEach(cv => {
+      const card = document.createElement('div');
+      const isActive = cv.id === this.activeCvId;
+      card.className = `history-card ${isActive ? 'active' : ''}`;
+
+      const tObj = CV_TEMPLATES.find(t => t.id === cv.templateId) || CV_TEMPLATES[0];
+
+      card.innerHTML = `
+        <div>
+          <div class="history-card-top">
+            <h4 class="history-card-title">${cv.cvTitle || 'Untitled CV'}</h4>
+            ${isActive ? '<span class="history-badge-active">Active</span>' : ''}
+          </div>
+          <div class="history-meta-row">
+            <div class="history-meta-item">
+              <i class="fa-solid fa-user" style="color:#2563eb;"></i>
+              <span>${cv.name || 'Candidate Name'}</span>
+            </div>
+            <div class="history-meta-item">
+              <i class="fa-solid fa-layer-group" style="color:#10b981;"></i>
+              <span>${tObj.name}</span>
+            </div>
+            <div class="history-meta-item">
+              <i class="fa-solid fa-clock" style="color:#64748b;"></i>
+              <span>Modified: ${cv.lastModified || 'Recent'}</span>
+            </div>
+          </div>
+        </div>
+        <div class="history-actions-row">
+          <button class="btn-history-action" data-load-id="${cv.id}" title="Open this CV">
+            <i class="fa-solid fa-folder-open"></i> ${isActive ? 'Current' : 'Open'}
+          </button>
+          <button class="btn-history-action" data-rename-id="${cv.id}" title="Rename title">
+            <i class="fa-solid fa-pen"></i>
+          </button>
+          <button class="btn-history-action btn-del-history" data-del-id="${cv.id}" title="Delete this CV">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+        </div>
+      `;
+
+      card.querySelector('[data-load-id]').addEventListener('click', () => {
+        this.switchActiveCV(cv.id);
+        document.getElementById('historyModal').classList.add('hidden');
+      });
+
+      card.querySelector('[data-rename-id]').addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.renameCV(cv.id);
+      });
+
+      card.querySelector('[data-del-id]').addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.deleteCV(cv.id);
+      });
+
+      grid.appendChild(card);
+    });
   }
 
   updateSaveIndicator(statusText) {
@@ -3149,18 +3350,15 @@ class CVApp {
     }, 2800);
   }
 
-  // =================== APPLY TEMPLATE ===================
+  // =================== TEMPLATES ===================
   applyTemplate(templateId) {
     this.data.templateId = templateId;
     this.saveData();
 
-    // Update CV paper class
     const paper = document.getElementById('cvPaper');
-    // Remove all previous template classes
     CV_TEMPLATES.forEach(t => paper.classList.remove(t.id));
     paper.classList.add(templateId);
 
-    // Update label
     const tObj = CV_TEMPLATES.find(t => t.id === templateId) || CV_TEMPLATES[0];
     const label = document.getElementById('activeTemplateNameLabel');
     if (label) label.textContent = tObj.name;
@@ -3210,6 +3408,14 @@ class CVApp {
   }
 
   initElements() {
+    // CV History UI
+    this.btnOpenHistory = document.getElementById('btnOpenHistory');
+    this.historyModal = document.getElementById('historyModal');
+    this.btnCloseHistoryModal = document.getElementById('btnCloseHistoryModal');
+    this.btnDuplicateCurrentCV = document.getElementById('btnDuplicateCurrentCV');
+    this.btnCreateNewCV = document.getElementById('btnCreateNewCV');
+    this.inputCvTitle = document.getElementById('inputCvTitle');
+
     // Toolbar buttons
     this.btnOpenTemplates = document.getElementById('btnOpenTemplates');
     this.templateModal = document.getElementById('templateModal');
@@ -3222,7 +3428,6 @@ class CVApp {
     this.btnPrint = document.getElementById('btnPrint');
     this.btnExportJSON = document.getElementById('btnExportJSON');
     this.importJSONInput = document.getElementById('importJSONInput');
-    this.btnReset = document.getElementById('btnReset');
     
     // Auth UI elements
     this.authGateScreen = document.getElementById('authGateScreen');
@@ -3325,6 +3530,28 @@ class CVApp {
   }
 
   bindEvents() {
+    // History Modal events
+    this.btnOpenHistory.addEventListener('click', () => {
+      this.historyModal.classList.remove('hidden');
+      this.renderHistoryModalGrid();
+    });
+
+    this.btnCloseHistoryModal.addEventListener('click', () => {
+      this.historyModal.classList.add('hidden');
+    });
+
+    this.historyModal.addEventListener('click', (e) => {
+      if (e.target === this.historyModal) this.historyModal.classList.add('hidden');
+    });
+
+    this.btnDuplicateCurrentCV.addEventListener('click', () => {
+      this.duplicateActiveCV();
+    });
+
+    this.btnCreateNewCV.addEventListener('click', () => {
+      this.createNewBlankCV();
+    });
+
     // Template Gallery events
     this.btnOpenTemplates.addEventListener('click', () => {
       this.templateModal.classList.remove('hidden');
@@ -3338,7 +3565,6 @@ class CVApp {
       if (e.target === this.templateModal) this.templateModal.classList.add('hidden');
     });
 
-    // Template filter buttons
     this.templateFilterBar.querySelectorAll('.filter-chip').forEach(btn => {
       btn.addEventListener('click', () => {
         this.templateFilterBar.querySelectorAll('.filter-chip').forEach(b => b.classList.remove('active'));
@@ -3363,10 +3589,10 @@ class CVApp {
         const sub = document.getElementById('gateSubtitle');
         if (target === 'signup') {
           title.textContent = "Create Your Account";
-          sub.textContent = "Sign up to choose from 32 CV formats and start editing";
+          sub.textContent = "Sign up to access 32 CV formats, history, and start editing";
         } else if (target === 'login') {
           title.textContent = "Welcome Back";
-          sub.textContent = "Sign in to access your saved CV and templates";
+          sub.textContent = "Sign in to access your saved CVs and templates";
         } else {
           title.textContent = "Reset Password";
           sub.textContent = "Enter your student email for recovery instructions";
@@ -3439,7 +3665,6 @@ class CVApp {
         }
       }
 
-      // Local Fallback
       this.currentUser = { name, email };
       localStorage.setItem('cv_studio_active_session', JSON.stringify(this.currentUser));
       this.data.name = name.toUpperCase();
@@ -3469,7 +3694,6 @@ class CVApp {
         }
       }
 
-      // Local demo fallback
       this.currentUser = { name: "Demo Student", email };
       localStorage.setItem('cv_studio_active_session', JSON.stringify(this.currentUser));
       this.authGateScreen.classList.add('hidden');
@@ -3600,7 +3824,7 @@ class CVApp {
       const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(this.data, null, 2));
       const downloadAnchor = document.createElement('a');
       downloadAnchor.setAttribute("href", dataStr);
-      downloadAnchor.setAttribute("download", `${this.data.name.replace(/\s+/g, '_')}_CV.json`);
+      downloadAnchor.setAttribute("download", `${(this.data.cvTitle || this.data.name || 'CV').replace(/\s+/g, '_')}.json`);
       document.body.appendChild(downloadAnchor);
       downloadAnchor.click();
       downloadAnchor.remove();
@@ -3615,10 +3839,16 @@ class CVApp {
         try {
           const parsed = JSON.parse(event.target.result);
           if (parsed && parsed.name) {
+            parsed.id = "cv_" + Date.now();
+            parsed.cvTitle = parsed.cvTitle || file.name.replace('.json', '');
+            parsed.lastModified = this.getFormattedDate();
+            this.cvHistory.unshift(parsed);
+            this.activeCvId = parsed.id;
             this.data = parsed;
             this.saveData();
             this.render();
-            this.showToast("CV successfully loaded!");
+            this.updateHistoryUI();
+            this.showToast("CV successfully loaded into history!");
           } else {
             alert("Invalid CV JSON format.");
           }
@@ -3630,13 +3860,12 @@ class CVApp {
       e.target.value = '';
     });
 
-    this.btnReset.addEventListener('click', () => {
-      if (confirm("Reset everything back to the sample student demo template? Any unsaved edits will be replaced.")) {
-        this.data = JSON.parse(JSON.stringify(DEFAULT_DEMO_DATA));
-        this.saveData();
-        this.render();
-        this.showToast("Reset to sample student template");
-      }
+    // CV Title input in sidebar
+    this.inputCvTitle.addEventListener('input', () => {
+      this.data.cvTitle = this.inputCvTitle.value;
+      this.saveData();
+      const label = document.getElementById('activeCvTitleLabel');
+      if (label) label.textContent = this.data.cvTitle;
     });
 
     document.querySelectorAll('.accordion-title').forEach(header => {
@@ -3724,6 +3953,7 @@ class CVApp {
   }
 
   syncForms() {
+    this.inputCvTitle.value = this.data.cvTitle || "";
     this.inputName.value = this.data.name || "";
     this.inputInitials.value = this.data.initials || "";
     this.inputPhone.value = this.data.phone || "";
@@ -3735,7 +3965,6 @@ class CVApp {
   }
 
   render() {
-    // Apply template
     const tId = this.data.templateId || "template-limpopo";
     const paper = document.getElementById('cvPaper');
     if (paper) {
