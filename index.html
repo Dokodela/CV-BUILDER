@@ -2043,6 +2043,899 @@ body {
 .cv-paper.template-borderless .cv-left-col { display: none !important; border: none !important; }
 .cv-paper.template-diamond-blue { --primary-color: #2563eb; border-top: 4px solid #2563eb; }
 
+/* ==========================================================================
+   JOB TARGETING & AUTO-SUGGEST CRITERIA STYLES
+   Tag any job to auto-suggest criteria, skills, verbs & ATS summaries
+   ========================================================================== */
+
+.candidate-job-target {
+  font-family: var(--font-heading);
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: var(--accent-color);
+  text-transform: uppercase;
+  margin-top: 5px;
+  display: inline-block;
+  cursor: text;
+  transition: all 0.15s;
+}
+
+.cv-paper.template-harvard .candidate-job-target {
+  text-align: center;
+  font-style: italic;
+  letter-spacing: 0.05em;
+  display: block;
+}
+
+.cv-paper.template-oxford .candidate-job-target {
+  font-family: 'Playfair Display', serif;
+  text-align: center;
+  display: block;
+}
+
+.cv-paper.template-swiss .candidate-job-target {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #111;
+}
+
+.cv-paper.template-header-block .candidate-job-target,
+.cv-paper.template-header-charcoal .candidate-job-target {
+  color: #93c5fd;
+}
+
+.btn-job-target-pill {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  color: #1e293b;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-job-target-pill:hover {
+  background: #eff6ff;
+  border-color: #3b82f6;
+  color: #1d4ed8;
+}
+
+.match-score-pill {
+  background: #10b981;
+  color: white;
+  border-radius: 999px;
+  padding: 1px 7px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  margin-left: 3px;
+}
+
+.helper-info-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.helper-job-tag-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #ffffff;
+  border: 1px solid #bfdbfe;
+  color: #1e40af;
+  font-size: 0.74rem;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.helper-job-tag-btn:hover {
+  background: #eff6ff;
+  border-color: #3b82f6;
+  transform: translateY(-1px);
+}
+
+.helper-match-pill {
+  background: #2563eb;
+  color: white;
+  padding: 1px 6px;
+  border-radius: 999px;
+  font-size: 0.65rem;
+  font-weight: 700;
+}
+
+/* Sidebar Job Target Accordion */
+.form-select-job {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: #ffffff;
+  font-size: 0.82rem;
+  color: #1f2937;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.form-select-job:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37,99,235,0.15);
+}
+
+.job-match-card {
+  background: linear-gradient(135deg, #f0fdf4 0%, #ecfeff 100%);
+  border: 1px solid #bbf7d0;
+  border-radius: 8px;
+  padding: 12px;
+  margin: 12px 0;
+}
+
+.match-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.match-card-lbl {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #166534;
+  font-weight: 700;
+}
+
+.match-card-top h4 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #15803d;
+  margin-top: 1px;
+}
+
+.match-status-badge {
+  background: #16a34a;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 700;
+}
+
+.match-bar-track {
+  width: 100%;
+  height: 6px;
+  background: #dcfce7;
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+
+.match-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #10b981, #059669);
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+.match-hint {
+  font-size: 0.73rem;
+  color: #166534;
+}
+
+.criteria-section {
+  margin-top: 12px;
+}
+
+.criteria-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.criteria-header label,
+.criteria-section label {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: #334155;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.criteria-chips-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.criteria-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 0.73rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+  transition: all 0.15s;
+}
+
+.criteria-chip.match-found {
+  background: #f0fdf4;
+  border-color: #86efac;
+  color: #15803d;
+  cursor: default;
+}
+
+.criteria-chip.match-missing {
+  background: #eff6ff;
+  border-color: #bfdbfe;
+  color: #1d4ed8;
+  cursor: pointer;
+}
+
+.criteria-chip.match-missing:hover {
+  background: #dbeafe;
+  border-color: #3b82f6;
+  transform: translateY(-1px);
+}
+
+.verbs-chips-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 4px;
+}
+
+.verb-chip {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  color: #475569;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.verb-chip:hover {
+  background: #f1f5f9;
+  border-color: #94a3b8;
+  color: #0f172a;
+}
+
+.tailored-summary-box {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 0.74rem;
+  color: #475569;
+  line-height: 1.45;
+  max-height: 95px;
+  overflow-y: auto;
+}
+
+/* Job Modal Specific */
+.job-criteria-modal-card {
+  max-width: 900px;
+  width: 95%;
+  max-height: 90vh;
+}
+
+.job-logo {
+  background: #eff6ff;
+  color: #2563eb;
+  border-color: #bfdbfe;
+}
+
+.job-modal-body {
+  margin-top: 10px;
+  overflow-y: auto;
+  max-height: 64vh;
+  padding-right: 4px;
+}
+
+.job-select-toolbar {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 12px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+}
+
+.job-select-toolbar label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #475569;
+  margin-bottom: 4px;
+}
+
+.job-select-toolbar input {
+  flex: 1;
+  padding: 7px 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 5px;
+  font-size: 0.8rem;
+}
+
+.job-match-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  color: #ffffff;
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin-bottom: 16px;
+}
+
+.match-banner-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.score-circle {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  font-weight: 800;
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.4);
+  flex-shrink: 0;
+}
+
+.match-banner-left h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 2px;
+}
+
+.match-banner-left p {
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+.job-modal-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.job-criteria-col {
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 14px;
+  background: #ffffff;
+}
+
+.job-criteria-col h4 {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #0f172a;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 3px;
+}
+
+.col-desc {
+  font-size: 0.75rem;
+  color: #64748b;
+  margin-bottom: 10px;
+}
+
+.criteria-list-box {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.criteria-list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 0.77rem;
+  font-weight: 500;
+}
+
+.criteria-list-item.has-skill {
+  background: #f0fdf4;
+  color: #15803d;
+  border: 1px solid #bbf7d0;
+}
+
+.criteria-list-item.missing-skill {
+  background: #f8fafc;
+  color: #334155;
+  border: 1px dashed #cbd5e1;
+}
+
+.tailored-summary-preview {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 10px 12px;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: #334155;
+}
+
+.sample-responsibilities-box {
+  margin-top: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sample-resp-item {
+  background: #f8fafc;
+  border: 1px solid #f1f5f9;
+  border-radius: 6px;
+  padding: 7px 10px;
+  font-size: 0.75rem;
+  color: #475569;
+  line-height: 1.4;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.sample-resp-item button {
+  flex-shrink: 0;
+}
+
+.history-job-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #eff6ff;
+  color: #2563eb;
+  padding: 2px 7px;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  margin-top: 3px;
+}
+
+/* ==========================================================================
+   MOBILE & RESPONSIVE DESIGN (PHONES & TABLETS)
+   Crafted for smooth mobile use, touch editing & auto-fit scaling
+   ========================================================================== */
+
+.mobile-bottom-bar {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .creator-badge {
+    display: none;
+  }
+  .auth-hero-panel {
+    padding: 32px 28px;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Auth Screen Mobile */
+  .auth-gate-screen {
+    padding: 12px 10px;
+    align-items: flex-start;
+  }
+
+  .auth-gate-container {
+    flex-direction: column;
+    max-width: 100%;
+    border-radius: 14px;
+    margin: 8px auto;
+  }
+
+  .auth-hero-panel {
+    padding: 22px 18px 16px 18px;
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .hero-brand {
+    font-size: 1.15rem;
+    margin-bottom: 12px;
+  }
+
+  .hero-title {
+    font-size: 1.45rem;
+    line-height: 1.25;
+    margin-bottom: 8px;
+  }
+
+  .hero-desc {
+    font-size: 0.82rem;
+    margin-bottom: 12px;
+  }
+
+  .hero-feature-list {
+    display: none;
+  }
+
+  .hero-creator-credit {
+    padding: 10px 12px;
+    font-size: 0.76rem;
+  }
+
+  .auth-gate-form-panel {
+    padding: 22px 16px 26px 16px;
+  }
+
+  /* Top Toolbar Mobile */
+  .app-toolbar {
+    height: 52px;
+    padding: 0 10px;
+    position: sticky;
+    top: 0;
+  }
+
+  .toolbar-brand {
+    font-size: 0.95rem;
+    gap: 6px;
+  }
+
+  .toolbar-brand i {
+    font-size: 1.15rem;
+  }
+
+  .btn-firebase-badge {
+    padding: 3px 6px;
+  }
+
+  .btn-firebase-badge #firebaseStatusText {
+    display: none;
+  }
+
+  .toolbar-actions {
+    gap: 4px;
+  }
+
+  .btn-templates-glow span,
+  .btn-history-badge > span:not(.badge-count),
+  .btn-job-target-pill #toolbarJobName,
+  #btnCustomize span,
+  #btnExportJSON span,
+  .btn-file-label span {
+    display: none;
+  }
+
+  .btn-job-target-pill {
+    padding: 5px 8px;
+  }
+
+  .match-score-pill {
+    padding: 1px 5px;
+    font-size: 0.62rem;
+  }
+
+  .btn-history-badge {
+    padding: 5px 8px;
+  }
+
+  .btn-templates-glow {
+    padding: 5px 8px;
+  }
+
+  .job-select-toolbar {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 10px;
+  }
+
+  .job-match-banner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    padding: 12px;
+  }
+
+  .job-modal-columns {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .candidate-job-target {
+    font-size: 0.8rem;
+  }
+
+  #btnToggleSidebar {
+    display: none; /* Managed via bottom bar on mobile */
+  }
+
+  #btnPrint {
+    padding: 5px 9px;
+  }
+
+  #btnPrint span {
+    font-size: 0.74rem;
+  }
+
+  .user-display-name {
+    display: none;
+  }
+
+  .btn-user-avatar {
+    padding: 3px;
+  }
+
+  .btn-user-avatar i {
+    display: none;
+  }
+
+  /* Info Banner */
+  .app-info-banner {
+    padding: 6px 12px;
+    font-size: 0.74rem;
+  }
+
+  /* App Layout & Sidebar Drawer */
+  .app-layout {
+    flex-direction: column;
+    position: relative;
+  }
+
+  .editor-sidebar {
+    position: fixed;
+    top: 52px;
+    bottom: 58px;
+    left: 0;
+    right: 0;
+    width: 100vw;
+    max-width: 100vw;
+    height: auto;
+    z-index: 700;
+    margin-left: 0 !important;
+    transform: translateX(0);
+    transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.22);
+    background: #ffffff;
+    border-right: none;
+  }
+
+  .editor-sidebar.collapsed {
+    transform: translateX(-100%);
+    pointer-events: none;
+  }
+
+  .sidebar-header {
+    padding: 12px 14px;
+    background: #f8fafc;
+  }
+
+  .sidebar-header h3 {
+    font-size: 0.95rem;
+  }
+
+  .sidebar-tip {
+    margin: 8px 12px 4px 12px;
+    padding: 8px 10px;
+    font-size: 0.74rem;
+  }
+
+  .accordion {
+    padding: 6px 12px 35px 12px;
+  }
+
+  /* Document Canvas Mobile */
+  .document-container {
+    height: calc(100vh - 52px);
+    padding: 10px 8px 80px 8px;
+    width: 100%;
+    overflow-x: hidden;
+    align-items: center;
+  }
+
+  .document-helper-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+    font-size: 0.74rem;
+    margin-bottom: 8px;
+    width: 100%;
+  }
+
+  .document-helper-bar .helper-text {
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .scale-controls {
+    justify-content: center;
+    align-self: center;
+    padding: 3px 8px;
+  }
+
+  .cv-page-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    overflow: visible;
+  }
+
+  /* Floating WhatsApp Button on Mobile */
+  .whatsapp-float-btn {
+    bottom: 70px;
+    right: 12px;
+    padding: 8px 13px;
+    font-size: 0.76rem;
+    gap: 6px;
+    box-shadow: 0 4px 14px rgba(37, 211, 102, 0.45);
+    z-index: 650;
+  }
+
+  .whatsapp-float-btn i {
+    font-size: 1.18rem;
+  }
+
+  /* Mobile Bottom Navigation Bar */
+  .mobile-bottom-bar {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 58px;
+    background: #ffffff;
+    border-top: 1px solid #e2e8f0;
+    z-index: 800;
+    box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.08);
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 2px;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  .mobile-nav-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    height: 100%;
+    background: none;
+    border: none;
+    color: #64748b;
+    font-size: 0.67rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 0.15s, transform 0.1s;
+    -webkit-tap-highlight-color: transparent;
+    font-family: var(--font-body);
+  }
+
+  .mobile-nav-item i {
+    font-size: 1.15rem;
+  }
+
+  .mobile-nav-item.active {
+    color: #2563eb;
+  }
+
+  .mobile-nav-item.active i {
+    transform: scale(1.12);
+  }
+
+  .mobile-nav-item.nav-item-pdf {
+    color: #0f172a;
+  }
+
+  .mobile-nav-item.nav-item-pdf i {
+    color: #dc2626;
+  }
+
+  /* Modals Mobile */
+  .auth-card {
+    width: 95% !important;
+    max-width: 95% !important;
+    padding: 20px 14px;
+    max-height: 86vh;
+    border-radius: 12px;
+  }
+
+  .template-gallery-card,
+  .history-gallery-card {
+    width: 96% !important;
+    max-width: 96% !important;
+    padding: 16px 12px;
+    max-height: 86vh;
+  }
+
+  .template-filter-bar {
+    padding-bottom: 6px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .template-grid-container {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    max-height: 52vh;
+    padding-right: 2px;
+  }
+
+  .history-grid-container {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    max-height: 52vh;
+  }
+
+  .history-toolbar-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .history-toolbar-row > div {
+    display: flex;
+    width: 100%;
+  }
+
+  .history-toolbar-row .btn {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .app-footer {
+    padding-bottom: 30px;
+    font-size: 0.72rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-info-banner span {
+    font-size: 0.7rem;
+    line-height: 1.35;
+  }
+
+  .auth-tabs .auth-tab-btn {
+    font-size: 0.75rem;
+    padding: 7px 2px;
+  }
+
+  .template-card {
+    padding: 10px;
+  }
+
+  .candidate-name {
+    font-size: 1.85rem;
+  }
+
+  .circular-stamp {
+    width: 95px;
+    height: 95px;
+  }
+}
+
 /* Print Stylesheet */
 @media print {
   @page {
@@ -2281,6 +3174,13 @@ body {
       </div>
 
       <div class="toolbar-actions">
+        <!-- Target Job & Auto-Suggest Criteria Button -->
+        <button id="btnOpenJobModal" class="btn btn-secondary btn-job-target-pill" title="Tag Target Job & Auto-Suggest Criteria">
+          <i class="fa-solid fa-bullseye" style="color: #2563eb;"></i>
+          <span id="toolbarJobName">Software Developer Intern</span>
+          <span class="match-score-pill" id="toolbarMatchScorePill">85%</span>
+        </button>
+
         <!-- CV History / Multi-CV Manager Button -->
         <button id="btnOpenHistory" class="btn btn-secondary btn-history-badge" title="Manage multiple CVs & view history">
           <i class="fa-solid fa-clock-rotate-left"></i>
@@ -2483,6 +3383,95 @@ body {
       </div>
     </div>
 
+    <!-- ==========================================================================
+         TARGET JOB & AUTO-SUGGEST CRITERIA MODAL
+         ========================================================================== -->
+    <div id="jobCriteriaModal" class="auth-modal-backdrop hidden no-print">
+      <div class="auth-card job-criteria-modal-card">
+        <button id="btnCloseJobModal" class="auth-close-btn" title="Close"><i class="fa-solid fa-xmark"></i></button>
+
+        <div class="auth-header">
+          <div class="auth-logo job-logo">
+            <i class="fa-solid fa-bullseye"></i>
+          </div>
+          <h2>Target Job & Criteria Auto-Suggester</h2>
+          <p class="auth-subtitle">Tag the job you are applying for to instantly get essential criteria, ATS skills, and tailored summaries</p>
+        </div>
+
+        <div class="job-modal-body">
+          <!-- Job Selection & Filter -->
+          <div class="job-select-toolbar">
+            <div class="job-select-group">
+              <label><i class="fa-solid fa-briefcase"></i> Select Target Job Role:</label>
+              <select id="modalSelectJob" class="form-select-job">
+                <!-- Populated dynamically from JOB_CRITERIA_DATABASE -->
+              </select>
+            </div>
+            <div class="job-custom-group">
+              <label><i class="fa-solid fa-pen"></i> Or Enter Custom Role:</label>
+              <div style="display:flex; gap:6px;">
+                <input type="text" id="modalInputCustomJob" placeholder="e.g. Cloud Engineer Trainee">
+                <button id="btnModalApplyCustomJob" class="btn btn-secondary btn-sm">Set Job</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Readiness / Match Score Banner -->
+          <div class="job-match-banner" id="modalMatchBanner">
+            <div class="match-banner-left">
+              <div class="score-circle" id="modalScoreCircle">85%</div>
+              <div>
+                <h3 id="modalRoleTitle">Software Developer Intern</h3>
+                <p id="modalScoreSubtitle">6 of 8 essential criteria present in your CV</p>
+              </div>
+            </div>
+            <div class="match-banner-actions">
+              <button id="btnModalAutoTune" class="btn btn-primary btn-sm">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> 1-Click Auto-Tune CV
+              </button>
+            </div>
+          </div>
+
+          <!-- Dual Column: Criteria Checklist & Tailored Content -->
+          <div class="job-modal-columns">
+            <!-- Left Column: Criteria Checklist -->
+            <div class="job-criteria-col">
+              <h4><i class="fa-solid fa-list-check" style="color:#2563eb;"></i> Essential Skills & Criteria Checklist</h4>
+              <p class="col-desc">Green = Already in your CV. Blue = Click <strong>+</strong> to add to CV skills.</p>
+              <div class="criteria-list-box" id="modalCriteriaList">
+                <!-- Criteria items -->
+              </div>
+
+              <h4 style="margin-top: 14px;"><i class="fa-solid fa-bolt" style="color:#f59e0b;"></i> Recommended Action Verbs</h4>
+              <p class="col-desc">Use these high-impact action verbs in your experience bullet points.</p>
+              <div class="verbs-chips-container" id="modalVerbsChips">
+                <!-- Action verbs -->
+              </div>
+            </div>
+
+            <!-- Right Column: Tailored Summary & Sample Responsibilities -->
+            <div class="job-criteria-col">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 6px;">
+                <h4 style="margin-bottom:0;"><i class="fa-solid fa-quote-left" style="color:#10b981;"></i> Tailored Professional Summary</h4>
+                <button id="btnModalApplySummary" class="btn btn-outline btn-sm"><i class="fa-solid fa-check"></i> Apply to About Me</button>
+              </div>
+              <p class="col-desc">Optimized for HR screening and Applicant Tracking Systems (ATS).</p>
+              <div class="tailored-summary-preview" id="modalTailoredSummary"></div>
+
+              <h4 style="margin-top: 14px;"><i class="fa-solid fa-briefcase" style="color:#6366f1;"></i> Typical Job Responsibilities (Inspiration)</h4>
+              <div class="sample-responsibilities-box" id="modalSampleResponsibilities">
+                <!-- Responsibilities -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="auth-footer">
+          <span>Student CV Studio • Created by <strong>Matimba Chauke</strong> • <a href="https://wa.me/27753806251" target="_blank" style="color:#16a34a; font-weight:600;"><i class="fa-brands fa-whatsapp"></i> WhatsApp Dokodela (075 380 6251)</a></span>
+        </div>
+      </div>
+    </div>
+
     <!-- App Layout: Left Sidebar & Canvas -->
     <div class="app-layout">
       <!-- Left Sidebar: Form-based Editor -->
@@ -2500,6 +3489,74 @@ body {
         </div>
 
         <div class="accordion">
+          <!-- Target Job & Auto-Criteria -->
+          <div class="accordion-item open" id="accordionJobTarget">
+            <div class="accordion-title">
+              <span><i class="fa-solid fa-bullseye" style="color: #2563eb;"></i> Target Job & Criteria Suggester</span>
+              <i class="fa-solid fa-chevron-down"></i>
+            </div>
+            <div class="accordion-content">
+              <div class="form-group">
+                <label><i class="fa-solid fa-briefcase"></i> Tag Target Job Role</label>
+                <select id="selectTargetJob" class="form-select-job">
+                  <!-- Populated from JOB_CRITERIA_DATABASE -->
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Or Type Custom Job Title</label>
+                <div style="display:flex; gap:6px;">
+                  <input type="text" id="inputCustomJob" placeholder="e.g. Cloud Engineer Trainee">
+                  <button type="button" id="btnApplyCustomJob" class="btn btn-sm btn-secondary">Apply</button>
+                </div>
+              </div>
+
+              <!-- Match Score Card -->
+              <div class="job-match-card">
+                <div class="match-card-top">
+                  <div>
+                    <span class="match-card-lbl">Job Readiness Score</span>
+                    <h4 id="sidebarMatchScoreText">85% Match</h4>
+                  </div>
+                  <span class="match-status-badge" id="sidebarMatchBadge">Strong Match</span>
+                </div>
+                <div class="match-bar-track">
+                  <div class="match-bar-fill" id="sidebarMatchBar" style="width: 85%;"></div>
+                </div>
+                <p class="match-hint" id="sidebarMatchHint">Found 6 of 8 essential criteria in your CV.</p>
+              </div>
+
+              <!-- Auto-Suggested Criteria Chips -->
+              <div class="criteria-section">
+                <div class="criteria-header">
+                  <label><i class="fa-solid fa-wand-magic-sparkles" style="color:#2563eb;"></i> Essential Skills Criteria</label>
+                  <small style="color:#64748b;">Click <strong>+</strong> to add</small>
+                </div>
+                <div class="criteria-chips-container" id="sidebarSkillsChips">
+                  <!-- Populated with auto-suggested criteria -->
+                </div>
+              </div>
+
+              <!-- Tailored Summary Suggestion -->
+              <div class="criteria-section">
+                <div class="criteria-header">
+                  <label><i class="fa-solid fa-file-lines" style="color:#10b981;"></i> Tailored Summary</label>
+                  <button type="button" id="btnApplyTailoredSummary" class="btn btn-sm btn-outline"><i class="fa-solid fa-check"></i> Apply</button>
+                </div>
+                <div class="tailored-summary-box" id="sidebarTailoredSummary"></div>
+              </div>
+
+              <!-- Action Verbs -->
+              <div class="criteria-section">
+                <label><i class="fa-solid fa-bolt" style="color:#f59e0b;"></i> Recommended Action Verbs</label>
+                <div class="verbs-chips-container" id="sidebarVerbsChips"></div>
+              </div>
+
+              <button type="button" id="btnAutoTuneCV" class="btn btn-primary btn-block btn-sm" style="margin-top: 10px;">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> 1-Click Auto-Tune CV
+              </button>
+            </div>
+          </div>
+
           <!-- Personal & Header -->
           <div class="accordion-item open">
             <div class="accordion-title">
@@ -2633,7 +3690,13 @@ body {
       <!-- Main Workspace / Live Document Canvas -->
       <main class="document-container">
         <div class="document-helper-bar no-print">
-          <span class="helper-text"><i class="fa-solid fa-file-signature"></i> CV: <strong id="activeCvTitleLabel">Main CV</strong> (<span id="activeTemplateNameLabel">Limpopo Classic</span>) • <span id="saveStatusIndicator"><i class="fa-solid fa-check"></i> Auto-saved</span></span>
+          <div class="helper-info-group">
+            <span class="helper-text"><i class="fa-solid fa-file-signature"></i> CV: <strong id="activeCvTitleLabel">Main CV</strong> (<span id="activeTemplateNameLabel">Limpopo Classic</span>) • <span id="saveStatusIndicator"><i class="fa-solid fa-check"></i> Auto-saved</span></span>
+            <button id="btnHelperJobTag" class="helper-job-tag-btn" title="Click to change target job and view criteria">
+              <i class="fa-solid fa-bullseye"></i> <span id="helperJobRoleText">Software Developer Intern</span>
+              <span class="helper-match-pill" id="helperMatchPill">85% Match</span>
+            </button>
+          </div>
           <div class="scale-controls">
             <button id="btnZoomOut" class="btn-icon-sm" title="Zoom Out"><i class="fa-solid fa-minus"></i></button>
             <span id="zoomLabel">100%</span>
@@ -2650,6 +3713,7 @@ body {
             <header class="cv-header">
               <div class="name-block">
                 <h1 class="candidate-name" id="cvName" contenteditable="true" spellcheck="false">THABO NDLOVU</h1>
+                <div class="candidate-job-target" id="cvJobTarget" contenteditable="true" spellcheck="false" title="Target Job Role (Click to edit or set in Job Matcher)">SOFTWARE DEVELOPER INTERN</div>
               </div>
               
               <div class="stamp-block" id="stampBlock" title="Click to customize monogram seal">
@@ -2795,6 +3859,35 @@ body {
         </footer>
       </main>
     </div>
+
+    <!-- Mobile Bottom Navigation Bar (Visible on mobile & tablets) -->
+    <nav class="mobile-bottom-bar no-print" id="mobileBottomBar">
+      <button class="mobile-nav-item" id="mobileNavForm" title="Edit CV Form">
+        <i class="fa-solid fa-pen-to-square"></i>
+        <span>Edit</span>
+      </button>
+      <button class="mobile-nav-item active" id="mobileNavPreview" title="View Live Document">
+        <i class="fa-solid fa-eye"></i>
+        <span>View CV</span>
+      </button>
+      <button class="mobile-nav-item" id="mobileNavJob" title="Job Match & Criteria">
+        <i class="fa-solid fa-bullseye"></i>
+        <span>Job Match</span>
+      </button>
+      <button class="mobile-nav-item" id="mobileNavTemplates" title="Browse 32 Formats">
+        <i class="fa-solid fa-layer-group"></i>
+        <span>Formats</span>
+      </button>
+      <button class="mobile-nav-item" id="mobileNavHistory" title="My Saved CVs">
+        <i class="fa-solid fa-clock-rotate-left"></i>
+        <span>My CVs</span>
+      </button>
+      <button class="mobile-nav-item nav-item-pdf" id="mobileNavPDF" title="Save as PDF or Print">
+        <i class="fa-solid fa-file-pdf"></i>
+        <span>PDF</span>
+      </button>
+    </nav>
+
   </div>
 
   <!-- APPLICATION LOGIC & FIREBASE INTEGRATION (INLINED) -->
@@ -2837,6 +3930,314 @@ const CV_TEMPLATES = [
   { id: "template-diamond-blue", name: "Cobalt Modern", category: "modern", desc: "Vibrant cobalt blue accents with modern clean geometric dividers.", colors: ["#2563eb", "#eff6ff", "#1d4ed8"] }
 ];
 
+/**
+ * 16+ Job Profiles with Criteria, Required Skills, Action Verbs & ATS Summaries
+ * Auto-suggested when a student tags their target role
+ */
+const JOB_CRITERIA_DATABASE = [
+  {
+    id: "software-dev",
+    category: "Technology & Computing",
+    title: "Software Developer Intern",
+    tagline: "Junior Software Developer & Applications Engineer",
+    summary: "Motivated Computer Science graduate with strong problem-solving acumen and hands-on proficiency in Python, Java, SQL, and modern web frameworks. Experienced in designing modular algorithms, collaborating on Git version-controlled codebases, and building scalable software solutions. Eager to contribute technical excellence to dynamic engineering teams.",
+    skills: ["Python & Java Programming", "Git & GitHub Version Control", "SQL & Relational Databases", "Object-Oriented Programming (OOP)", "RESTful API Integration", "Data Structures & Algorithms", "Unit Testing & Debugging", "Agile / Scrum Teamwork"],
+    keywords: ["Engineered", "Developed", "Deployed", "Refactored", "Optimized", "Debugged", "Architected", "Automated"],
+    responsibilities: [
+      "Designed and implemented clean, maintainable code following modern software design patterns.",
+      "Collaborated with cross-functional teams to debug, test, and deploy feature updates.",
+      "Participated in agile sprints, peer code reviews, and continuous integration workflows."
+    ]
+  },
+  {
+    id: "data-analyst",
+    category: "Technology & Computing",
+    title: "Data Analyst / BI Specialist",
+    tagline: "Junior Data Analyst & Business Intelligence Trainee",
+    summary: "Analytical and detail-oriented graduate skilled in quantitative analysis, SQL database querying, Python statistical modeling, and data visualization tools (Power BI & Excel). Proven ability to translate complex data into actionable business insights and strategic dashboards.",
+    skills: ["SQL Data Querying", "Python (Pandas, NumPy)", "Power BI / Tableau", "Advanced Excel (Pivot, VLOOKUP)", "Statistical Modeling", "Data Cleaning & Wrangling", "Dashboard Reporting", "Critical Thinking"],
+    keywords: ["Analyzed", "Synthesized", "Modeled", "Visualized", "Queried", "Identified", "Forecasted", "Optimized"],
+    responsibilities: [
+      "Extracted, cleansed, and validated large-scale datasets from multiple database sources.",
+      "Developed interactive dashboards and visual KPI reports for executive decision-makers.",
+      "Identified trends, anomalies, and revenue optimization opportunities using statistical methods."
+    ]
+  },
+  {
+    id: "accountant",
+    category: "Finance & Accounting",
+    title: "Junior Accountant / SAICA Trainee",
+    tagline: "Graduate Accountant & Financial Auditor Trainee",
+    summary: "Dedicated BCom Accounting graduate with comprehensive knowledge of IFRS standards, ledger reconciliation, tax compliance, and auditing procedures. Proficient in Pastel, QuickBooks, and Advanced Excel, committed to financial accuracy and high ethical standards.",
+    skills: ["IFRS & Financial Reporting", "Bank & Ledger Reconciliation", "Tax Compliance (VAT & PAYE)", "Pastel & QuickBooks", "Advanced Excel Financial Modeling", "Internal Controls & Auditing", "Accounts Payable/Receivable", "Attention to Detail"],
+    keywords: ["Reconciled", "Audited", "Prepared", "Calculated", "Verified", "Monitored", "Ensured", "Analyzed"],
+    responsibilities: [
+      "Prepared monthly general ledger reconciliations, balance sheets, and journal entries.",
+      "Assisted senior auditors in compliance audits, expenditure reviews, and asset verification.",
+      "Ensured regulatory compliance with SARS requirements, VAT calculations, and payroll deductions."
+    ]
+  },
+  {
+    id: "bank-teller",
+    category: "Finance & Accounting",
+    title: "Bank Teller / Customer Service Consultant",
+    tagline: "Banking Services Representative & Financial Consultant",
+    summary: "Customer-centric banking professional with strong numerical aptitude, meticulous cash handling skills, and sound knowledge of retail banking products and FICA compliance. Dedicated to delivering outstanding customer service while maintaining zero cash discrepancies.",
+    skills: ["Cash Handling & Balancing", "FICA & AML Regulations", "Customer Service Excellence", "Retail Banking Systems", "Cross-Selling Financial Products", "Conflict Resolution", "Dispute Handling", "Numerical Accuracy"],
+    keywords: ["Processed", "Balanced", "Facilitated", "Resolved", "Safeguarded", "Communicated", "Advised"],
+    responsibilities: [
+      "Processed high-volume cash, cheque, and foreign currency transactions with 100% accuracy.",
+      "Educated customers on digital banking options, loan facilities, and savings portfolios.",
+      "Strictly adhered to FICA, fraud prevention protocols, and daily vault balancing procedures."
+    ]
+  },
+  {
+    id: "admin-clerk",
+    category: "Administration & Office",
+    title: "Administrative Assistant / Clerk",
+    tagline: "Executive Administrative Assistant & Office Coordinator",
+    summary: "Organized and resourceful administrative professional proficient in Microsoft Office Suite (Word, Excel, PowerPoint), calendar coordination, document archiving, and front-desk client communication. Known for multitasking, accuracy, and maintaining confidential records.",
+    skills: ["Office Administration", "Microsoft Office Suite", "Records & Document Management", "Diary & Meeting Coordination", "Travel & Logistics Planning", "Professional Email Correspondence", "Customer Inquiries", "Time Management"],
+    keywords: ["Coordinated", "Organized", "Maintained", "Scheduled", "Drafted", "Archived", "Facilitated"],
+    responsibilities: [
+      "Managed executive correspondence, prepared meeting minutes, and coordinated company events.",
+      "Maintained structured digital and physical document archiving systems ensuring quick retrieval.",
+      "Answered switchboard inquiries, screened visitors, and resolved client queries professionally."
+    ]
+  },
+  {
+    id: "hr-intern",
+    category: "Administration & Office",
+    title: "Human Resources (HR) Assistant",
+    tagline: "Junior HR Officer & People Operations Trainee",
+    summary: "Enthusiastic Human Resources graduate with knowledge of the South African Labour Relations Act, Basic Conditions of Employment, and recruitment workflows. Experienced in screening CVs, coordinating candidate interviews, onboarding new hires, and maintaining employee records.",
+    skills: ["Recruitment & CV Screening", "BCEA & Labour Relations", "Employee Onboarding", "HR Information Systems (HRIS)", "Payroll Assistance", "Confidential Records Management", "Interpersonal Communication", "Training Coordination"],
+    keywords: ["Recruited", "Screened", "Onboarded", "Coordinated", "Administered", "Mediated", "Facilitated"],
+    responsibilities: [
+      "Assisted in talent acquisition by drafting job posts, screening candidate CVs, and scheduling interviews.",
+      "Facilitated new employee onboarding programs and gathered compliance documentation.",
+      "Maintained confidential personnel files and updated HR databases in compliance with POPIA."
+    ]
+  },
+  {
+    id: "marketing-specialist",
+    category: "Marketing & Creative",
+    title: "Digital Marketing & Social Media Coordinator",
+    tagline: "Digital Marketing Specialist & Content Creator",
+    summary: "Creative and metrics-driven marketing graduate skilled in digital campaign execution, social media management (Instagram, LinkedIn, TikTok), SEO basics, and graphic design (Canva/Photoshop). Passionate about brand storytelling, content creation, and community engagement.",
+    skills: ["Social Media Strategy", "Content Creation & Copywriting", "Canva & Adobe Creative Cloud", "Email Marketing (Mailchimp)", "SEO Fundamentals", "Google Analytics & Insights", "Campaign Management", "Community Engagement"],
+    keywords: ["Crafted", "Launched", "Amplified", "Designed", "Engaged", "Boosted", "Managed", "Monitored"],
+    responsibilities: [
+      "Planned and scheduled monthly social media content calendars across multi-channel platforms.",
+      "Analyzed engagement metrics, website traffic, and campaign ROI using analytics tools.",
+      "Created high-impact visual banners, video reels, and promotional newsletters."
+    ]
+  },
+  {
+    id: "call-centre",
+    category: "Customer Support & Sales",
+    title: "Customer Support / Call Centre Representative",
+    tagline: "Customer Experience Representative & Inbound Specialist",
+    summary: "Empathetic and clear communicator adept at resolving high-volume inbound customer queries, troubleshooting service issues, and handling escalated complaints with composure. Dedicated to achieving high first-call resolution and customer satisfaction scores.",
+    skills: ["Inbound & Outbound Calling", "CRM & Ticketing Systems", "Active Listening & Empathy", "De-escalation & Complaint Handling", "Fast Accurate Typing (45+ WPM)", "Product Knowledge", "Quality Assurance Compliance", "Patience & Resilience"],
+    keywords: ["Resolved", "Assisted", "Guided", "Escalated", "Documented", "Exceeded", "Communicated"],
+    responsibilities: [
+      "Managed 80+ customer interactions daily via phone, live chat, and email with polite efficiency.",
+      "Accurately logged customer issues, inquiries, and solutions into company CRM systems.",
+      "Consistently achieved >90% customer satisfaction (CSAT) and first-contact resolution rates."
+    ]
+  },
+  {
+    id: "teacher-educator",
+    category: "Education & Academic",
+    title: "High School Teacher / Educator",
+    tagline: "Qualified High School Educator & Subject Specialist",
+    summary: "Dedicated B.Ed graduate passionate about student academic growth, modern learner-centered pedagogical techniques, and positive classroom management. Skilled in CAPS curriculum delivery, lesson planning, formative assessments, and fostering inclusive learning environments.",
+    skills: ["CAPS Curriculum Delivery", "Lesson Planning & Pedagogy", "Classroom Management", "Formative Assessment & Grading", "Parent-Teacher Engagement", "Extra-Mural Coaching", "Differentiated Instruction", "Empathy & Mentorship"],
+    keywords: ["Instructed", "Educated", "Mentored", "Facilitated", "Evaluated", "Inspire", "Formulated"],
+    responsibilities: [
+      "Delivered engaging, structured lessons aligned with provincial and national curriculum guidelines.",
+      "Assessed learner progress through regular homework, tests, and individualized feedback.",
+      "Fostered a disciplined, supportive classroom culture and coached school sports / debate societies."
+    ]
+  },
+  {
+    id: "nurse-healthcare",
+    category: "Healthcare & Sciences",
+    title: "Registered Nurse / Healthcare Assistant",
+    tagline: "Compassionate Registered Nurse & Clinical Care Specialist",
+    summary: "Compassionate nursing graduate with SANC registration eligibility, trained in patient triage, vital signs monitoring, medication administration, and compassionate bedside care. Thrives in high-pressure clinical environments with steadfast commitment to patient safety and hygiene.",
+    skills: ["Patient Triage & Vital Signs", "Medication Administration", "Infection Control & Hygiene", "Wound Dressing & Phlebotomy", "Emergency Response & CPR", "Patient Advocacy & Empathy", "Electronic Health Records (EHR)", "Clinical Teamwork"],
+    keywords: ["Administered", "Monitored", "Treated", "Triaged", "Cared", "Documented", "Assisted"],
+    responsibilities: [
+      "Monitored patient vitals, administered prescribed treatments, and accurately recorded symptoms.",
+      "Maintained strict hygiene, sterile field protocols, and medical waste disposal standards.",
+      "Collaborated with multidisciplinary healthcare teams to coordinate holistic patient recovery plans."
+    ]
+  },
+  {
+    id: "mechanical-engineer",
+    category: "Engineering & Technical",
+    title: "Mechanical Engineer Graduate",
+    tagline: "Graduate Mechanical Engineer & CAD Designer",
+    summary: "Analytical BSc / BEng Mechanical Engineering graduate equipped with solid grounding in thermodynamics, fluid mechanics, CAD design (SolidWorks/AutoCAD), and manufacturing principles. Eager to solve complex technical problems in manufacturing, maintenance, or consulting.",
+    skills: ["3D CAD Modeling (SolidWorks/AutoCAD)", "Thermodynamics & Fluid Mechanics", "Finite Element Analysis (FEA)", "Preventative Maintenance", "Manufacturing Processes", "MATLAB & Engineering Math", "Technical Documentation", "Root Cause Analysis"],
+    keywords: ["Engineered", "Designed", "Simulated", "Fabricated", "Maintained", "Tested", "Inspected"],
+    responsibilities: [
+      "Modeled mechanical assemblies, generated detailed 2D manufacturing drawings, and checked tolerances.",
+      "Assisted with plant maintenance schedules, failure investigations, and equipment reliability tests.",
+      "Prepared technical feasibility reports, bill of materials (BOM), and cost estimates."
+    ]
+  },
+  {
+    id: "electrical-engineer",
+    category: "Engineering & Technical",
+    title: "Electrical Engineer Intern",
+    tagline: "Junior Electrical & Instrumentation Engineer",
+    summary: "Dynamic Electrical Engineering graduate with strong technical capabilities in circuit design, PLC programming, power systems, and signal processing. Experienced in prototyping, testing equipment, and compliance with national safety regulations (SANS).",
+    skills: ["Circuit Design & Simulation (MATLAB)", "PLC & SCADA Basics", "Power Distribution & Wiring", "Electrical Testing & Multimeters", "SANS Safety Regulations", "Soldering & Prototyping", "Troubleshooting", "Technical Schematics"],
+    keywords: ["Commissioned", "Wired", "Calibrated", "Programmed", "Tested", "Diagnosed", "Integrated"],
+    responsibilities: [
+      "Interpreted electrical schematics and assisted with wiring, commissioning, and control panel wiring.",
+      "Diagnosed faults in electronic circuits and calibrated instrumentation sensors.",
+      "Ensured all installations complied with electrical codes and occupational health & safety acts."
+    ]
+  },
+  {
+    id: "civil-engineer",
+    category: "Engineering & Technical",
+    title: "Civil Engineer Trainee",
+    tagline: "Graduate Civil Engineer & Site Coordinator",
+    summary: "Motivated Civil Engineering graduate with foundational skills in structural analysis, site surveying, geotechnical testing, and AutoCAD / Civil 3D design. Seeking site supervision or consulting engineering opportunities to contribute to infrastructure development.",
+    skills: ["AutoCAD & Civil 3D", "Structural Analysis", "Site Surveying & Levelling", "Concrete & Soil Testing", "Project Bill of Quantities (BOQ)", "Quality Assurance on Site", "Health & Safety (OHS)", "Contract Administration"],
+    keywords: ["Surveyed", "Inspected", "Supervised", "Estimated", "Constructed", "Drafted", "Coordinated"],
+    responsibilities: [
+      "Assisted with topographical site surveying, levels measurement, and contractor setting out.",
+      "Conducted quality checks on concrete slump, soil compaction, and reinforcement placement.",
+      "Prepared progress measurement reports and tracked material requisitions against the bill of quantities."
+    ]
+  },
+  {
+    id: "retail-sales",
+    category: "Customer Support & Sales",
+    title: "Retail Store Assistant / Cashier",
+    tagline: "Retail Sales Associate & Store Merchandiser",
+    summary: "Energetic and helpful customer service associate experienced in point-of-sale (POS) cashiering, visual merchandising, stock replenishment, and customer engagement. Dedicated to boosting retail sales through friendly service and efficient store presentation.",
+    skills: ["POS Cashiering & Till Balancing", "Visual Merchandising", "Stock Control & Inventory", "Customer Engagement", "Product Upselling", "Store Hygiene & Organization", "Team Collaboration", "Reliability & Punctuality"],
+    keywords: ["Assisted", "Merchandised", "Operated", "Replenished", "Audited", "Welcomed", "Maximized"],
+    responsibilities: [
+      "Welcomed customers, answered product inquiries, and assisted with fitting and recommendations.",
+      "Operated point-of-sale cash registers accurately and processed card, cash, and voucher payments.",
+      "Restocked shelves, organized inventory stockrooms, and designed attractive promotional displays."
+    ]
+  },
+  {
+    id: "cybersecurity-analyst",
+    category: "Technology & Computing",
+    title: "Cybersecurity Analyst Trainee",
+    tagline: "Junior Cybersecurity & Information Security Analyst",
+    summary: "Vigilant and certified IT graduate with keen interest in network security, vulnerability scanning, threat mitigation, and security compliance (ISO 27001 / NIST). Skilled in Linux administration, Wireshark packet analysis, and ethical hacking fundamentals.",
+    skills: ["Network Security & Firewalls", "Vulnerability Assessment & Scanning", "Linux System Administration", "Wireshark Packet Analysis", "Security Incident & Event Management (SIEM)", "CompTIA Security+ Fundamentals", "Identity & Access Management (IAM)", "Security Policies"],
+    keywords: ["Protected", "Investigated", "Audited", "Remediated", "Configured", "Monitored", "Mitigated"],
+    responsibilities: [
+      "Monitored network traffic and SIEM alerts for unauthorized access attempts or suspicious activities.",
+      "Performed routine vulnerability scans, patch management audits, and password hygiene reviews.",
+      "Assisted in formulating employee security awareness training materials and phishing simulations."
+    ]
+  },
+  {
+    id: "supply-chain",
+    category: "Administration & Office",
+    title: "Supply Chain & Logistics Assistant",
+    tagline: "Supply Chain Trainee & Logistics Coordinator",
+    summary: "Detail-oriented logistics graduate equipped with knowledge of inventory optimization, procurement procedures, freight dispatching, and warehouse management systems. Skilled in supplier communication and optimizing delivery timelines.",
+    skills: ["Logistics & Fleet Coordination", "Inventory Management Systems", "Procurement & Purchase Orders", "Warehouse Stock Audits", "Supplier Negotiations", "Advanced Excel Tracking", "Import/Export Regulations", "Problem Solving"],
+    keywords: ["Dispatched", "Procured", "Coordinated", "Audited", "Optimized", "Tracked", "Expedited"],
+    responsibilities: [
+      "Tracked shipment schedules, verified customs clearance documentation, and dispatched delivery routes.",
+      "Monitored inventory levels to prevent stockouts and assisted with quarterly physical stock counts.",
+      "Communicated with freight carriers and suppliers to resolve delivery delays and rate inquiries."
+    ]
+  }
+];
+
+function getJobCriteria(jobTitleOrId) {
+  if (!jobTitleOrId) jobTitleOrId = "Software Developer Intern";
+  const normalized = jobTitleOrId.toLowerCase().trim();
+  
+  // Exact or close match in database
+  const found = JOB_CRITERIA_DATABASE.find(j => 
+    j.id.toLowerCase() === normalized || 
+    j.title.toLowerCase() === normalized ||
+    normalized.includes(j.title.toLowerCase()) ||
+    j.title.toLowerCase().includes(normalized)
+  );
+  if (found) return found;
+
+  // Keyword heuristic matching for custom titles
+  if (normalized.includes("data") || normalized.includes("analyst") || normalized.includes("bi") || normalized.includes("statist")) {
+    return { ...JOB_CRITERIA_DATABASE.find(j => j.id === "data-analyst"), title: jobTitleOrId };
+  }
+  if (normalized.includes("account") || normalized.includes("audit") || normalized.includes("tax") || normalized.includes("bookkeep")) {
+    return { ...JOB_CRITERIA_DATABASE.find(j => j.id === "accountant"), title: jobTitleOrId };
+  }
+  if (normalized.includes("bank") || normalized.includes("teller") || normalized.includes("finance") || normalized.includes("credit")) {
+    return { ...JOB_CRITERIA_DATABASE.find(j => j.id === "bank-teller"), title: jobTitleOrId };
+  }
+  if (normalized.includes("admin") || normalized.includes("clerk") || normalized.includes("reception") || normalized.includes("secretary") || normalized.includes("office")) {
+    return { ...JOB_CRITERIA_DATABASE.find(j => j.id === "admin-clerk"), title: jobTitleOrId };
+  }
+  if (normalized.includes("hr") || normalized.includes("human resource") || normalized.includes("people") || normalized.includes("talent") || normalized.includes("recruit")) {
+    return { ...JOB_CRITERIA_DATABASE.find(j => j.id === "hr-intern"), title: jobTitleOrId };
+  }
+  if (normalized.includes("market") || normalized.includes("media") || normalized.includes("content") || normalized.includes("brand") || normalized.includes("seo")) {
+    return { ...JOB_CRITERIA_DATABASE.find(j => j.id === "marketing-specialist"), title: jobTitleOrId };
+  }
+  if (normalized.includes("call") || normalized.includes("support") || normalized.includes("agent") || normalized.includes("service") || normalized.includes("helpdesk")) {
+    return { ...JOB_CRITERIA_DATABASE.find(j => j.id === "call-centre"), title: jobTitleOrId };
+  }
+  if (normalized.includes("teach") || normalized.includes("educat") || normalized.includes("tutor") || normalized.includes("school") || normalized.includes("lectur")) {
+    return { ...JOB_CRITERIA_DATABASE.find(j => j.id === "teacher-educator"), title: jobTitleOrId };
+  }
+  if (normalized.includes("nurse") || normalized.includes("health") || normalized.includes("clinic") || normalized.includes("medic") || normalized.includes("care") || normalized.includes("pharmac")) {
+    return { ...JOB_CRITERIA_DATABASE.find(j => j.id === "nurse-healthcare"), title: jobTitleOrId };
+  }
+  if (normalized.includes("civil") || normalized.includes("construct") || normalized.includes("survey")) {
+    return { ...JOB_CRITERIA_DATABASE.find(j => j.id === "civil-engineer"), title: jobTitleOrId };
+  }
+  if (normalized.includes("electr") || normalized.includes("power") || normalized.includes("instrument")) {
+    return { ...JOB_CRITERIA_DATABASE.find(j => j.id === "electrical-engineer"), title: jobTitleOrId };
+  }
+  if (normalized.includes("mechanic") || normalized.includes("machin") || normalized.includes("cad")) {
+    return { ...JOB_CRITERIA_DATABASE.find(j => j.id === "mechanical-engineer"), title: jobTitleOrId };
+  }
+  if (normalized.includes("cyber") || normalized.includes("secur") || normalized.includes("network") || normalized.includes("linux")) {
+    return { ...JOB_CRITERIA_DATABASE.find(j => j.id === "cybersecurity-analyst"), title: jobTitleOrId };
+  }
+  if (normalized.includes("logist") || normalized.includes("supply") || normalized.includes("warehouse") || normalized.includes("procure")) {
+    return { ...JOB_CRITERIA_DATABASE.find(j => j.id === "supply-chain"), title: jobTitleOrId };
+  }
+  if (normalized.includes("retail") || normalized.includes("sales") || normalized.includes("store") || normalized.includes("cashier") || normalized.includes("shop")) {
+    return { ...JOB_CRITERIA_DATABASE.find(j => j.id === "retail-sales"), title: jobTitleOrId };
+  }
+
+  // Fallback well-rounded criteria for any unique custom job title
+  return {
+    id: "custom-" + normalized.replace(/\s+/g, '-'),
+    category: "Professional",
+    title: jobTitleOrId,
+    tagline: `Aspiring ${jobTitleOrId}`,
+    summary: `Dedicated and goal-oriented graduate pursuing opportunities as a ${jobTitleOrId}. Combines academic excellence, analytical problem-solving, and strong collaboration abilities to deliver immediate value, support team objectives, and adhere to industry standards.`,
+    skills: ["Professional Communication", "Time & Task Management", "Analytical Problem Solving", "Project Coordination", "Industry Regulatory Compliance", "Team Collaboration", "Digital Productivity Tools", "Attention to Detail"],
+    keywords: ["Executed", "Coordinated", "Delivered", "Collaborated", "Achieved", "Spearheaded", "Optimized", "Maintained"],
+    responsibilities: [
+      `Assisted with day-to-day operations and project deliverables related to ${jobTitleOrId}.`,
+      "Collaborated with cross-functional team members to uphold quality standards and deadlines.",
+      "Prepared analytical reports, tracked milestones, and resolved operational challenges proactively."
+    ]
+  };
+}
+
 // Firebase Config
 const DEFAULT_FIREBASE_CONFIG = {
   apiKey: "AIzaSyCgSvQtW4ls-9grgFp8r8-vtEGzDDQDQVE",
@@ -2864,6 +4265,7 @@ function getFirebaseConfig() {
 const DEFAULT_DEMO_DATA = {
   id: "cv_default_1",
   cvTitle: "Main General CV",
+  targetJob: "Software Developer Intern",
   templateId: "template-limpopo",
   lastModified: new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
   name: "THABO NDLOVU",
@@ -2975,6 +4377,7 @@ class CVApp {
     this.initElements();
     this.bindEvents();
     this.render();
+    this.initMobileResponsive();
   }
 
   // =================== AUTHENTICATION & GATE ===================
@@ -3279,7 +4682,11 @@ class CVApp {
           </div>
           <div class="history-meta-row">
             <div class="history-meta-item">
-              <i class="fa-solid fa-user" style="color:#2563eb;"></i>
+              <i class="fa-solid fa-bullseye" style="color:#2563eb;"></i>
+              <strong style="color:#1d4ed8;">${cv.targetJob || 'Software Developer Intern'}</strong>
+            </div>
+            <div class="history-meta-item">
+              <i class="fa-solid fa-user" style="color:#64748b;"></i>
               <span>${cv.name || 'Candidate Name'}</span>
             </div>
             <div class="history-meta-item">
@@ -3422,6 +4829,23 @@ class CVApp {
     this.btnCloseTemplateModal = document.getElementById('btnCloseTemplateModal');
     this.templateFilterBar = document.getElementById('templateFilterBar');
 
+    // Job Targeting UI elements
+    this.btnOpenJobModal = document.getElementById('btnOpenJobModal');
+    this.jobCriteriaModal = document.getElementById('jobCriteriaModal');
+    this.btnCloseJobModal = document.getElementById('btnCloseJobModal');
+    this.selectTargetJob = document.getElementById('selectTargetJob');
+    this.inputCustomJob = document.getElementById('inputCustomJob');
+    this.btnApplyCustomJob = document.getElementById('btnApplyCustomJob');
+    this.modalSelectJob = document.getElementById('modalSelectJob');
+    this.modalInputCustomJob = document.getElementById('modalInputCustomJob');
+    this.btnModalApplyCustomJob = document.getElementById('btnModalApplyCustomJob');
+    this.btnHelperJobTag = document.getElementById('btnHelperJobTag');
+    this.btnAutoTuneCV = document.getElementById('btnAutoTuneCV');
+    this.btnModalAutoTune = document.getElementById('btnModalAutoTune');
+    this.btnApplyTailoredSummary = document.getElementById('btnApplyTailoredSummary');
+    this.btnModalApplySummary = document.getElementById('btnModalApplySummary');
+    this.cvJobTarget = document.getElementById('cvJobTarget');
+
     this.btnToggleSidebar = document.getElementById('btnToggleSidebar');
     this.btnCloseSidebar = document.getElementById('btnCloseSidebar');
     this.editorSidebar = document.getElementById('editorSidebar');
@@ -3513,9 +4937,372 @@ class CVApp {
     document.getElementById('btnAddExtracurricular').addEventListener('click', () => this.addExtracurricular());
     document.getElementById('btnAddReference').addEventListener('click', () => this.addReference());
 
+    this.initJobTargeting();
     this.updateUserBadge();
     this.updateFirebaseStatusUI();
     this.renderTemplateGallery();
+  }
+
+  // =================== TARGET JOB & AUTO-SUGGEST CRITERIA ===================
+  initJobTargeting() {
+    // Populate dropdowns with categories & jobs
+    const populateSelect = (selectEl) => {
+      if (!selectEl) return;
+      selectEl.innerHTML = '';
+      
+      const categories = [...new Set(JOB_CRITERIA_DATABASE.map(j => j.category))];
+      categories.forEach(cat => {
+        const optgroup = document.createElement('optgroup');
+        optgroup.label = cat;
+        JOB_CRITERIA_DATABASE.filter(j => j.category === cat).forEach(job => {
+          const opt = document.createElement('option');
+          opt.value = job.title;
+          opt.textContent = job.title;
+          optgroup.appendChild(opt);
+        });
+        selectEl.appendChild(optgroup);
+      });
+    };
+
+    populateSelect(this.selectTargetJob);
+    populateSelect(this.modalSelectJob);
+
+    // Sync current value
+    const curJob = this.data.targetJob || "Software Developer Intern";
+    if (this.selectTargetJob) this.selectTargetJob.value = curJob;
+    if (this.modalSelectJob) this.modalSelectJob.value = curJob;
+
+    // Events: Select change
+    if (this.selectTargetJob) {
+      this.selectTargetJob.addEventListener('change', (e) => {
+        this.setTargetJob(e.target.value);
+      });
+    }
+
+    if (this.modalSelectJob) {
+      this.modalSelectJob.addEventListener('change', (e) => {
+        this.setTargetJob(e.target.value);
+      });
+    }
+
+    // Custom job buttons
+    if (this.btnApplyCustomJob && this.inputCustomJob) {
+      this.btnApplyCustomJob.addEventListener('click', () => {
+        const val = this.inputCustomJob.value.trim();
+        if (val) this.setTargetJob(val);
+      });
+    }
+
+    if (this.btnModalApplyCustomJob && this.modalInputCustomJob) {
+      this.btnModalApplyCustomJob.addEventListener('click', () => {
+        const val = this.modalInputCustomJob.value.trim();
+        if (val) this.setTargetJob(val);
+      });
+    }
+
+    // Modal open & close
+    if (this.btnOpenJobModal) {
+      this.btnOpenJobModal.addEventListener('click', () => {
+        this.jobCriteriaModal.classList.remove('hidden');
+        this.updateJobCriteriaUI();
+      });
+    }
+
+    if (this.btnHelperJobTag) {
+      this.btnHelperJobTag.addEventListener('click', () => {
+        this.jobCriteriaModal.classList.remove('hidden');
+        this.updateJobCriteriaUI();
+      });
+    }
+
+    const navJob = document.getElementById('mobileNavJob');
+    if (navJob) {
+      navJob.addEventListener('click', () => {
+        this.jobCriteriaModal.classList.remove('hidden');
+        this.updateJobCriteriaUI();
+      });
+    }
+
+    if (this.btnCloseJobModal) {
+      this.btnCloseJobModal.addEventListener('click', () => {
+        this.jobCriteriaModal.classList.add('hidden');
+      });
+    }
+
+    if (this.jobCriteriaModal) {
+      this.jobCriteriaModal.addEventListener('click', (e) => {
+        if (e.target === this.jobCriteriaModal) {
+          this.jobCriteriaModal.classList.add('hidden');
+        }
+      });
+    }
+
+    // Auto-tune buttons
+    const handleAutoTune = () => {
+      const criteria = getJobCriteria(this.data.targetJob);
+      const match = this.calculateJobMatch(criteria);
+      
+      // Add missing skills
+      match.missingSkills.forEach(skill => {
+        if (!this.data.skills.includes(skill)) {
+          this.data.skills.push(skill);
+        }
+      });
+
+      // Apply tailored summary
+      if (criteria.summary) {
+        this.data.about = criteria.summary;
+      }
+
+      this.saveData();
+      this.render();
+      this.updateJobCriteriaUI();
+      this.showToast(`🎯 CV successfully auto-tuned for ${criteria.title}!`);
+    };
+
+    if (this.btnAutoTuneCV) this.btnAutoTuneCV.addEventListener('click', handleAutoTune);
+    if (this.btnModalAutoTune) this.btnModalAutoTune.addEventListener('click', handleAutoTune);
+
+    // Apply Tailored Summary buttons
+    const handleApplySummary = () => {
+      const criteria = getJobCriteria(this.data.targetJob);
+      if (criteria.summary) {
+        this.data.about = criteria.summary;
+        this.saveData();
+        this.syncDocumentHeader();
+        this.syncForms();
+        this.updateJobCriteriaUI();
+        this.showToast("Tailored summary applied to About Me!");
+      }
+    };
+
+    if (this.btnApplyTailoredSummary) this.btnApplyTailoredSummary.addEventListener('click', handleApplySummary);
+    if (this.btnModalApplySummary) this.btnModalApplySummary.addEventListener('click', handleApplySummary);
+
+    // Inline blur on paper job target
+    if (this.cvJobTarget) {
+      this.cvJobTarget.addEventListener('blur', () => {
+        const val = this.cvJobTarget.innerText.trim();
+        if (val) {
+          this.setTargetJob(val);
+        }
+      });
+    }
+  }
+
+  setTargetJob(jobTitle) {
+    this.data.targetJob = jobTitle;
+    this.saveData();
+    this.syncForms();
+    this.syncDocumentHeader();
+    this.updateJobCriteriaUI();
+    this.showToast(`🎯 Tagged target job: ${jobTitle}`);
+  }
+
+  calculateJobMatch(jobCriteria) {
+    if (!jobCriteria || !jobCriteria.skills) return { score: 75, foundCount: 6, totalCount: 8, missingSkills: [], foundSkills: [] };
+    const cvText = [
+      (this.data.skills || []).join(' '),
+      this.data.about || '',
+      (this.data.experience || []).map(e => (e.title || '') + ' ' + (e.bullets || []).join(' ')).join(' ')
+    ].join(' ').toLowerCase();
+
+    const missingSkills = [];
+    const foundSkills = [];
+
+    jobCriteria.skills.forEach(skill => {
+      const cleanSkill = skill.toLowerCase();
+      const words = cleanSkill.split(/[\s,&/()]+/).filter(w => w.length > 3);
+      const isFound = words.some(w => cvText.includes(w)) || (this.data.skills || []).some(s => s.toLowerCase().includes(cleanSkill) || cleanSkill.includes(s.toLowerCase()));
+
+      if (isFound) {
+        foundSkills.push(skill);
+      } else {
+        missingSkills.push(skill);
+      }
+    });
+
+    const total = jobCriteria.skills.length;
+    const found = foundSkills.length;
+    let score = Math.round((found / Math.max(1, total)) * 100);
+    score = Math.max(35, Math.min(100, score));
+
+    return {
+      score,
+      foundCount: found,
+      totalCount: total,
+      missingSkills,
+      foundSkills
+    };
+  }
+
+  updateJobCriteriaUI() {
+    const jobTitle = this.data.targetJob || "Software Developer Intern";
+    const criteria = getJobCriteria(jobTitle);
+    const match = this.calculateJobMatch(criteria);
+
+    // Update Toolbar badge
+    const tbName = document.getElementById('toolbarJobName');
+    if (tbName) tbName.textContent = criteria.title;
+    const tbPill = document.getElementById('toolbarMatchScorePill');
+    if (tbPill) {
+      tbPill.textContent = `${match.score}%`;
+      tbPill.style.background = match.score >= 75 ? "#10b981" : match.score >= 50 ? "#f59e0b" : "#ef4444";
+    }
+
+    // Update Helper bar badge
+    const helperName = document.getElementById('helperJobRoleText');
+    if (helperName) helperName.textContent = criteria.title;
+    const helperPill = document.getElementById('helperMatchPill');
+    if (helperPill) {
+      helperPill.textContent = `${match.score}% Match`;
+      helperPill.style.background = match.score >= 75 ? "#10b981" : match.score >= 50 ? "#f59e0b" : "#ef4444";
+    }
+
+    // Update Paper candidate job target
+    if (this.cvJobTarget) {
+      this.cvJobTarget.innerText = (criteria.tagline || criteria.title || "").toUpperCase();
+    }
+
+    // Update Sidebar Accordion
+    const sideScore = document.getElementById('sidebarMatchScoreText');
+    if (sideScore) sideScore.textContent = `${match.score}% Match`;
+    const sideBadge = document.getElementById('sidebarMatchBadge');
+    if (sideBadge) {
+      sideBadge.textContent = match.score >= 80 ? "Strong Match" : match.score >= 60 ? "Good Match" : "Needs Criteria";
+      sideBadge.style.background = match.score >= 80 ? "#16a34a" : match.score >= 60 ? "#d97706" : "#dc2626";
+    }
+    const sideBar = document.getElementById('sidebarMatchBar');
+    if (sideBar) {
+      sideBar.style.width = `${match.score}%`;
+      sideBar.style.background = match.score >= 80 ? "linear-gradient(90deg, #10b981, #059669)" : "linear-gradient(90deg, #f59e0b, #d97706)";
+    }
+    const sideHint = document.getElementById('sidebarMatchHint');
+    if (sideHint) {
+      sideHint.textContent = `Found ${match.foundCount} of ${match.totalCount} essential criteria in your CV.`;
+    }
+
+    // Render Sidebar Criteria Chips
+    const sideChips = document.getElementById('sidebarSkillsChips');
+    if (sideChips) {
+      sideChips.innerHTML = '';
+      criteria.skills.forEach(skill => {
+        const isFound = match.foundSkills.includes(skill);
+        const chip = document.createElement('button');
+        chip.type = 'button';
+        chip.className = `criteria-chip ${isFound ? 'match-found' : 'match-missing'}`;
+        chip.innerHTML = isFound 
+          ? `<i class="fa-solid fa-check"></i> <span>${skill}</span>` 
+          : `<i class="fa-solid fa-plus"></i> <span>${skill}</span>`;
+        chip.title = isFound ? "Criteria met in your CV" : "Click to add this skill to your CV";
+        if (!isFound) {
+          chip.addEventListener('click', () => {
+            this.data.skills.push(skill);
+            this.saveData();
+            this.renderSkills();
+            this.updateJobCriteriaUI();
+            this.showToast(`Added "${skill}" to your CV skills!`);
+          });
+        }
+        sideChips.appendChild(chip);
+      });
+    }
+
+    // Sidebar Tailored Summary
+    const sideSummary = document.getElementById('sidebarTailoredSummary');
+    if (sideSummary) sideSummary.textContent = criteria.summary;
+
+    // Sidebar Verbs
+    const sideVerbs = document.getElementById('sidebarVerbsChips');
+    if (sideVerbs) {
+      sideVerbs.innerHTML = '';
+      (criteria.keywords || []).forEach(verb => {
+        const span = document.createElement('span');
+        span.className = 'verb-chip';
+        span.textContent = verb;
+        span.title = "Click to copy";
+        span.addEventListener('click', () => {
+          navigator.clipboard.writeText(verb);
+          this.showToast(`Copied verb: "${verb}"`);
+        });
+        sideVerbs.appendChild(span);
+      });
+    }
+
+    // Update Modal
+    const modalCircle = document.getElementById('modalScoreCircle');
+    if (modalCircle) {
+      modalCircle.textContent = `${match.score}%`;
+      modalCircle.style.background = match.score >= 75 ? "linear-gradient(135deg, #10b981, #059669)" : "linear-gradient(135deg, #f59e0b, #d97706)";
+    }
+    const modalTitle = document.getElementById('modalRoleTitle');
+    if (modalTitle) modalTitle.textContent = criteria.title;
+    const modalSub = document.getElementById('modalScoreSubtitle');
+    if (modalSub) modalSub.textContent = `${match.foundCount} of ${match.totalCount} essential criteria present in your CV`;
+
+    // Modal Criteria List
+    const modalCritList = document.getElementById('modalCriteriaList');
+    if (modalCritList) {
+      modalCritList.innerHTML = '';
+      criteria.skills.forEach(skill => {
+        const isFound = match.foundSkills.includes(skill);
+        const item = document.createElement('div');
+        item.className = `criteria-list-item ${isFound ? 'has-skill' : 'missing-skill'}`;
+        item.innerHTML = `
+          <span>${isFound ? '<i class="fa-solid fa-circle-check" style="color:#16a34a; margin-right:6px;"></i>' : '<i class="fa-solid fa-circle-plus" style="color:#2563eb; margin-right:6px;"></i>'} ${skill}</span>
+          ${isFound ? '<span style="font-size:0.7rem; font-weight:700; color:#16a34a;">Found</span>' : '<button class="btn btn-sm btn-outline" style="padding:2px 8px; font-size:0.7rem;"><i class="fa-solid fa-plus"></i> Add</button>'}
+        `;
+        if (!isFound) {
+          item.querySelector('button').addEventListener('click', () => {
+            this.data.skills.push(skill);
+            this.saveData();
+            this.renderSkills();
+            this.updateJobCriteriaUI();
+            this.showToast(`Added "${skill}" to CV!`);
+          });
+        }
+        modalCritList.appendChild(item);
+      });
+    }
+
+    // Modal Verbs
+    const modalVerbs = document.getElementById('modalVerbsChips');
+    if (modalVerbs) {
+      modalVerbs.innerHTML = '';
+      (criteria.keywords || []).forEach(verb => {
+        const span = document.createElement('span');
+        span.className = 'verb-chip';
+        span.textContent = verb;
+        span.addEventListener('click', () => {
+          navigator.clipboard.writeText(verb);
+          this.showToast(`Copied verb: "${verb}"`);
+        });
+        modalVerbs.appendChild(span);
+      });
+    }
+
+    // Modal Tailored Summary
+    const modalSummary = document.getElementById('modalTailoredSummary');
+    if (modalSummary) modalSummary.textContent = criteria.summary;
+
+    // Modal Sample Responsibilities
+    const modalResp = document.getElementById('modalSampleResponsibilities');
+    if (modalResp) {
+      modalResp.innerHTML = '';
+      (criteria.responsibilities || []).forEach(resp => {
+        const div = document.createElement('div');
+        div.className = 'sample-resp-item';
+        div.innerHTML = `
+          <span>• ${resp}</span>
+          <button class="btn btn-sm btn-secondary" title="Copy to clipboard"><i class="fa-solid fa-copy"></i></button>
+        `;
+        div.querySelector('button').addEventListener('click', () => {
+          navigator.clipboard.writeText(resp);
+          this.showToast("Copied responsibility bullet!");
+        });
+        modalResp.appendChild(div);
+      });
+    }
   }
 
   updateUserBadge() {
@@ -3810,9 +5597,11 @@ class CVApp {
     this.btnZoomIn.addEventListener('click', () => this.setZoom(this.zoomLevel + 0.1));
     this.btnZoomOut.addEventListener('click', () => this.setZoom(this.zoomLevel - 0.1));
     this.btnZoomFit.addEventListener('click', () => {
-      const containerWidth = document.querySelector('.document-container').clientWidth - 60;
+      const isMobile = window.innerWidth <= 768;
+      const container = document.querySelector('.document-container');
+      const containerWidth = (container ? container.clientWidth : window.innerWidth) - (isMobile ? 16 : 60);
       const paperWidthPx = 210 * 3.7795275591;
-      const targetZoom = Math.min(1.0, Math.max(0.5, containerWidth / paperWidthPx));
+      const targetZoom = Math.min(1.0, Math.max(0.25, containerWidth / paperWidthPx));
       this.setZoom(targetZoom);
     });
 
@@ -3912,9 +5701,115 @@ class CVApp {
   }
 
   setZoom(val) {
-    this.zoomLevel = Math.min(1.4, Math.max(0.5, Math.round(val * 10) / 10));
+    this.zoomLevel = Math.min(1.4, Math.max(0.25, Math.round(val * 100) / 100));
     this.cvPageWrapper.style.transform = `scale(${this.zoomLevel})`;
     this.zoomLabel.textContent = `${Math.round(this.zoomLevel * 100)}%`;
+
+    // Dynamic height compensation to prevent blank whitespace below scaled canvas
+    const paper = document.getElementById('cvPaper');
+    if (paper && this.zoomLevel < 1.0) {
+      const realHeight = paper.offsetHeight || 1123;
+      this.cvPageWrapper.style.height = `${Math.round(realHeight * this.zoomLevel) + 20}px`;
+    } else if (this.cvPageWrapper) {
+      this.cvPageWrapper.style.height = 'auto';
+    }
+  }
+
+  // =================== MOBILE & TOUCH RESPONSIVE ===================
+  initMobileResponsive() {
+    // On small screens, collapse sidebar by default so user sees the live CV preview
+    if (window.innerWidth <= 768) {
+      if (this.editorSidebar) this.editorSidebar.classList.add('collapsed');
+      this.autoScaleMobile();
+    }
+
+    // Auto-fit on screen resize or phone orientation change
+    window.addEventListener('resize', () => {
+      if (window.innerWidth <= 768) {
+        this.autoScaleMobile();
+      }
+    });
+
+    // Wire up Mobile Bottom Bar items
+    const navForm = document.getElementById('mobileNavForm');
+    const navPreview = document.getElementById('mobileNavPreview');
+    const navTemplates = document.getElementById('mobileNavTemplates');
+    const navHistory = document.getElementById('mobileNavHistory');
+    const navPDF = document.getElementById('mobileNavPDF');
+
+    if (navForm) {
+      navForm.addEventListener('click', () => {
+        if (this.editorSidebar) {
+          this.editorSidebar.classList.remove('collapsed');
+          this.updateMobileNavActive('form');
+        }
+      });
+    }
+
+    if (navPreview) {
+      navPreview.addEventListener('click', () => {
+        if (this.editorSidebar) {
+          this.editorSidebar.classList.add('collapsed');
+          this.updateMobileNavActive('preview');
+          this.autoScaleMobile();
+        }
+      });
+    }
+
+    if (navTemplates) {
+      navTemplates.addEventListener('click', () => {
+        if (this.templateModal) {
+          this.templateModal.classList.remove('hidden');
+          this.renderTemplateGallery();
+        }
+      });
+    }
+
+    if (navHistory) {
+      navHistory.addEventListener('click', () => {
+        if (this.historyModal) {
+          this.historyModal.classList.remove('hidden');
+          this.renderHistoryModalGrid();
+        }
+      });
+    }
+
+    if (navPDF) {
+      navPDF.addEventListener('click', () => {
+        window.print();
+      });
+    }
+
+    // Sync mobile nav active state when desktop toggle button or close button is clicked
+    if (this.btnCloseSidebar) {
+      this.btnCloseSidebar.addEventListener('click', () => {
+        this.updateMobileNavActive('preview');
+        this.autoScaleMobile();
+      });
+    }
+  }
+
+  updateMobileNavActive(activeTab) {
+    document.querySelectorAll('.mobile-nav-item').forEach(btn => {
+      btn.classList.remove('active');
+    });
+    if (activeTab === 'form') {
+      const b = document.getElementById('mobileNavForm');
+      if (b) b.classList.add('active');
+    } else if (activeTab === 'preview') {
+      const b = document.getElementById('mobileNavPreview');
+      if (b) b.classList.add('active');
+    }
+  }
+
+  autoScaleMobile() {
+    const container = document.querySelector('.document-container');
+    if (!container) return;
+    const padding = 16;
+    const availWidth = Math.max(280, container.clientWidth - padding);
+    const paperWidthPx = 210 * 3.7795275591; // ~793.7px
+    const targetZoom = Math.min(1.0, Math.max(0.25, availWidth / paperWidthPx));
+    this.setZoom(targetZoom);
   }
 
   updateStamp() {
@@ -3950,6 +5845,10 @@ class CVApp {
     this.cvDob.innerText = this.data.dob;
     this.cvNationality.innerText = this.data.nationality;
     this.cvAbout.innerText = this.data.about;
+    if (this.cvJobTarget) {
+      const criteria = getJobCriteria(this.data.targetJob);
+      this.cvJobTarget.innerText = (criteria.tagline || criteria.title || this.data.targetJob || "Software Developer Intern").toUpperCase();
+    }
   }
 
   syncForms() {
@@ -3962,6 +5861,8 @@ class CVApp {
     this.inputDob.value = this.data.dob || "";
     this.inputNationality.value = this.data.nationality || "";
     this.inputAbout.value = this.data.about || "";
+    if (this.selectTargetJob) this.selectTargetJob.value = this.data.targetJob || "Software Developer Intern";
+    if (this.modalSelectJob) this.modalSelectJob.value = this.data.targetJob || "Software Developer Intern";
   }
 
   render() {
@@ -3985,6 +5886,7 @@ class CVApp {
     this.renderEducation();
     this.renderExtracurricular();
     this.renderReferences();
+    this.updateJobCriteriaUI();
   }
 
   renderSkills() {
