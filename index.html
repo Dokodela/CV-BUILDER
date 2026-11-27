@@ -3483,7 +3483,556 @@ body {
     box-shadow: none !important;
   }
 }
-  </style>
+  
+/* ==========================================================================
+   ENHANCED MODERN COLOR ACCENTS & DENSITY SYSTEM (ELITE DESIGN UPGRADE)
+   ========================================================================== */
+
+/* Dynamic Density Variables (Scoped to both CV Paper & Cover Letter Paper) */
+.density-ultra-compact .cv-paper,
+body.density-ultra-compact .cv-paper {
+  --cv-padding: 20px 26px !important;
+  --section-gap: 10px !important;
+  --item-gap: 5px !important;
+  --body-font-size: 0.72rem !important;
+  --line-height: 1.25 !important;
+}
+
+.density-compact .cv-paper,
+body.density-compact .cv-paper {
+  --cv-padding: 26px 34px !important;
+  --section-gap: 14px !important;
+  --item-gap: 7px !important;
+  --body-font-size: 0.77rem !important;
+  --line-height: 1.32 !important;
+}
+
+.density-normal .cv-paper,
+body.density-normal .cv-paper {
+  --cv-padding: 38px 46px !important;
+  --section-gap: 20px !important;
+  --item-gap: 11px !important;
+  --body-font-size: 0.82rem !important;
+  --line-height: 1.45 !important;
+}
+
+.density-spacious .cv-paper,
+body.density-spacious .cv-paper {
+  --cv-padding: 48px 56px !important;
+  --section-gap: 26px !important;
+  --item-gap: 15px !important;
+  --body-font-size: 0.88rem !important;
+  --line-height: 1.6 !important;
+}
+
+/* Ensure padding and font sizing actively apply to paper */
+.cv-paper {
+  padding: var(--cv-padding, 38px 46px) !important;
+  font-size: var(--body-font-size, 0.82rem) !important;
+  line-height: var(--line-height, 1.45) !important;
+}
+.cv-section {
+  margin-bottom: var(--section-gap, 20px) !important;
+}
+.entry-item, .reference-card {
+  margin-bottom: var(--item-gap, 11px) !important;
+}
+
+/* Professional Color Palette Picker in Theme Dropdown */
+.palette-preset-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 8px;
+  margin-top: 10px;
+}
+.palette-swatch-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 0 1px #d1d5db;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 0;
+  outline: none;
+}
+.palette-swatch-btn:hover {
+  transform: scale(1.18);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2), 0 0 0 2px #2563eb;
+}
+.palette-swatch-btn.active {
+  transform: scale(1.15);
+  box-shadow: 0 0 0 2px #2563eb, 0 2px 6px rgba(0,0,0,0.3);
+}
+
+/* Elite Theme Modal Enhancements */
+.theme-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+.theme-modal-backdrop.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.theme-modal-container {
+  background: #ffffff;
+  width: 94%;
+  max-width: 1100px;
+  max-height: 90vh;
+  border-radius: 18px;
+  box-shadow: 0 25px 60px -15px rgba(0,0,0,0.35);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: modalPopIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes modalPopIn {
+  from { transform: scale(0.96) translateY(12px); opacity: 0; }
+  to { transform: scale(1) translateY(0); opacity: 1; }
+}
+.theme-modal-header {
+  padding: 18px 24px;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f8fafc;
+}
+.theme-modal-header h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #0f172a;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.theme-modal-search-bar {
+  padding: 14px 24px;
+  border-bottom: 1px solid #f1f5f9;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  background: #ffffff;
+}
+.theme-search-input {
+  flex: 1;
+  padding: 10px 16px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  transition: border 0.15s;
+}
+.theme-search-input:focus {
+  border-color: #2563eb;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
+}
+.theme-filter-tabs {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+}
+.theme-filter-pill {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  color: #475569;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s;
+}
+.theme-filter-pill:hover, .theme-filter-pill.active {
+  background: #0f172a;
+  color: #ffffff;
+  border-color: #0f172a;
+}
+.theme-grid-scrollable {
+  padding: 24px;
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 18px;
+  background: #f1f5f9;
+}
+.theme-card-modern {
+  background: #ffffff;
+  border-radius: 14px;
+  border: 2px solid transparent;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+}
+.theme-card-modern:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.12);
+  border-color: #93c5fd;
+}
+.theme-card-modern.selected {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.25), 0 8px 20px rgba(37,99,235,0.15);
+}
+.theme-card-preview {
+  height: 140px;
+  padding: 12px;
+  background: #f8fafc;
+  border-bottom: 1px solid #f1f5f9;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  position: relative;
+  overflow: hidden;
+}
+.preview-header-mock {
+  height: 22px;
+  border-radius: 4px;
+  background: #cbd5e1;
+  width: 65%;
+}
+.preview-body-mock {
+  display: flex;
+  gap: 8px;
+  flex: 1;
+}
+.preview-col-mock {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.preview-line-mock {
+  height: 6px;
+  border-radius: 3px;
+  background: #e2e8f0;
+}
+.theme-card-info {
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.theme-card-title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+.theme-card-category {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #64748b;
+  letter-spacing: 0.05em;
+}
+
+/* ==========================================================================
+   COVER LETTER INTERACTIVE EDITOR STYLES
+   ========================================================================== */
+.cl-editor-section {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.cl-editor-quickbar {
+  display: flex;
+  gap: 8px;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  padding: 10px 14px;
+  border-radius: 10px;
+  align-items: center;
+  justify-content: space-between;
+}
+.cl-quick-btn {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #1d4ed8;
+  background: #ffffff;
+  border: 1px solid #93c5fd;
+  border-radius: 6px;
+  padding: 4px 10px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.cl-quick-btn:hover {
+  background: #2563eb;
+  color: #ffffff;
+  border-color: #2563eb;
+}
+
+/* Inline Editable Hover Effect on Paper */
+.cover-letter-paper [contenteditable="true"] {
+  outline: none;
+  transition: background-color 0.15s, box-shadow 0.15s;
+  border-radius: 3px;
+  padding: 1px 3px;
+}
+.cover-letter-paper [contenteditable="true"]:hover {
+  background-color: rgba(37, 99, 235, 0.06);
+}
+.cover-letter-paper [contenteditable="true"]:focus {
+  background-color: rgba(37, 99, 235, 0.12);
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.4);
+}
+
+
+/* ==========================================================================
+   STYLING DEFINITIONS FOR 12 ADDITIONAL MODERN THEMES
+   ========================================================================== */
+
+/* 1. Tokyo Minimalist (Dark Accent & High-Tech) */
+.template-tokyo-cyber {
+  font-family: 'Space Grotesk', -apple-system, sans-serif;
+  color: #0f172a;
+}
+.template-tokyo-cyber .cv-header {
+  border-bottom: 2px solid #0f172a;
+  padding-bottom: 16px;
+  margin-bottom: 22px;
+}
+.template-tokyo-cyber .candidate-name {
+  font-family: 'Fira Code', monospace;
+  font-size: 2.1rem;
+  letter-spacing: -0.04em;
+  color: #0284c7;
+}
+.template-tokyo-cyber .section-title {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  color: #0f172a;
+  background: #f1f5f9;
+  padding: 4px 10px;
+  border-radius: 4px;
+  display: inline-block;
+  border-left: 3px solid #0284c7;
+}
+
+/* 2. Zurich Swiss Grid (Precision Typography) */
+.template-zurich-clean {
+  font-family: 'Inter', -apple-system, sans-serif;
+}
+.template-zurich-clean .cv-header {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  border-bottom: 1px solid #111111;
+  padding-bottom: 20px;
+}
+.template-zurich-clean .candidate-name {
+  font-weight: 800;
+  font-size: 2.3rem;
+  letter-spacing: -0.05em;
+  line-height: 1.05;
+}
+.template-zurich-clean .section-title {
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  color: #111111;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 4px;
+}
+
+/* 3. Berlin Brutalist Mono */
+.template-berlin-brutalist {
+  font-family: 'Fira Code', monospace;
+  background: #ffffff;
+}
+.template-berlin-brutalist .cv-header {
+  border: 2px solid #000000;
+  padding: 16px;
+  margin-bottom: 20px;
+  background: #fafafa;
+}
+.template-berlin-brutalist .candidate-name {
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: #000000;
+}
+.template-berlin-brutalist .section-title {
+  background: #000000;
+  color: #ffffff;
+  padding: 3px 8px;
+  font-size: 0.82rem;
+  display: inline-block;
+}
+
+/* 4. Toronto Modern Corporate */
+.template-toronto-corp {
+  font-family: 'Inter', sans-serif;
+}
+.template-toronto-corp .cv-header {
+  background: linear-gradient(to right, #f8fafc, #edf2f7);
+  padding: 20px;
+  border-left: 5px solid #1e3a8a;
+  border-radius: 0 8px 8px 0;
+  margin-bottom: 24px;
+}
+.template-toronto-corp .candidate-name {
+  color: #1e3a8a;
+  font-weight: 800;
+}
+.template-toronto-corp .section-title {
+  color: #1e3a8a;
+  border-bottom: 2px solid #bfdbfe;
+  padding-bottom: 4px;
+}
+
+/* 5. Milan Vogue Editorial */
+.template-milan-editorial {
+  font-family: 'Playfair Display', Georgia, serif;
+}
+.template-milan-editorial .candidate-name {
+  font-style: italic;
+  font-weight: 400;
+  font-size: 2.6rem;
+  text-align: center;
+}
+.template-milan-editorial .cv-header {
+  text-align: center;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 18px;
+}
+.template-milan-editorial .section-title {
+  text-align: center;
+  font-style: italic;
+  font-size: 1.15rem;
+  color: #4b5563;
+  margin-bottom: 14px;
+}
+
+/* 6. Silicon Valley Frost */
+.template-silicon-glass {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+.template-silicon-glass .candidate-name {
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 800;
+  font-size: 2.2rem;
+}
+.template-silicon-glass .section-title {
+  color: #2563eb;
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* 7. Amsterdam Modular Cards */
+.template-amsterdam-card .entry-item,
+.template-amsterdam-card .reference-card {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 12px 14px;
+}
+.template-amsterdam-card .section-title {
+  color: #0f172a;
+  font-weight: 700;
+}
+
+/* 8. Cape Town Marine Executive */
+.template-capetown-marine {
+  font-family: 'Inter', sans-serif;
+  border-top: 6px solid #0d9488;
+}
+.template-capetown-marine .candidate-name {
+  color: #0f766e;
+  font-weight: 800;
+}
+.template-capetown-marine .section-title {
+  color: #0f766e;
+  border-bottom: 2px solid #99f6e4;
+  padding-bottom: 4px;
+}
+
+/* 9. Durban Coastal Clean */
+.template-durban-coral .candidate-name {
+  color: #ea580c;
+  font-weight: 800;
+}
+.template-durban-coral .section-title {
+  color: #ea580c;
+  border-left: 3px solid #ea580c;
+  padding-left: 8px;
+}
+
+/* 10. Johannesburg Gold Reserve */
+.template-johannesburg-gold {
+  border-top: 6px solid #d97706;
+}
+.template-johannesburg-gold .candidate-name {
+  color: #b45309;
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+.template-johannesburg-gold .section-title {
+  color: #b45309;
+  border-bottom: 2px solid #fde68a;
+}
+
+/* 11. Cambridge Academic Fellow */
+.template-cambridge-fellow {
+  font-family: 'EB Garamond', Georgia, serif;
+  line-height: 1.5;
+}
+.template-cambridge-fellow .cv-body {
+  flex-direction: column !important;
+}
+.template-cambridge-fellow .candidate-name {
+  font-size: 2.2rem;
+  letter-spacing: 0.03em;
+  text-align: center;
+}
+.template-cambridge-fellow .section-title {
+  font-size: 1.05rem;
+  text-transform: uppercase;
+  border-bottom: 1px solid #111111;
+  padding-bottom: 2px;
+}
+
+/* 12. Nordic Frost Minimal */
+.template-nordic-frost {
+  font-family: 'Inter', sans-serif;
+  color: #334155;
+}
+.template-nordic-frost .candidate-name {
+  font-weight: 300;
+  font-size: 2.4rem;
+  letter-spacing: 0.02em;
+  color: #0f172a;
+}
+.template-nordic-frost .section-title {
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #64748b;
+  margin-bottom: 12px;
+}
+
+</style>
 </head>
 <body>
 
@@ -3680,7 +4229,7 @@ body {
         <!-- 32 CV Formats Gallery Button -->
         <button id="btnOpenTemplates" class="btn btn-templates-glow" title="Browse 32 different CV formats">
           <i class="fa-solid fa-layer-group"></i>
-          <span>Formats (32)</span>
+          <span>Formats (44)</span>
         </button>
 
         <button id="btnToggleSidebar" class="btn btn-secondary" title="Open Form Editor Panel">
@@ -3689,31 +4238,53 @@ body {
         </button>
 
         <div class="dropdown-container">
-          <button id="btnCustomize" class="btn btn-secondary">
-            <i class="fa-solid fa-palette"></i>
-            <span>Theme</span>
-          </button>
-          <div id="customizeMenu" class="dropdown-menu hidden">
-            <div class="menu-item">
-              <label>Color Accent</label>
-              <input type="color" id="accentColorPicker" value="#111111">
+            <button id="btnCustomize" class="btn btn-secondary" title="Customize theme color and page density">
+              <i class="fa-solid fa-palette"></i>
+              <span>Theme</span>
+            </button>
+
+            <div id="customizeMenu" class="dropdown-menu hidden">
+              <div class="menu-item">
+                <label><i class="fa-solid fa-palette"></i> Modern Color Accent</label>
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <input type="color" id="accentColorPicker" value="#111111" style="width:36px; height:36px; border-radius:8px; border:none; cursor:pointer;">
+                  <span id="accentColorHex" style="font-size:0.8rem; font-family:monospace; color:#64748b; font-weight:600;">#111111</span>
+                </div>
+                <!-- Curated Designer Palettes -->
+                <div class="palette-preset-grid" id="palettePresetGrid">
+                  <button type="button" class="palette-swatch-btn" data-color="#0f172a" style="background:#0f172a;" title="Slate Navy"></button>
+                  <button type="button" class="palette-swatch-btn" data-color="#2563eb" style="background:#2563eb;" title="Electric Sapphire"></button>
+                  <button type="button" class="palette-swatch-btn" data-color="#059669" style="background:#059669;" title="Emerald Green"></button>
+                  <button type="button" class="palette-swatch-btn" data-color="#7c3aed" style="background:#7c3aed;" title="Royal Violet"></button>
+                  <button type="button" class="palette-swatch-btn" data-color="#dc2626" style="background:#dc2626;" title="Ruby Red"></button>
+                  <button type="button" class="palette-swatch-btn" data-color="#d97706" style="background:#d97706;" title="Amber Gold"></button>
+                  <button type="button" class="palette-swatch-btn" data-color="#0284c7" style="background:#0284c7;" title="Cyan Tech"></button>
+                  <button type="button" class="palette-swatch-btn" data-color="#4f46e5" style="background:#4f46e5;" title="Indigo Modern"></button>
+                  <button type="button" class="palette-swatch-btn" data-color="#be185d" style="background:#be185d;" title="Rose Glamour"></button>
+                  <button type="button" class="palette-swatch-btn" data-color="#334155" style="background:#334155;" title="Charcoal Executive"></button>
+                  <button type="button" class="palette-swatch-btn" data-color="#14b8a6" style="background:#14b8a6;" title="Teal Mint"></button>
+                  <button type="button" class="palette-swatch-btn" data-color="#111111" style="background:#111111;" title="Monochrome Onyx"></button>
+                </div>
+              </div>
+              <div class="menu-item">
+                <label><i class="fa-solid fa-arrows-up-down"></i> Page Density & Fitting</label>
+                <select id="densitySelect" class="form-control" style="width:100%; padding:6px 10px; border-radius:6px; border:1px solid #cbd5e1; font-size:0.85rem;">
+                  <option value="ultra-compact">Ultra-Compact (Strict 1-Page Fit)</option>
+                  <option value="compact">Compact (Fit to 1 page)</option>
+                  <option value="normal" selected>Standard (Balanced)</option>
+                  <option value="spacious">Spacious (Executive)</option>
+                </select>
+                <small style="color:#64748b; font-size:0.72rem; margin-top:4px; display:block;">Instantly recalibrates spacing and padding to fit your content cleanly.</small>
+              </div>
+              <div class="menu-item">
+                <label><i class="fa-solid fa-stamp"></i> Seal Monogram</label>
+                <label class="toggle-switch">
+                  <input type="checkbox" id="toggleSeal" checked>
+                  <span class="slider round"></span>
+                </label>
+              </div>
             </div>
-            <div class="menu-item">
-              <label>Page Density</label>
-              <select id="densitySelect">
-                <option value="compact">Compact (Fit to 1 page)</option>
-                <option value="normal" selected>Standard</option>
-                <option value="spacious">Spacious</option>
-              </select>
-            </div>
-            <div class="menu-item">
-              <label>Seal Monogram</label>
-              <label class="toggle-switch">
-                <input type="checkbox" id="toggleSeal" checked>
-                <span class="slider"></span>
-              </label>
-            </div>
-          </div>
+          </div>/div>
         </div>
 
         <button id="btnExportJSON" class="btn btn-secondary" title="Export CV data as JSON file">
@@ -4044,7 +4615,74 @@ body {
                 <i class="fa-solid fa-wand-magic-sparkles"></i> 1-Click Auto-Tune CV
               </button>
             </div>
+          <
+
+          <!-- Cover Letter Editor Section in Sidebar -->
+          <div class="accordion-item" id="accordionCoverLetter">
+            <div class="accordion-title">
+              <span><i class="fa-solid fa-envelope-open-text" style="color: #0284c7;"></i> Cover Letter Generator & Editor</span>
+              <i class="fa-solid fa-chevron-down"></i>
+            </div>
+            <div class="accordion-content">
+              <div class="cl-editor-section">
+                <div class="cl-editor-quickbar">
+                  <span style="font-size: 0.8rem; font-weight: 600; color: #1e3a8a;"><i class="fa-solid fa-wand-magic-sparkles"></i> AI Job Tailor</span>
+                  <button type="button" id="btnRegenerateCoverLetter" class="cl-quick-btn"><i class="fa-solid fa-arrows-rotate"></i> Regenerate Letter</button>
+                </div>
+
+                <div class="form-group">
+                  <label><i class="fa-solid fa-user-tie"></i> Hiring Manager / Recipient</label>
+                  <input type="text" id="inputClRecipientName" placeholder="The Hiring Team / HR Manager" value="The Hiring Manager">
+                </div>
+
+                <div class="form-group">
+                  <label><i class="fa-solid fa-building"></i> Company / Organization Name</label>
+                  <input type="text" id="inputClCompanyName" placeholder="e.g. Standard Bank Technology" value="Standard Bank Technology">
+                </div>
+
+                <div class="form-group">
+                  <label><i class="fa-solid fa-location-dot"></i> Company Physical Address</label>
+                  <input type="text" id="inputClCompanyAddress" placeholder="e.g. 30 Baker Street, Rosebank, Johannesburg" value="30 Baker Street, Rosebank, Johannesburg, 2196">
+                </div>
+
+                <div class="form-group">
+                  <label><i class="fa-solid fa-calendar"></i> Letter Date</label>
+                  <input type="text" id="inputClDate" placeholder="e.g. 27 November 2026" value="27 November 2026">
+                </div>
+
+                <div class="form-group">
+                  <label><i class="fa-solid fa-heading"></i> Subject Line</label>
+                  <input type="text" id="inputClSubject" placeholder="RE: APPLICATION FOR..." value="RE: APPLICATION FOR SOFTWARE DEVELOPER INTERN POSITION">
+                </div>
+
+                <div class="form-group">
+                  <label><i class="fa-solid fa-handshake"></i> Salutation</label>
+                  <input type="text" id="inputClSalutation" placeholder="Dear Hiring Manager," value="Dear Hiring Team,">
+                </div>
+
+                <div class="form-group">
+                  <label><i class="fa-solid fa-paragraph"></i> Opening Paragraph</label>
+                  <textarea id="inputClParaOpening" rows="3" placeholder="Explain the role you are applying for and key motivation..."></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label><i class="fa-solid fa-laptop-code"></i> Core Competencies & Experience</label>
+                  <textarea id="inputClParaBody1" rows="4" placeholder="Detail your relevant academic or practical project achievements..."></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label><i class="fa-solid fa-star"></i> Alignment & Value Proposition</label>
+                  <textarea id="inputClParaBody2" rows="3" placeholder="Why this organization and how you will create impact..."></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label><i class="fa-solid fa-comment-dots"></i> Closing Call to Action</label>
+                  <textarea id="inputClParaClosing" rows="2" placeholder="Thank the recruiter and express availability for interview..."></textarea>
+                </div>
+              </div>
+            </div>
           </div>
+/div>
 
           <!-- Personal & Header -->
           <div class="accordion-item open">
@@ -4461,6 +5099,20 @@ body {
  * 32 Distinct CV Templates Configuration
  */
 const CV_TEMPLATES = [
+
+  { id: 'template-tokyo-cyber', name: 'Tokyo Minimalist (Dark Accent)', category: 'Tech & Modern', tags: ['Modern', 'Tech', 'Clean'], desc: 'High-contrast modern engineering design with sleek monospace headers and crisp section badges.' },
+  { id: 'template-zurich-clean', name: 'Zurich Swiss Grid', category: 'Executive & Elegant', tags: ['Swiss', 'Grid', 'Corporate'], desc: 'Precision Swiss typography, structured asymmetric header, and high-readability layout.' },
+  { id: 'template-berlin-brutalist', name: 'Berlin Minimalist Mono', category: 'Creative & Portfolio', tags: ['Brutalist', 'Mono', 'Creative'], desc: 'Striking black and white minimalist design favored by high-growth startups and tech firms.' },
+  { id: 'template-toronto-corp', name: 'Toronto Modern Corporate', category: 'Corporate & Finance', tags: ['Corporate', 'Two-Tone', 'Finance'], desc: 'Polished executive design with subtle steel-blue borders and distinct credential badges.' },
+  { id: 'template-milan-editorial', name: 'Milan Vogue Editorial', category: 'Creative & Portfolio', tags: ['Editorial', 'Serif', 'Fashion'], desc: 'High-fashion editorial layout with serif headline typography and graceful line rules.' },
+  { id: 'template-silicon-glass', name: 'Silicon Valley Frost', category: 'Tech & Modern', tags: ['Tech', 'Modern', 'Startup'], desc: 'Modern tech layout with subtle frosted category cards and modern pill tags.' },
+  { id: 'template-amsterdam-card', name: 'Amsterdam Modular Cards', category: 'Modern & Clean', tags: ['Modular', 'Cards', 'Clean'], desc: 'Neat modular grid boxes separating education, experience, and projects effortlessly.' },
+  { id: 'template-capetown-marine', name: 'Cape Town Marine Executive', category: 'Executive & Elegant', tags: ['South Africa', 'Marine', 'Executive'], desc: 'Subtle ocean-teal borders with formal South African graduate credentials structure.' },
+  { id: 'template-durban-coral', name: 'Durban Coastal Clean', category: 'Modern & Clean', tags: ['Clean', 'Warm', 'Fresh'], desc: 'Vibrant clean aesthetic with coral headers and balanced whitespace distribution.' },
+  { id: 'template-johannesburg-gold', name: 'Johannesburg Gold Reserve', category: 'Corporate & Finance', tags: ['South Africa', 'Gold', 'Banking'], desc: 'Distinguished metallic gold accents tailored for commerce, banking, and leadership roles.' },
+  { id: 'template-cambridge-fellow', name: 'Cambridge Academic Fellow', category: 'Academic & Formal', tags: ['Academic', 'Cambridge', 'Formal'], desc: 'Traditional British academic single-column CV for postgraduate bursaries and scholarship applications.' },
+  { id: 'template-nordic-frost', name: 'Nordic Frost Minimal', category: 'Modern & Clean', tags: ['Nordic', 'Minimalist', 'Clean'], desc: 'Ultra-clean Scandinavian layout prioritizing crisp scan-ability and tranquil typography.' },
+
   { id: "template-limpopo", name: "Limpopo Classic", category: "modern", desc: "The original clean geometric monochrome layout with circular monogram seal.", colors: ["#111111", "#ffffff", "#4b5563"] },
   { id: "template-harvard", name: "Harvard Academic", category: "academic", desc: "Traditional Ivy League serif layout, centered titles, thin formal rules.", colors: ["#1e293b", "#ffffff", "#cbd5e1"] },
   { id: "template-stanford", name: "Stanford Modern", category: "modern", desc: "Clean modern sans-serif with bold Cardinal red accents and subtle dividers.", colors: ["#8c1515", "#ffffff", "#1e293b"] },
@@ -5567,6 +6219,8 @@ class CVApp {
 
     // Modal open & close
     
+    this.initCoverLetterSync();
+
     // Document Switcher (CV vs Cover Letter)
     const btnTabCV = document.getElementById('btnTabCV');
     const btnTabCL = document.getElementById('btnTabCoverLetter');
