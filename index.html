@@ -1862,74 +1862,184 @@ body {
 }
 
 /* ==========================================================================
-   32 DIVERSE CV TEMPLATES & FORMAT OVERRIDES
+   32 DIVERSE CV TEMPLATES & RADICALLY DIFFERENT FORMAT ARCHITECTURES
+   Visually & structurally distinct layouts (Single Column, Solid Sidebar,
+   Inverted Right Sidebar, Connected Timeline, Modular Cards, Tech Console, etc.)
    ========================================================================== */
 
+/* 1. Limpopo Classic (Original geometric monochrome with seal) */
 .cv-paper.template-limpopo {
   --primary-color: #111111;
   --font-heading: 'Montserrat', sans-serif;
 }
 
+/* 2. Harvard Academic (Full Single Column, Centered Serif, No Sidebar) */
 .cv-paper.template-harvard {
   --primary-color: #1e293b;
   --font-heading: 'Merriweather', serif;
   --font-body: 'Merriweather', serif;
-}
-.cv-paper.template-harvard .candidate-name {
-  text-align: center;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  font-size: 2.1rem;
+  padding: 38px 48px;
 }
 .cv-paper.template-harvard .cv-header {
   flex-direction: column;
   align-items: center;
   text-align: center;
+  padding-bottom: 10px;
+}
+.cv-paper.template-harvard .candidate-name {
+  text-align: center;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  font-size: 2.1rem;
 }
 .cv-paper.template-harvard .stamp-block { display: none; }
-.cv-paper.template-harvard .header-divider { height: 1px; background-color: #334155; }
+.cv-paper.template-harvard .header-divider {
+  height: 2px;
+  background-color: #0f172a;
+  margin-bottom: 16px;
+}
+.cv-paper.template-harvard .cv-body {
+  display: flex !important;
+  flex-direction: column !important;
+}
+.cv-paper.template-harvard .cv-left-col {
+  width: 100% !important;
+  border-right: none !important;
+  padding-right: 0 !important;
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  gap: 16px !important;
+  border-bottom: 1.5px solid #cbd5e1 !important;
+  padding-bottom: 14px !important;
+  margin-bottom: 16px !important;
+}
+.cv-paper.template-harvard #sectionContacts {
+  width: 100%;
+  margin-bottom: 6px;
+}
+.cv-paper.template-harvard .contact-card {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: center !important;
+  gap: 20px !important;
+  border: none !important;
+  background: transparent !important;
+  padding: 0 !important;
+}
+.cv-paper.template-harvard .contact-divider { display: none; }
+.cv-paper.template-harvard .contact-row {
+  flex-direction: row-reverse;
+  gap: 6px;
+}
+.cv-paper.template-harvard .cv-right-col {
+  width: 100% !important;
+  padding-left: 0 !important;
+}
 .cv-paper.template-harvard .section-heading {
-  font-size: 0.92rem;
+  font-size: 0.95rem;
   letter-spacing: 0.12em;
-  border-bottom: 1px solid #cbd5e1;
+  border-bottom: 1.5px solid #0f172a;
   padding-bottom: 4px;
 }
 
+/* 3. Stanford Timeline (Connected Milestones with Timeline Dots) */
 .cv-paper.template-stanford {
   --primary-color: #8c1515;
   --font-heading: 'Roboto', sans-serif;
 }
 .cv-paper.template-stanford .header-divider { background-color: #8c1515; }
 .cv-paper.template-stanford .cv-left-col { border-right-color: #8c1515; }
+.cv-paper.template-stanford .entry-item {
+  position: relative;
+  padding-left: 20px;
+  border-left: 2px solid #8c1515;
+  margin-left: 6px;
+  margin-bottom: 16px;
+}
+.cv-paper.template-stanford .entry-item::before {
+  content: "";
+  position: absolute;
+  left: -6px;
+  top: 4px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #8c1515;
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 0 2px #8c1515;
+}
 
+/* 4. Oxford Traditional (Refined Playfair Scholarly Single Column) */
 .cv-paper.template-oxford {
   --primary-color: #002147;
   --font-heading: 'Playfair Display', serif;
+  padding: 38px 48px;
+}
+.cv-paper.template-oxford .cv-header {
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 .cv-paper.template-oxford .candidate-name {
   font-style: italic;
-  font-weight: 600;
-  letter-spacing: 0.05em;
+  font-weight: 700;
+  font-size: 2.2rem;
+  letter-spacing: 0.04em;
 }
+.cv-paper.template-oxford .stamp-block { display: none; }
+.cv-paper.template-oxford .header-divider { height: 2px; background: #002147; margin-bottom: 14px; }
+.cv-paper.template-oxford .cv-body { display: flex !important; flex-direction: column !important; }
+.cv-paper.template-oxford .cv-left-col {
+  width: 100% !important;
+  border-right: none !important;
+  border-bottom: 1px solid #002147 !important;
+  padding: 0 0 12px 0 !important;
+  margin-bottom: 16px !important;
+}
+.cv-paper.template-oxford .contact-card {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: center !important;
+  gap: 16px !important;
+  border: none !important;
+  background: none !important;
+}
+.cv-paper.template-oxford .contact-divider { display: none; }
+.cv-paper.template-oxford .cv-right-col { width: 100% !important; padding-left: 0 !important; }
 
+/* 5. Tech Terminal Console (Monospaced Hacker/Developer Terminal) */
 .cv-paper.template-tech-minimalist {
   --primary-color: #0f172a;
   --font-heading: 'Fira Code', monospace;
-  background-color: #fafbfc;
+  --font-body: 'Fira Code', monospace;
+  background-color: #f8fafc;
 }
 .cv-paper.template-tech-minimalist .section-heading::before {
-  content: "> ";
+  content: "$ ~/ ";
   color: #2563eb;
+  font-weight: 700;
+}
+.cv-paper.template-tech-minimalist .cv-bullet-item {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  padding: 4px 8px;
+  border-radius: 4px;
+  margin-bottom: 5px;
 }
 
+/* 6. Executive Gold (Framed Inset Border, Formal Leadership) */
 .cv-paper.template-executive-gold {
   --primary-color: #1e1b18;
   --font-heading: 'Montserrat', sans-serif;
-  border-top: 6px solid #d97706;
+  border: 2.5px solid #d97706;
+  outline: 6px solid #fef3c7;
+  outline-offset: -12px;
 }
-.cv-paper.template-executive-gold .section-heading { color: #b45309; }
-.cv-paper.template-executive-gold .header-divider { background-color: #d97706; }
+.cv-paper.template-executive-gold .section-heading { color: #b45309; border-bottom: 1.5px solid #d97706; padding-bottom: 3px; }
+.cv-paper.template-executive-gold .header-divider { background-color: #d97706; height: 2px; }
 
+/* 7. Nordic Clean (Airy Minimalist Whitespace) */
 .cv-paper.template-nordic-clean {
   --primary-color: #475569;
   --font-heading: 'Inter', sans-serif;
@@ -1941,29 +2051,109 @@ body {
 }
 .cv-paper.template-nordic-clean .cv-left-col { border-right-color: #e2e8f0; }
 
+/* 8. Creative Indigo (Boxed Modular Cards, Rounded Tags) */
 .cv-paper.template-creative-indigo {
   --primary-color: #4f46e5;
   --font-heading: 'Montserrat', sans-serif;
 }
-.cv-paper.template-creative-indigo .candidate-name { color: #4338ca; letter-spacing: 0.22em; }
-.cv-paper.template-creative-indigo .contact-icon { background-color: #e0e7ff; color: #4338ca; }
+.cv-paper.template-creative-indigo .candidate-name { color: #4338ca; letter-spacing: 0.16em; }
+.cv-paper.template-creative-indigo .cv-section {
+  background: #f8faff;
+  border: 1px solid #e0e7ff;
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 14px;
+}
+.cv-paper.template-creative-indigo .cv-bullet-item {
+  background: #ffffff;
+  border: 1px solid #c7d2fe;
+  border-radius: 999px;
+  padding: 4px 12px;
+  margin-bottom: 6px;
+}
 
-.cv-paper.template-emerald { --primary-color: #065f46; }
-.cv-paper.template-sapphire { --primary-color: #1e3a8a; }
-.cv-paper.template-ruby { --primary-color: #9f1239; }
-.cv-paper.template-teal { --primary-color: #0f766e; }
+/* 9. Emerald Horizon (Solid Forest Green Left Sidebar) */
+.cv-paper.template-emerald {
+  --primary-color: #065f46;
+}
+.cv-paper.template-emerald .cv-left-col {
+  background: #064e3b;
+  color: #ffffff;
+  padding: 22px 18px;
+  border-radius: 8px;
+  border-right: none;
+}
+.cv-paper.template-emerald .cv-left-col .section-heading { color: #a7f3d0; border-bottom-color: rgba(255,255,255,0.25); }
+.cv-paper.template-emerald .cv-left-col .contact-val { color: #ffffff; }
+.cv-paper.template-emerald .cv-left-col .contact-icon { background: rgba(255,255,255,0.18); color: #ffffff; }
+.cv-paper.template-emerald .cv-left-col .personal-lbl { color: #a7f3d0; }
+.cv-paper.template-emerald .cv-left-col .personal-val { color: #ffffff; }
+.cv-paper.template-emerald .cv-left-col .item-text { color: #ffffff; }
 
+/* 10. Midnight Sapphire (Solid Deep Royal Blue Left Sidebar) */
+.cv-paper.template-sapphire {
+  --primary-color: #1e3a8a;
+}
+.cv-paper.template-sapphire .cv-left-col {
+  background: #0f172a;
+  color: #ffffff;
+  padding: 22px 18px;
+  border-radius: 8px;
+  border-right: none;
+}
+.cv-paper.template-sapphire .cv-left-col .section-heading { color: #93c5fd; border-bottom-color: rgba(255,255,255,0.25); }
+.cv-paper.template-sapphire .cv-left-col .contact-val { color: #ffffff; }
+.cv-paper.template-sapphire .cv-left-col .contact-icon { background: rgba(255,255,255,0.18); color: #ffffff; }
+.cv-paper.template-sapphire .cv-left-col .personal-lbl { color: #93c5fd; }
+.cv-paper.template-sapphire .cv-left-col .personal-val { color: #ffffff; }
+.cv-paper.template-sapphire .cv-left-col .item-text { color: #ffffff; }
+
+/* 11. Ruby Professional (Solid Crimson Accent Sidebar) */
+.cv-paper.template-ruby {
+  --primary-color: #9f1239;
+}
+.cv-paper.template-ruby .cv-left-col {
+  background: #881337;
+  color: #ffffff;
+  padding: 22px 18px;
+  border-radius: 8px;
+  border-right: none;
+}
+.cv-paper.template-ruby .cv-left-col .section-heading { color: #fecdd3; border-bottom-color: rgba(255,255,255,0.25); }
+.cv-paper.template-ruby .cv-left-col .contact-val { color: #ffffff; }
+.cv-paper.template-ruby .cv-left-col .contact-icon { background: rgba(255,255,255,0.18); color: #ffffff; }
+.cv-paper.template-ruby .cv-left-col .personal-lbl { color: #fecdd3; }
+.cv-paper.template-ruby .cv-left-col .personal-val { color: #ffffff; }
+.cv-paper.template-ruby .cv-left-col .item-text { color: #ffffff; }
+
+/* 12. Teal Synergy */
+.cv-paper.template-teal {
+  --primary-color: #0f766e;
+}
+.cv-paper.template-teal .header-divider { background-color: #0f766e; height: 3px; }
+
+/* 13. Swiss Grid (Pure Brutalist Typography & Zero Borders) */
 .cv-paper.template-swiss {
   --primary-color: #000000;
   --font-heading: 'Inter', sans-serif;
 }
 .cv-paper.template-swiss .candidate-name {
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  font-size: 2.6rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  font-size: 2.7rem;
+}
+.cv-paper.template-swiss .header-divider,
+.cv-paper.template-swiss .cv-section::after,
+.cv-paper.template-swiss .cv-left-col {
+  border: none !important;
+  display: none !important;
 }
 
-.cv-paper.template-header-block { padding-top: 0; overflow: hidden; }
+/* 14. Bold Navy Header Block (Solid Dark Full-Width Top Banner) */
+.cv-paper.template-header-block {
+  padding-top: 0;
+  overflow: hidden;
+}
 .cv-paper.template-header-block .cv-header {
   background-color: #0f172a;
   color: white;
@@ -1978,7 +2168,10 @@ body {
 .cv-paper.template-header-block .stamp-center-monogram { fill: white; }
 .cv-paper.template-header-block .header-divider { display: none; }
 
-.cv-paper.template-header-charcoal { padding-top: 0; }
+/* 15. Charcoal Banner (Deep Matte Top Banner) */
+.cv-paper.template-header-charcoal {
+  padding-top: 0;
+}
 .cv-paper.template-header-charcoal .cv-header {
   background-color: #27272a;
   color: white;
@@ -1988,60 +2181,350 @@ body {
 .cv-paper.template-header-charcoal .candidate-name { color: white; }
 .cv-paper.template-header-charcoal .header-divider { display: none; }
 
+/* 16. Warm Terracotta */
 .cv-paper.template-terracotta {
   --primary-color: #c2410c;
   background-color: #fffbf7;
 }
 
+/* 17. Compact 1-Page Heavy */
 .cv-paper.template-compact-pro {
-  --cv-padding: 22px 30px;
-  --section-gap: 11px;
-  --item-gap: 6px;
-  --body-font-size: 0.75rem;
-  --line-height: 1.3;
+  --cv-padding: 20px 28px;
+  --section-gap: 10px;
+  --item-gap: 5px;
+  --body-font-size: 0.74rem;
+  --line-height: 1.28;
 }
-.cv-paper.template-compact-pro .candidate-name { font-size: 1.85rem; }
+.cv-paper.template-compact-pro .candidate-name { font-size: 1.75rem; }
 
+/* 18. Inverted Right Sidebar Layout */
 .cv-paper.template-right-sidebar .cv-body { flex-direction: row-reverse; }
 .cv-paper.template-right-sidebar .cv-left-col {
   border-right: none;
-  border-left: 1.5px solid var(--primary-color);
+  border-left: 2px solid var(--primary-color);
   padding-right: 0;
-  padding-left: 22px;
+  padding-left: 20px;
+  background: #f8fafc;
+  border-radius: 8px;
+  padding: 16px;
 }
-.cv-paper.template-right-sidebar .cv-right-col { padding-left: 0; padding-right: 24px; }
+.cv-paper.template-right-sidebar .cv-right-col { padding-left: 0; padding-right: 22px; }
 
+/* 19. Single Column Chronological */
+.cv-paper.template-single-column { padding: 36px 46px; }
 .cv-paper.template-single-column .cv-body { flex-direction: column; }
 .cv-paper.template-single-column .cv-left-col {
   width: 100%;
   border-right: none;
   padding-right: 0;
-  border-bottom: 1.5px solid var(--primary-color);
-  padding-bottom: 14px;
+  border-bottom: 2px solid var(--primary-color);
+  padding-bottom: 12px;
+  margin-bottom: 16px;
 }
-.cv-paper.template-single-column .cv-right-col {
-  width: 100%;
-  padding-left: 0;
-  padding-top: 14px;
+.cv-paper.template-single-column .cv-right-col { width: 100%; padding-left: 0; }
+
+/* 20. Soft Lavender */
+.cv-paper.template-lavender {
+  --primary-color: #7c3aed;
+  background-color: #faf7ff;
 }
 
-.cv-paper.template-lavender { --primary-color: #7c3aed; background-color: #faf7ff; }
-.cv-paper.template-rose-gold { --primary-color: #be185d; }
+/* 21. Rose Gold Accent */
+.cv-paper.template-rose-gold {
+  --primary-color: #be185d;
+}
+
+/* 22. High-Contrast Heavy Borders */
 .cv-paper.template-heavy-borders .header-divider,
 .cv-paper.template-heavy-borders .cv-left-col,
-.cv-paper.template-heavy-borders .cv-section::after { border-width: 2.5px; height: 2.5px; }
-.cv-paper.template-wall-street { --primary-color: #1e3a5f; --font-heading: 'Roboto', sans-serif; }
-.cv-paper.template-medical { --primary-color: #0284c7; }
-.cv-paper.template-engineering { --primary-color: #0369a1; --font-heading: 'Roboto', sans-serif; }
-.cv-paper.template-legal { --primary-color: #1f2937; --font-heading: 'Merriweather', serif; --font-body: 'Merriweather', serif; }
-.cv-paper.template-startup-amber { --primary-color: #d97706; }
-.cv-paper.template-cyber { --primary-color: #0284c7; --font-heading: 'Fira Code', monospace; }
-.cv-paper.template-editorial { --primary-color: #111827; --font-heading: 'Playfair Display', serif; }
-.cv-paper.template-pretoria { --primary-color: #14532d; border-top: 5px solid #ca8a04; }
+.cv-paper.template-heavy-borders .cv-section::after {
+  border-width: 2.5px;
+  height: 2.5px;
+}
+
+/* 23. Wall Street Banking (Executive Framed Pinstripe) */
+.cv-paper.template-wall-street {
+  --primary-color: #1e3a5f;
+  --font-heading: 'Roboto', sans-serif;
+  border: 2px solid #1e3a5f;
+  outline: 6px solid #f1f5f9;
+  outline-offset: -12px;
+}
+
+/* 24. Medical & Health Sciences */
+.cv-paper.template-medical {
+  --primary-color: #0284c7;
+}
+
+/* 25. Engineering Blueprint */
+.cv-paper.template-engineering {
+  --primary-color: #0369a1;
+  --font-heading: 'Roboto', sans-serif;
+}
+.cv-paper.template-engineering .cv-body { flex-direction: row-reverse; }
+.cv-paper.template-engineering .cv-left-col {
+  border-right: none;
+  border-left: 2px dashed #0369a1;
+  background: #f0f9ff;
+  border-radius: 6px;
+  padding: 16px;
+}
+
+/* 26. Legal & Jurisprudence (Formal Serif Single Column) */
+.cv-paper.template-legal {
+  --primary-color: #1f2937;
+  --font-heading: 'Merriweather', serif;
+  --font-body: 'Merriweather', serif;
+  padding: 38px 48px;
+}
+.cv-paper.template-legal .cv-header { flex-direction: column; text-align: center; }
+.cv-paper.template-legal .stamp-block { display: none; }
+.cv-paper.template-legal .cv-body { flex-direction: column; }
+.cv-paper.template-legal .cv-left-col { width: 100%; border-right: none; border-bottom: 2px solid #1f2937; padding-bottom: 12px; margin-bottom: 14px; }
+.cv-paper.template-legal .cv-right-col { width: 100%; padding-left: 0; }
+
+/* 27. Startup Amber */
+.cv-paper.template-startup-amber {
+  --primary-color: #d97706;
+}
+.cv-paper.template-startup-amber .cv-body { flex-direction: row-reverse; }
+.cv-paper.template-startup-amber .cv-left-col {
+  border-right: none;
+  border-left: 2px solid #d97706;
+  background: #fffbeb;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+/* 28. Cyber Matrix (Code Prompt IT Console) */
+.cv-paper.template-cyber {
+  --primary-color: #0284c7;
+  --font-heading: 'Fira Code', monospace;
+  background-color: #f8fafc;
+}
+.cv-paper.template-cyber .section-heading::before {
+  content: "$ ~/ ";
+  color: #0284c7;
+  font-weight: 700;
+}
+
+/* 29. Editorial Magazine */
+.cv-paper.template-editorial {
+  --primary-color: #111827;
+  --font-heading: 'Playfair Display', serif;
+}
+.cv-paper.template-editorial .candidate-name {
+  font-size: 2.6rem;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+}
+
+/* 30. Pretoria Public Sector (Hunter Green Solid Sidebar) */
+.cv-paper.template-pretoria {
+  --primary-color: #14532d;
+  border-top: 5px solid #ca8a04;
+}
+.cv-paper.template-pretoria .cv-left-col {
+  background: #14532d;
+  color: #ffffff;
+  padding: 22px 18px;
+  border-radius: 8px;
+  border-right: none;
+}
+.cv-paper.template-pretoria .cv-left-col .section-heading { color: #fef08a; border-bottom-color: rgba(255,255,255,0.25); }
+.cv-paper.template-pretoria .cv-left-col .contact-val { color: #ffffff; }
+.cv-paper.template-pretoria .cv-left-col .contact-icon { background: rgba(255,255,255,0.18); color: #ffffff; }
+.cv-paper.template-pretoria .cv-left-col .personal-lbl { color: #fef08a; }
+.cv-paper.template-pretoria .cv-left-col .personal-val { color: #ffffff; }
+.cv-paper.template-pretoria .cv-left-col .item-text { color: #ffffff; }
+
+/* 31. Minimalist Borderless */
 .cv-paper.template-borderless .header-divider,
 .cv-paper.template-borderless .cv-section::after,
-.cv-paper.template-borderless .cv-left-col { display: none !important; border: none !important; }
-.cv-paper.template-diamond-blue { --primary-color: #2563eb; border-top: 4px solid #2563eb; }
+.cv-paper.template-borderless .cv-left-col {
+  display: none !important;
+  border: none !important;
+}
+
+/* 32. Cobalt Modern (Timeline Accent) */
+.cv-paper.template-diamond-blue {
+  --primary-color: #2563eb;
+  border-top: 4px solid #2563eb;
+}
+.cv-paper.template-diamond-blue .entry-item {
+  position: relative;
+  padding-left: 18px;
+  border-left: 2px solid #2563eb;
+  margin-left: 4px;
+  margin-bottom: 14px;
+}
+.cv-paper.template-diamond-blue .entry-item::before {
+  content: "";
+  position: absolute;
+  left: -5px;
+  top: 5px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #2563eb;
+}
+
+/* ==========================================================================
+   COVER LETTER PORTAL STYLES
+   ========================================================================== */
+
+.doc-type-switcher {
+  display: inline-flex;
+  align-items: center;
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 3px;
+  gap: 3px;
+  margin-left: 8px;
+}
+
+.btn-doc-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 13px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: var(--font-body);
+}
+
+.btn-doc-tab:hover {
+  color: #0f172a;
+  background: rgba(255, 255, 255, 0.65);
+}
+
+.btn-doc-tab.active {
+  background: #ffffff;
+  color: #2563eb;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+.cover-letter-paper {
+  display: flex !important;
+  flex-direction: column !important;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: #1e293b;
+  min-height: 297mm;
+  padding: 48px 56px !important;
+}
+
+.cl-header {
+  margin-bottom: 22px;
+}
+
+.cl-candidate-name {
+  font-family: var(--font-heading);
+  font-size: 2.2rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--primary-color);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  line-height: 1.1;
+}
+
+.cl-contact-row {
+  font-size: 0.85rem;
+  color: #475569;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.cl-divider {
+  width: 100%;
+  height: 2px;
+  background: var(--primary-color);
+  margin-bottom: 26px;
+  opacity: 0.85;
+}
+
+.cl-content-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+}
+
+.cl-date-line {
+  font-size: 0.88rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.cl-recipient-section {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: #1e293b;
+}
+
+.cl-subject-line {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--primary-color);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 8px 0;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.cl-salutation {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #0f172a;
+}
+
+.cl-paragraphs-container {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  font-size: 0.92rem;
+  line-height: 1.68;
+  color: #334155;
+  text-align: justify;
+}
+
+.cl-para {
+  margin: 0;
+}
+
+.cl-signoff-block {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cl-signoff-phrase {
+  font-size: 0.95rem;
+  color: #334155;
+}
+
+.cl-signoff-name {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
 
 /* ==========================================================================
    JOB TARGETING & AUTO-SUGGEST CRITERIA STYLES
@@ -3175,7 +3658,13 @@ body {
 
       <div class="toolbar-actions">
         <!-- Target Job & Auto-Suggest Criteria Button -->
-        <button id="btnOpenJobModal" class="btn btn-secondary btn-job-target-pill" title="Tag Target Job & Auto-Suggest Criteria">
+        
+        <!-- Document Mode Switcher (CV vs Cover Letter) -->
+        <div class="doc-type-switcher no-print" id="docTypeSwitcher">
+          <button id="btnTabCV" class="btn-doc-tab active" title="Switch to Curriculum Vitae"><i class="fa-solid fa-file-lines"></i> <span>CV</span></button>
+          <button id="btnTabCoverLetter" class="btn-doc-tab" title="Switch to Cover Letter Portal"><i class="fa-solid fa-envelope-open-text"></i> <span>Cover Letter</span></button>
+        </div>
+          <button id="btnOpenJobModal" class="btn btn-secondary btn-job-target-pill" title="Tag Target Job & Auto-Suggest Criteria">
           <i class="fa-solid fa-bullseye" style="color: #2563eb;"></i>
           <span id="toolbarJobName">Software Developer Intern</span>
           <span class="match-score-pill" id="toolbarMatchScorePill">85%</span>
@@ -3713,7 +4202,7 @@ body {
             <header class="cv-header">
               <div class="name-block">
                 <h1 class="candidate-name" id="cvName" contenteditable="true" spellcheck="false">THABO NDLOVU</h1>
-                <div class="candidate-job-target" id="cvJobTarget" contenteditable="true" spellcheck="false" title="Target Job Role (Click to edit or set in Job Matcher)">SOFTWARE DEVELOPER INTERN</div>
+                
               </div>
               
               <div class="stamp-block" id="stampBlock" title="Click to customize monogram seal">
@@ -3848,6 +4337,82 @@ body {
               </section>
             </div>
 
+          </article>
+        </div>
+
+        
+        <!-- Cover Letter A4 Paper Wrapper -->
+        <div class="cover-letter-page-wrapper hidden" id="coverLetterWrapper">
+          <article class="cv-paper cover-letter-paper template-limpopo" id="coverLetterPaper">
+            <!-- Candidate Header matching CV styling -->
+            <header class="cv-header cl-candidate-header">
+              <div class="name-block">
+                <h1 class="candidate-name" id="clCandidateName">THABO NDLOVU</h1>
+                <div class="cl-candidate-contact" id="clCandidateContact">
+                  <span><i class="fa-solid fa-phone"></i> +27 71 234 5678</span> •
+                  <span><i class="fa-solid fa-envelope"></i> thabo.ndlovu@email.com</span> •
+                  <span><i class="fa-solid fa-location-dot"></i> Johannesburg, GP</span>
+                </div>
+              </div>
+              <div class="stamp-block" id="clStampBlock">
+                <svg class="circular-stamp" viewBox="0 0 160 160" width="100" height="100">
+                  <circle cx="80" cy="80" r="76" class="stamp-outer-ring" />
+                  <circle cx="80" cy="80" r="48" class="stamp-inner-ring" />
+                  <g class="stamp-center-monogram">
+                    <text x="80" y="74" text-anchor="middle" class="monogram-letter" id="clMonogramTop">T</text>
+                    <line x1="66" y1="80" x2="94" y2="80" class="monogram-line" />
+                    <text x="80" y="96" text-anchor="middle" class="monogram-letter" id="clMonogramBottom">N</text>
+                  </g>
+                </svg>
+              </div>
+            </header>
+
+            <div class="cl-body">
+              <!-- Meta: Date & Recipient Details -->
+              <div class="cl-meta-row">
+                <div class="cl-recipient-box" contenteditable="true" spellcheck="false" id="clRecipientBox">
+                  <div class="cl-recipient-name" id="clRecipientName">The Hiring Manager</div>
+                  <div class="cl-company-name" id="clCompanyName">Standard Bank Technology</div>
+                  <div class="cl-company-address" id="clCompanyAddress">30 Baker Street, Rosebank, Johannesburg, 2196</div>
+                </div>
+                <div class="cl-date-box">
+                  <div class="cl-date" id="clDate">27 November 2026</div>
+                </div>
+              </div>
+
+              <!-- Formal Subject Line (Target Job is featured here!) -->
+              <div class="cl-subject-line" id="clSubjectLine" contenteditable="true" spellcheck="false">
+                RE: APPLICATION FOR SOFTWARE DEVELOPER INTERN POSITION
+              </div>
+
+              <!-- Salutation -->
+              <div class="cl-salutation" id="clSalutation" contenteditable="true" spellcheck="false">
+                Dear Hiring Team,
+              </div>
+
+              <!-- Tailored Letter Paragraphs -->
+              <div class="cl-paragraphs-container" id="clParagraphsContainer" contenteditable="true" spellcheck="false">
+                <p id="clParaOpening">
+                  I am writing to express my enthusiastic interest in the Software Developer Intern role currently open at your esteemed organization. As a dedicated student with foundational expertise in JavaScript, Python, and SQL, combined with a continuous commitment to writing clean, maintainable code, I am eager to contribute fresh problem-solving energy to your engineering initiatives.
+                </p>
+                <p id="clParaBody1">
+                  Throughout my academic projects and practical assignments, I have focused on building scalable, user-centric software solutions. My coursework and hands-on lab work have given me solid proficiency in object-oriented programming, data structures, and relational database design. Moreover, my experience collaborating on team-based development sprints has instilled in me strong version-control discipline and active cross-functional communication.
+                </p>
+                <p id="clParaBody2">
+                  What excites me most about this opportunity is your team's reputation for engineering excellence and innovation. I am proactive, quick to grasp new toolsets and tech stacks, and driven by a strong desire to deliver real-world business impact while learning alongside seasoned professionals.
+                </p>
+                <p id="clParaClosing">
+                  Thank you for considering my application. I would welcome the opportunity to discuss further how my skills, academic achievements, and enthusiasm align with your team's objectives.
+                </p>
+              </div>
+
+              <!-- Sign-off & Signature Block -->
+              <div class="cl-signoff-block">
+                <div class="cl-valediction">Sincerely,</div>
+                <div class="cl-signature-name" id="clSignatureName">Thabo Ndlovu</div>
+                <div class="cl-signature-tag">Applicant</div>
+              </div>
+            </div>
           </article>
         </div>
 
@@ -5001,6 +5566,18 @@ class CVApp {
     }
 
     // Modal open & close
+    
+    // Document Switcher (CV vs Cover Letter)
+    const btnTabCV = document.getElementById('btnTabCV');
+    const btnTabCL = document.getElementById('btnTabCoverLetter');
+    const mobTabCV = document.getElementById('mobileNavPreview');
+    const mobTabCL = document.getElementById('mobileNavCoverLetter');
+
+    if (btnTabCV) btnTabCV.addEventListener('click', () => this.switchDocMode('cv'));
+    if (btnTabCL) btnTabCL.addEventListener('click', () => this.switchDocMode('cover-letter'));
+    if (mobTabCV) mobTabCV.addEventListener('click', () => this.switchDocMode('cv'));
+    if (mobTabCL) mobTabCL.addEventListener('click', () => this.switchDocMode('cover-letter'));
+
     if (this.btnOpenJobModal) {
       this.btnOpenJobModal.addEventListener('click', () => {
         this.jobCriteriaModal.classList.remove('hidden');
@@ -5092,11 +5669,23 @@ class CVApp {
 
   setTargetJob(jobTitle) {
     this.data.targetJob = jobTitle;
+    const criteria = getJobCriteria(jobTitle);
+    
+    // Auto-update skills and about me tailored specifically for this tagged job role!
+    if (criteria && criteria.skills && criteria.skills.length > 0) {
+      this.data.skills = [...criteria.skills];
+    }
+    if (criteria && criteria.summary) {
+      this.data.about = criteria.summary;
+    }
+
     this.saveData();
     this.syncForms();
+    this.renderSkills();
     this.syncDocumentHeader();
     this.updateJobCriteriaUI();
-    this.showToast(`🎯 Tagged target job: ${jobTitle}`);
+    this.updateCoverLetterForJob(jobTitle);
+    this.showToast(`🎯 Tagged: ${jobTitle} • Skills & Summary Auto-Updated!`);
   }
 
   calculateJobMatch(jobCriteria) {
@@ -5160,9 +5749,7 @@ class CVApp {
     }
 
     // Update Paper candidate job target
-    if (this.cvJobTarget) {
-      this.cvJobTarget.innerText = (criteria.tagline || criteria.title || "").toUpperCase();
-    }
+    // job target omitted from cv paper
 
     // Update Sidebar Accordion
     const sideScore = document.getElementById('sidebarMatchScoreText');
